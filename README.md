@@ -13,7 +13,7 @@ Học viên đi từ chỗ dùng AI rời rạc sang làm chủ một công cụ
 
 | Buổi | Khái niệm | Học viên làm được | Bài thực hành |
 |---|---|---|---|
-| 1 | **Agent** | Cài Claude Code trên Claude Desktop, hiểu agent khác chat thường thế nào, lập thư mục dự án + CLAUDE.md, ra lệnh cho agent đọc/sửa file | Cho agent đọc & xử lý file trong 1 thư mục |
+| 1 | **Skill + MCP + Agent + GitHub** | Skill là gì và cách kích hoạt, tự tạo skill; MCP là gì; tạo repo GitHub + lấy token + cắm GitHub MCP để quản lý skill; tạo agent đầu tiên | Tạo skill, đưa skill lên GitHub, tạo 1 agent |
 | 2 | **Skill** | Đóng gói một quy trình lặp lại thành skill để Claude tự nạp và làm đúng mỗi lần | Skill đọc & tóm tắt tài liệu |
 | 3 | **MCP** | Cắm công cụ và dữ liệu ngoài vào agent (file, web, Google Drive, cơ sở dữ liệu) qua MCP | MCP đọc dữ liệu và phân tích |
 | 4 | **Subagent** | Tự định nghĩa agent chuyên trách: đặt vai trò, chỉ dẫn, giới hạn công cụ | Tạo Report Agent + Research Agent |
@@ -36,7 +36,7 @@ khoa-ai-workspace-6-agent/
 ├── 00-tong-quan-khoa-hoc.md      # Đối tượng, chuẩn đầu ra, công cụ, chuẩn bị trước lớp
 ├── giao-an/                      # Dành cho GIẢNG VIÊN đứng lớp
 │   ├── _template-giao-an.md      # Khung chuẩn: lời dẫn + prompt + file demo + kết quả mong đợi
-│   ├── buoi-01-agent-claude-code.md
+│   ├── buoi-01-skill-mcp-agent-github.md
 │   ├── buoi-02-skill.md
 │   ├── buoi-03-mcp.md
 │   ├── buoi-04-subagent.md
@@ -50,7 +50,8 @@ khoa-ai-workspace-6-agent/
 │   ├── mcp-cau-hinh-mau.md       # Mẫu khai báo MCP + cách cấp quyền
 │   ├── agent-report-mau.md       # Mẫu định nghĩa subagent (Report)
 │   ├── agent-research-mau.md     # Mẫu định nghĩa subagent (Research)
-│   └── agent-team-mau.md         # Mẫu lập agent team + chia việc
+│   ├── agent-team-mau.md         # Mẫu lập agent team + chia việc
+│   └── github-mcp-va-token.md    # Tạo repo + lấy token + cắm GitHub MCP quản lý skill
 └── tai-lieu-phat/
     ├── checklist-hoc-vien-toan-khoa.md
     ├── template-bao-cao-agent.md
