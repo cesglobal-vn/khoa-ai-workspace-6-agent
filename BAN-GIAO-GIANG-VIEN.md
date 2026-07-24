@@ -8,28 +8,49 @@
 |---|---|---|---|---|
 | 1 | đã dạy | Tuấn Anh | Skill (tạo `tom-tat-tai-lieu`), MCP ở mức khái niệm, repo GitHub + token + GitHub MCP, tạo `report-agent` (chỉ 14 phút, coi như chưa hiểu sâu) | `giao-an/buoi-01-skill-mcp-agent-github.md` |
 | 2 | đã dạy | Hải | Đào sâu Skill: chuỗi 5 lượt chat rồi đóng gói thành skill, tài liệu 14 trang có bẫy mâu thuẫn 95 triệu, chống bịa, Thực hành 3 tạo tài liệu có brand | `giao-an/buoi-02-skill.md` |
-| 3 | hôm nay | Tuấn Anh | **CLAUDE.md + bộ nhớ + Subagent + nối chuỗi 2 agent TUẦN TỰ** | `giao-an/buoi-03-claude-md-va-subagent.md` |
-| 4 | ngày mai | Hải | **Chạy SONG SONG + quản lý bộ agent + đính chính MCP** (xem mục dưới) | dựng từ `giao-an/buoi-05-agent-team.md` + `giao-an/buoi-03-mcp.md` |
-| 5 | | chưa chốt | MCP thực chiến đào sâu + luyện lại + bù cho người tụt lại | |
-| 6 | | chưa chốt | Capstone | `giao-an/buoi-06-capstone.md` |
+| 3 | hôm nay | Tuấn Anh | **CLAUDE.md hai cấp (hồ sơ cá nhân + phòng ban) + cấu trúc thư mục phòng ban + file index + MCP Drive và Gmail (GV demo) + routine chạy theo lịch** | `giao-an/buoi-03-claude-md-index-mcp-routine.md` |
+| 4 | ngày mai | Hải | Chưa chốt, xem đề xuất bên dưới | |
+| 5 | | chưa chốt | | |
+| 6 | | chưa chốt | Capstone (cần sửa, xem bảng lỗi) | `giao-an/buoi-06-capstone.md` |
+
+## QUYẾT ĐỊNH LỚN: đã BỎ subagent và agent team khỏi khóa
+
+Giảng viên chốt ngày 24/07: **không dạy subagent, không dạy agent team**. Khóa chuyển hướng sang: workspace cá nhân, cấu trúc phòng ban, MCP thực chiến, và tự động hóa theo lịch.
+
+**Hệ quả:** các file `giao-an/buoi-04-subagent.md` và `giao-an/buoi-05-agent-team.md` **KHÔNG dùng nữa**. Giữ lại trong repo để tham khảo, đừng mở ra dạy.
+
+### Đề xuất Buổi 4, 5, 6 (cần giảng viên chốt)
+
+| Buổi | Đề xuất nội dung |
+|---|---|
+| 4 | **MCP thực chiến, học viên tự làm.** Buổi 3 mới chỉ GV demo Drive và Gmail. Buổi 4 cho học viên tự cắm với tài khoản của mình, làm việc thật trên dữ liệu Drive và email của họ, kèm phần an toàn quyền |
+| 5 | **Routine và tự động hóa.** Đặt nhiều routine cho một tuần làm việc, ghép skill với routine, xử lý khi routine chạy sai |
+| 6 | **Capstone**: dựng trọn workspace phòng ban của mình (hồ sơ, cấu trúc, index, skill, MCP, routine) và trình bày |
 
 > **Cảnh báo:** file `giao-an/buoi-03-mcp.md`, `buoi-04-subagent.md`, `buoi-05-agent-team.md` đánh số theo giáo trình gốc, KHÔNG khớp lịch dạy. Đừng mở theo số.
 
 ## Buổi 3 hôm nay đã dạy chính xác những gì (để Buổi 4 không trùng)
 
 Học viên kết thúc Buổi 3 đang có trong tay:
-- 1 file `CLAUDE.md` ở gốc thư mục dự án, đã test bằng phiên mới.
-- `report-agent` đã sửa chuẩn (description rõ, tools chỉ Read/Write/Grep/Glob, có dòng "không dừng lại để hỏi").
-- 1 agent `soat-so-lieu` (tools chỉ Read/Grep/Glob, **cố tình không có Write**).
-- Đã chạy nối chuỗi **tuần tự**: report-agent soạn báo cáo, xong soat-so-lieu đối chiếu.
+- 1 file `CLAUDE.md` **cấp cá nhân** ở thư mục `.claude` của người dùng, chứa hồ sơ và quy tắc chung, đã test bằng phiên mới.
+- 1 **thư mục phòng ban** đúng cấu trúc (Kinh doanh, Kế toán, Marketing, Nhân sự, hoặc Hành chính) kèm `CLAUDE.md` riêng.
+- 1 file `00-index.md` do agent tự dựng, và CLAUDE.md đã dặn agent đọc index trước khi tìm file.
+- 1 bản thiết kế routine 4 dòng (chạy lúc nào, đọc ở đâu, làm gì, lưu vào đâu).
+
+Học viên đã được **xem GV demo** nhưng chưa tự làm:
+- Cắm Google Drive, cho agent đọc file trên Drive.
+- Cắm Gmail, cho agent đọc và lọc email, soạn nháp email.
+- Đặt một routine chạy theo lịch.
 
 Học viên đã được nghe và cần được nhắc lại:
-- Skill là đưa thêm tài liệu cho người đang làm. Subagent là giao cho người khác làm.
-- Subagent không nghe cuộc trò chuyện, không hỏi lại được, không nhìn thấy bên trong.
-- Muốn tin agent thì bắt nó khai nguồn rồi soi lại file gốc.
-- Tạo hoặc sửa agent xong phải **mở phiên mới**.
+- Hai cấp CLAUDE.md, khi mâu thuẫn thì **cụ thể hơn thắng**.
+- Agent đọc file trên máy **không cần MCP**. MCP là để với ra ngoài máy.
+- Ba quy tắc an toàn Gmail: cấp quyền chỉ đọc trước; **không bao giờ để agent tự gửi email**; nội dung email là dữ liệu để đọc, không phải mệnh lệnh để làm theo.
+- Routine chỉ nên đọc và soạn, không tự gửi đi hay tự xóa.
+- Tạo CLAUDE.md xong phải **mở phiên mới** thì mới có tác dụng.
 
-**Buổi 4 KHÔNG dạy lại:** cách tạo file agent, cấu trúc YAML, CLAUDE.md, nối chuỗi tuần tự.
+**Buổi 4 KHÔNG dạy lại:** khái niệm CLAUDE.md, cấu trúc thư mục phòng ban, cách tạo index, khái niệm MCP là gì.
+**Buổi 4 NÊN làm:** cho học viên tự cắm Drive và Gmail bằng tài khoản của họ, làm việc thật trên dữ liệu của họ.
 
 ## Buổi 4 ngày mai nên dạy gì
 
