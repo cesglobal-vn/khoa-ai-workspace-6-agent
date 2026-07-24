@@ -64,13 +64,20 @@ Workspace của bạn là một công ty thu nhỏ:
 
 ## Timeline chi tiết
 
-### [00:00-00:10] Mở đầu: vẽ lại bản đồ và nói thẳng chỗ lệch
+### [00:00-00:10] Mở đầu: bản đồ khóa và kiểm tra đầu giờ
 
-- **Lời dẫn GV (nói thẳng, đừng né):** "Chào cả lớp. Trước khi vào bài, tôi nói thẳng một chuyện. Hai buổi vừa rồi có chỗ trùng nhau, và có chỗ tôi với anh Hải nói chưa khớp. Buổi 2 có hỏi cả lớp file CLAUDE.md dùng để làm gì, trong khi buổi 1 tôi chưa hề dạy cái đó. Ai hôm đó thấy hoang mang thì không phải do anh chị dốt, là do chúng tôi soạn chưa khớp. Hôm nay tôi vẽ lại bản đồ cho rõ và lấp đúng chỗ còn thiếu."
-- Chiếu bảng 3 dòng: Buổi 1 đã học gì, Buổi 2 đã học gì, hôm nay học gì.
-- Kiểm nhanh: ai còn mở được thư mục dự án, ai còn thấy skill `tom-tat-tai-lieu`, ai còn file `report-agent`. Ai mất thì trợ giảng kèm riêng, không để cả lớp chờ.
+- **Lời dẫn GV:** "Chào cả lớp. Hai buổi vừa rồi cả lớp đã có hai thứ trong tay: một là skill, tức quy trình đóng gói sẵn để agent làm đúng chuẩn mỗi lần; hai là kho skill trên GitHub. Hôm nay mình lên một nấc mới. Mình sẽ dạy agent nhớ anh chị là ai để khỏi phải dặn lại mỗi lần, rồi tuyển cho anh chị nhân viên AI chuyên trách đầu tiên và cho hai nhân viên đó làm nối tiếp nhau."
+- **Chiếu bảng bản đồ khóa 3 dòng:**
 
-> Ghi chú GV: thừa nhận trước thì lớp tin. Giấu thì lớp tự phát hiện và mất tin hoàn toàn.
+| Buổi | Đã có gì trong tay |
+|---|---|
+| Buổi 1 | Skill `tom-tat-tai-lieu`, kho skill trên GitHub, agent `report-agent` đầu tiên |
+| Buổi 2 | Biết skill sinh ra từ đâu, biết bắt agent không bịa số |
+| **Hôm nay** | **Bộ nhớ dự án (CLAUDE.md) + nhân viên chuyên trách + cho 2 nhân viên làm nối tiếp** |
+
+- **Kiểm nhanh đầu giờ (2 phút):** ai còn mở được thư mục dự án, ai còn thấy skill `tom-tat-tai-lieu`, ai còn file `report-agent`. Ai mất thì trợ giảng kèm riêng, không để cả lớp chờ.
+
+> Ghi chú GV: mở đầu bằng thứ lớp đã làm được, không nhắc lại chuyện buổi trước lệch nhau. Nếu có học viên tự hỏi về CLAUDE.md, xử lý theo bảng tình huống cuối giáo án.
 
 ### [00:10-00:32] CLAUDE.md: nỗi đau trước, giải pháp sau
 
@@ -245,7 +252,7 @@ Trợ giảng kèm riêng nhóm chưa xong CLAUDE.md hoặc chưa sửa được
 | **Tạo CLAUDE.md xong nhưng "không thấy khác gì"** | Chưa mở phiên mới. CLAUDE.md chỉ nạp khi mở phiên mới. Đây là lỗi số một của buổi, dặn trước khi thực hành |
 | **Sửa agent xong gọi tên thì Claude không biết agent đó** | Cũng do phiên cũ chưa nạp lại. Mở phiên mới rồi gọi |
 | **Không thấy thư mục `.claude` trong File Explorer** | Thư mục ẩn trên Windows. Bật "hiện file ẩn" trong tab View. Dặn trước 2 phút đầu thực hành |
-| **Học viên hỏi: sao buổi 1 không dạy CLAUDE.md?** | Nói thẳng: "Buổi 1 nhiều nội dung quá nên để lại, hôm nay bù, và đúng chỗ hơn vì hôm nay mình cần tới nó." Né sẽ mất uy tín |
+| **Học viên hỏi về CLAUDE.md của buổi trước** | Trả lời gọn, không sa đà: "CLAUDE.md để đúng hôm nay mới hợp, vì hôm nay mình bắt đầu có nhiều agent, cần một chỗ đặt quy tắc chung." Rồi quay lại bài ngay |
 | **Agent trả về danh sách câu hỏi thay vì bản báo cáo** | Phần thân agent còn dòng "hỏi trước khi làm". Sửa lại theo P1: vẫn soạn đủ, chỗ thiếu ghi [đợi bổ sung] |
 | **P3 Claude tự làm, không gọi agent** | Bình thường, đã báo trước. Dạy luôn: việc nhỏ thì gọi đích danh cho chắc |
 | **Đặt tên agent có dấu cách hoặc chữ hoa** | Đổi về chữ thường nối gạch nối: `soat-so-lieu` |
