@@ -1,4 +1,4 @@
-# Outline Buổi 04 (viết cho người học mới): MCP tạo slide, agent, token, subagent
+# Outline Buổi 04 (viết cho người học mới): MCP tạo slide, agent, cửa sổ ngữ cảnh, subagent
 
 > Outline này viết từ góc người học mới hoàn toàn. Trọng tâm: giúp họ tự trả lời được
 > "việc này nên hỏi thẳng, tạo agent, hay gọi subagent". Nhiều ví dụ với file có sẵn, prompt chi tiết.
@@ -6,7 +6,7 @@
 
 ## Thông tin buổi
 - **Buổi:** 04 / 6
-- **Khái niệm chính:** MCP tạo slide, lập agent và cơ chế hoạt động, cách tính token, subagent
+- **Khái niệm chính:** MCP tạo slide, lập agent và cơ chế hoạt động, cửa sổ ngữ cảnh (context window), subagent
 - **Bối cảnh:** công việc phòng Nhân sự
 - **Thời lượng:** 150 phút
 
@@ -77,8 +77,8 @@ Thư mục `demo/buoi-04/phong-nhan-su/`:
 | K1 | 00:12-00:40 | MCP tạo slide |
 | K2 | 00:40-01:15 | Lập agent, cơ chế hoạt động, ngân hàng ví dụ agent |
 | Nghỉ | 01:15-01:25 | |
-| K3 | 01:25-01:48 | Cách tính token |
-| K4 | 01:48-02:20 | Subagent, cách làm việc, ngân hàng ví dụ subagent |
+| K3 | 01:25-01:50 | Cửa sổ ngữ cảnh và cửa sổ của từng loại agent |
+| K4 | 01:50-02:20 | Subagent, cách làm việc, ngân hàng ví dụ subagent |
 | K5 | 02:20-02:30 | Chốt, bảng so sánh agent vs subagent |
 
 Mốc cứng: K2 xong trước 01:15, K4 xong trước 02:20. K2 và K4 không cắt.
@@ -222,31 +222,52 @@ Mốc cứng phút 75: dán tên agent vào chat Zoom.
 
 ---
 
-## K3: Cách tính token (23 phút)
+## K3: Cửa sổ ngữ cảnh và cửa sổ của từng loại agent (25 phút)
 
-**Ẩn dụ:** token là đồng hồ taxi. Mỗi chữ đọc vào và viết ra đều tính tiền.
+**Ẩn dụ:** cửa sổ ngữ cảnh là cái BÀN LÀM VIỆC của agent trong một phiên. Bàn có giới hạn chỗ. Mọi thứ agent đang cần nhớ đều để trên bàn: cuộc trò chuyện, CLAUDE.md, các file đã mở, kết quả đã viết. Bàn đầy thì phải dẹp bớt giấy cũ.
 
-### Token là gì (7 phút)
-- Đơn vị đo lượng chữ agent xử lý. Áng chừng: 4 ký tự tiếng Anh khoảng 1 token. Tiếng Việt có dấu tốn hơn, cùng nội dung khoảng 1,5 tới 2 lần.
-- Tính cả hai chiều: chữ đọc vào và chữ viết ra đều tốn. Nối lại cơ chế K2: bước 2 đọc bối cảnh tốn đầu vào, bước 4 trả kết quả tốn đầu ra.
-- Mỗi phiên giới hạn khoảng 200 nghìn token. Gần đầy thì Claude nén lịch sử cũ, có thể quên đoạn đầu.
+### Phần 1: Cửa sổ ngữ cảnh là gì (7 phút)
+- Là vùng nhớ tạm của agent trong một phiên, đo bằng token. Một token khoảng 4 ký tự tiếng Anh. Tiếng Việt có dấu tốn hơn, cùng nội dung khoảng 1,5 tới 2 lần.
+- Sức chứa khoảng 200 nghìn token một phiên. Mọi thứ đọc vào và viết ra đều chiếm chỗ trên bàn. Nối lại cơ chế K2: bước 2 đọc bối cảnh và bước 4 trả kết quả đều lấp bàn.
+- **Bàn đầy thì sao:** agent dẹp bớt phần cũ nhất (gọi là nén lại), nên có thể quên đoạn đầu cuộc trò chuyện. Đây là lý do một phiên kéo quá dài thì agent hay quên thứ mình dặn lúc đầu.
 
-### Xem đã dùng bao nhiêu (5 phút)
-GV demo lệnh (tên có thể khác theo phiên bản, đã kiểm trước): `/context` xem phiên chứa gì; `/cost` tổng đã dùng; `/compact` nén cho nhẹ.
+### Phần 2: Cửa sổ ngữ cảnh của từng loại tính thế nào (9 phút, đây là phần chính)
 
-### Bốn cách tiết kiệm (4 phút)
-1. Giữ CLAUDE.md ngắn (đọc lại mỗi phiên).
-2. Đừng nạp file không cần.
-3. **Giao việc nặng cho subagent** (cầu nối sang K4).
+Điểm mấu chốt người mới cần thấy: **mỗi agent có một bàn làm việc RIÊNG.**
+
+| Loại | Ngồi bàn nào | Cái gì chất lên bàn đó |
+|---|---|---|
+| **Agent chính** (bạn đang chat) | Bàn chính của phiên | Cả cuộc trò chuyện, CLAUDE.md, mọi file bạn mở, mọi skill nạp, mọi kết quả |
+| **Skill** khi được nạp | KHÔNG có bàn riêng, đặt thêm lên bàn chính | Nội dung skill cộng thêm vào bàn chính, nên tốn chỗ của phiên chính |
+| **Subagent** (gọi tạm) | Bàn RIÊNG, tách hẳn | File nó đọc chất lên bàn riêng. Xong việc, bàn đó bỏ đi, chỉ một tờ tóm tắt chuyển về bàn chính |
+| **Agent chuyên trách** (khi được giao việc) | Bàn RIÊNG khi chạy | Giống subagent: đọc và làm trên bàn riêng của nó, chỉ kết quả cuối về bàn chính |
+
+**Vì sao điều này quan trọng (nói chậm, đây là cái đắt giá nhất buổi):**
+- Nhờ agent chính đọc thẳng 20 CV, cả 20 CV chất lên BÀN CHÍNH, chiếm gần hết chỗ, phiên mau đầy và mau quên.
+- Giao cho subagent đọc 20 CV, chúng chất lên BÀN RIÊNG của nó. Bàn chính chỉ nhận về một tờ tóm tắt, vẫn rộng rãi.
+- Đó là toàn bộ lý do subagent giúp giữ cửa sổ ngữ cảnh chính gọn. Không phải nó đọc nhanh hơn, mà nó đọc ở bàn khác.
+
+**Khác biệt với skill (nối lại Buổi 2):** skill nạp thẳng vào bàn chính nên tốn chỗ phiên chính, còn subagent mượn một bàn khác nên không tốn chỗ phiên chính. Cùng là "làm thêm việc" nhưng ngồi bàn khác nhau.
+
+### Phần 3: Xem bàn đầy chưa và cách dọn (4 phút)
+GV demo lệnh (tên có thể khác theo phiên bản, đã kiểm trước):
+- `/context` : xem trên bàn đang có gì, phần nào chiếm nhiều chỗ.
+- `/compact` : dồn gọn phần cũ cho nhẹ bàn.
+- Mở phiên mới : dọn sạch bàn, bắt đầu lại.
+
+Bốn cách giữ bàn chính gọn:
+1. Giữ CLAUDE.md ngắn, vì nó luôn nằm trên bàn.
+2. Đừng mở file không cần.
+3. **Giao việc đọc nặng cho subagent**, để nó chất lên bàn riêng (cầu nối sang K4).
 4. Việc dài thì `/compact` hoặc mở phiên mới.
 
-### Hoạt động (7 phút)
+### Phần 4: Hoạt động (5 phút)
 **PROMPT K3-1:**
 ```
-1. Ước lượng đoạn văn tiếng Việt 100 chữ này tốn khoảng bao nhiêu token: [dán đoạn của bạn].
-2. Dịch sang tiếng Anh, ước lượng lại, so sánh.
-3. Ước lượng CLAUDE.md của tôi tốn bao nhiêu token mỗi phiên, gợi ý một chỗ rút gọn.
+Xem giúp tôi cửa sổ ngữ cảnh của phiên này đang chứa những gì, phần nào chiếm nhiều chỗ nhất, và gợi ý một thứ tôi có thể bỏ bớt cho nhẹ phiên.
 ```
+Nếu bản không có lệnh xem, cho agent ước lượng.
+Kết quả rút ra: thấy CLAUDE.md và các file đã mở chiếm chỗ; hiểu vì sao phải giữ gọn và vì sao việc nặng nên đẩy sang subagent.
 > Nói rõ: con số token là ước lượng để hiểu cơ chế, không phải hóa đơn.
 
 ---
@@ -254,10 +275,10 @@ GV demo lệnh (tên có thể khác theo phiên bản, đã kiểm trước): `
 ## K4: Subagent và cách làm việc với subagent (32 phút)
 
 ### Phần 1: Người mới cần hiểu subagent qua đúng một hình ảnh (7 phút)
-- Nối từ K3: cách tiết kiệm token số 3 là subagent. Việc đọc nhiều mà chỉ cần tóm tắt thì giao nó.
+- Nối thẳng từ K3: subagent chính là cái "bàn riêng" vừa học. Việc đọc nhiều mà chỉ cần tóm tắt thì giao nó, để nó chất giấy lên bàn của nó, không lấp bàn chính của bạn.
 - **Subagent là trợ lý gọi tạm.** Ba điều:
-  1. Nó ngồi phòng riêng, đọc nhiều cỡ nào cũng không làm bừa bộn phiên chính của bạn.
-  2. Nó chỉ nộp lại bản tóm tắt, không đổ nguyên nội dung, nên phiên chính đỡ tốn token.
+  1. Nó ngồi bàn riêng (cửa sổ ngữ cảnh riêng), đọc nhiều cỡ nào cũng không lấp đầy cửa sổ chính của bạn.
+  2. Nó chỉ nộp lại bản tóm tắt, không đổ nguyên nội dung, nên cửa sổ chính vẫn rộng.
   3. Nó không nói chuyện với subagent khác, chỉ báo về bạn.
 - **Không cần cài gì**, chỉ nói "dùng một subagent để...".
 
@@ -278,7 +299,7 @@ tên ứng viên, vị trí ứng tuyển, điểm mạnh nhất, một điểm 
 Chỉ trả bảng, không đổ nguyên nội dung từng hồ sơ.
 ```
 Kết quả mong đợi: bảng tóm tắt 5 ứng viên. GV chỉ ra: Claude báo đang dùng subagent; chỉ bảng về tới phiên chính; nội dung 5 CV nằm ở phòng riêng nên phiên chính vẫn gọn.
-**So sánh cho lớp thấy:** nếu bảo đọc thẳng 5 CV thì phiên chính ngốn nguyên nội dung 5 file, tốn token hơn nhiều.
+**So sánh cho lớp thấy:** nếu bảo đọc thẳng 5 CV thì nội dung 5 file chất lên bàn chính, lấp gần hết cửa sổ ngữ cảnh của phiên. Giao subagent thì 5 file nằm ở bàn riêng, bàn chính chỉ nhận cái bảng.
 
 ### Phần 4: Ngân hàng ví dụ subagent (nhiều ca với file có sẵn)
 
@@ -326,13 +347,14 @@ Mốc cứng phút 118: dán bản tóm tắt subagent trả về vào chat Zoom
 | Là gì | Nhân viên chính thức, có bản mô tả công việc | Trợ lý gọi tạm cho một việc |
 | Có file định nghĩa không | Có, trong `.claude/agents/` | Không, chỉ nói miệng |
 | Dùng lại nhiều lần không | Có, gọi bằng tên | Không, xong việc là thôi |
+| Cửa sổ ngữ cảnh | Chạy ở bàn riêng khi được giao việc, trả kết quả về bàn chính | Chạy ở bàn riêng, trả tóm tắt về bàn chính |
 | Hợp với việc | Lặp lại, có quy tắc riêng | Nặng, đọc nhiều, cần tóm tắt, một lần |
 | Ví dụ | agent-onboarding lo đón nhân viên mới | đọc 20 CV chọn 5 người |
 
 **Bốn ý cần nhớ:**
 1. Sơ đồ 2 câu hỏi: lặp lại thì nuôi agent, việc nặng một lần thì gọi subagent, còn lại hỏi thẳng.
 2. Agent chạy qua 4 bước: nhận việc, đọc bối cảnh, dùng công cụ, trả kết quả. Tạo xong phải mở phiên mới.
-3. Token là đồng hồ taxi: đọc và ghi đều tốn, tiếng Việt tốn hơn.
+3. Cửa sổ ngữ cảnh là cái bàn làm việc có giới hạn chỗ. Mỗi agent có bàn riêng, nên subagent đọc nặng ở bàn nó, bàn chính vẫn gọn.
 4. Giao việc cho subagent phải nói đủ: đọc ở đâu, làm gì, trả về dạng gì.
 
 **Bài về nhà:**
@@ -357,7 +379,7 @@ Mốc cứng phút 118: dán bản tóm tắt subagent trả về vào chat Zoom
 | K2-2 | Gọi agent-onboarding (phiên mới) | K2 | Checklist + email + lịch |
 | A | Gọi agent-tuyen-dung chấm CV | K2 | Xếp hạng ứng viên |
 | B | Gọi agent-dao-tao soạn dàn ý | K2 | Dàn ý đào tạo từ nội quy |
-| K3-1 | Ước lượng token Việt vs Anh | K3 | Thấy Việt tốn hơn |
+| K3-1 | Xem cửa sổ ngữ cảnh phiên chứa gì, gợi ý bỏ bớt | K3 | Thấy file đã mở chiếm chỗ, hiểu phải giữ gọn |
 | K4-1 | Subagent đọc thư mục ứng viên | K4 | Bảng tóm tắt, phiên gọn |
 | VD1 | Subagent chọn 2 người từ 5 CV | K4 | Kết quả chọn + rủi ro |
 | VD2 | Subagent tìm hợp đồng sắp hết hạn | K4 | Danh sách theo hạn |
@@ -380,13 +402,14 @@ Mốc cứng phút 118: dán bản tóm tắt subagent trả về vào chat Zoom
 ## Ba câu kiểm hiểu cuối buổi
 1. "Việc lặp lại thì dùng agent hay subagent? Việc đọc 20 file một lần thì dùng cái nào?"
 2. "Kể 4 bước một agent chạy khi nhận việc."
-3. "Giao việc cho subagent phải nói đủ ba thứ nào?" (đọc ở đâu, làm gì, trả về dạng gì)
+3. "Vì sao giao việc nặng cho subagent lại giữ cửa sổ ngữ cảnh chính gọn?" (vì subagent đọc ở bàn riêng của nó, bàn chính chỉ nhận bản tóm tắt)
 
 ## Tiêu chí hoàn thành buổi
 - [ ] Tự phân loại được một việc thật của mình theo sơ đồ 2 câu hỏi
 - [ ] Tạo được 1 ảnh slide nhân sự bằng MCP
 - [ ] Lập được 1 agent, mở phiên mới gọi chạy được
 - [ ] Nói lại được 4 bước cơ chế của agent
+- [ ] Giải thích được mỗi agent có cửa sổ ngữ cảnh riêng, và vì sao subagent giữ cửa sổ chính gọn
 - [ ] Giao được subagent đọc một nhóm file và nhận về bản tóm tắt đúng ý
 
 ---
