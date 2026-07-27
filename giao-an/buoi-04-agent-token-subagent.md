@@ -1,158 +1,167 @@
-# Giáo án Buổi 04: MCP tạo slide, lập agent và cơ chế hoạt động, cách tính token, subagent
+# Outline Buổi 04 (viết cho người học mới): MCP tạo slide, agent, token, subagent
 
-> Lối dạy: nỗi đau trước, khái niệm sau, demo rồi cho làm ngay. Mỗi phân đoạn có prompt sẵn.
-> Agent team KHÔNG dạy hôm nay, để sang Buổi 5.
+> Outline này viết từ góc người học mới hoàn toàn. Trọng tâm: giúp họ tự trả lời được
+> "việc này nên hỏi thẳng, tạo agent, hay gọi subagent". Nhiều ví dụ với file có sẵn, prompt chi tiết.
+> Agent team KHÔNG dạy hôm nay, để Buổi 5.
 
 ## Thông tin buổi
 - **Buổi:** 04 / 6
-- **Khái niệm chính:** MCP tạo slide, lập 1 agent và cơ chế hoạt động của agent, cách tính token, subagent
-- **Bối cảnh áp dụng:** công việc phòng Nhân sự (đón nhân viên mới, đào tạo nội quy)
+- **Khái niệm chính:** MCP tạo slide, lập agent và cơ chế hoạt động, cách tính token, subagent
+- **Bối cảnh:** công việc phòng Nhân sự
 - **Thời lượng:** 150 phút
-
-## Vì sao xếp buổi theo thứ tự này
-Bốn phần nối liền nhau thành một mạch, không rời rạc:
-1. **MCP tạo slide** mở màn nhẹ, ra sản phẩm nhìn thấy ngay, hâm nóng lại khái niệm MCP của Buổi 3.
-2. **Lập agent và cơ chế hoạt động** là lõi: agent làm việc bằng cách đọc bối cảnh, dùng công cụ, rồi trả kết quả.
-3. **Cách tính token**: chính việc đọc và ghi ở phần 2 là cái tốn token. Hiểu token để dùng tiết kiệm.
-4. **Subagent**: cách giao việc nặng mà không đốt token của phiên chính. Đây là lời giải cho phần 3.
-
-## Học xong làm được gì
-1. Dùng MCP được cấp để sinh ảnh slide cho một chủ đề nhân sự.
-2. Lập được 1 agent chuyên trách và nói được agent hoạt động qua mấy bước.
-3. Hiểu token là gì, biết cách xem đã dùng bao nhiêu và 4 cách tiết kiệm.
-4. Giao được việc nặng cho subagent để giữ phiên chính gọn và đỡ tốn token.
-
-## Bối cảnh demo dùng xuyên suốt
-Tình huống phòng Nhân sự: đón một nhân viên mới và làm slide đào tạo nội quy.
-Thư mục demo đề xuất `demo/buoi-04/phong-nhan-su/`:
-- `01-ung-vien/` : 4 tới 5 hồ sơ ứng viên rút gọn (.md), dùng cho phần subagent
-- `02-nhan-vien-moi/` : thông tin nhân viên sắp vào làm
-- `03-noi-quy/` : nội quy công ty, quy trình onboarding
-- `04-slide/` : nơi lưu ảnh slide
-- `CLAUDE.md` : hồ sơ phòng Nhân sự (nối tiếp Buổi 3)
-
-> Bộ file demo này chưa có, sẽ tạo khi anh duyệt giáo án.
 
 ---
 
-## Chuẩn bị của giảng viên
+## PHẦN NỀN: người học mới cần gỡ đúng một nút thắt
 
-### Bắt buộc kiểm, phần dễ chết nhất
-- [ ] **Cài sẵn MCP tạo slide trên máy lớp hoặc phát cấu hình sẵn.** KHÔNG để học viên tự cài trong lớp (git clone, uv, đăng nhập OAuth quá kỹ thuật). Xem "Ghi chú cài MCP" cuối bài
-- [ ] Chạy `login_status` xác nhận còn đăng nhập và còn quota
-- [ ] Sinh thử 1 ảnh slide nhân sự, xem chữ tiếng Việt đúng dấu không
-- [ ] Lập thử 1 agent trong `.claude/agents/`, mở phiên mới gọi lại xem có nạp không
-- [ ] Test lệnh xem token trên bản Claude Desktop lớp dùng (`/context`, `/cost`, `/compact`), ghi lại tên lệnh đúng vì có thể khác theo phiên bản
-- [ ] Chuẩn bị bộ file demo phòng Nhân sự
+Là người mới, sau ba buổi họ đã nghe: chat thường, skill, agent, MCP. Giờ thêm subagent. Họ rối vì **nhìn cái nào cũng na ná nhau**. Nút thắt duy nhất cần gỡ tối nay: **việc trước mặt thì nên dùng cái nào?**
 
-### Thường lệ
-- [ ] Mở sẵn Claude Code trong thư mục dự án
-- [ ] Gửi Zalo lớp: bảng prompt in sẵn, nhắc mở đúng thư mục
+### Bốn cách nhờ Claude, và chọn cái nào
+
+| Cách | Dùng khi | Ví dụ một câu |
+|---|---|---|
+| **Hỏi thẳng** | Việc làm một lần, đơn giản | "Tóm tắt giúp tôi CV của anh Nam" |
+| **Skill** (đã học Buổi 2) | Một quy trình lặp lại, mình vẫn là người bấm nút | Mỗi tuần soạn email chào hàng theo đúng mẫu |
+| **Agent chuyên trách** | Muốn giao hẳn một vai, có quy tắc riêng, dùng lại nhiều lần | agent-onboarding lo trọn việc đón nhân viên mới |
+| **Subagent** | Việc nặng, đọc nhiều file, chỉ cần bản tóm tắt, làm một lần | Đọc 20 CV chọn ra 5 người |
+
+### Sơ đồ 2 câu hỏi để tự quyết (chiếu lên bảng, học viên thuộc lòng)
+
+```
+Việc trước mặt của bạn...
+
+CÂU 1: Việc này bạn có làm đi làm lại nhiều lần, cùng một cách không?
+   CÓ  ->  Tạo AGENT chuyên trách (giao hẳn một vai)
+   KHÔNG ->  sang Câu 2
+
+CÂU 2: Việc này có phải đọc nhiều file, việc nặng, mà bạn chỉ cần bản tóm tắt không?
+   CÓ  ->  Gọi SUBAGENT (trợ lý đọc giúp rồi tóm tắt)
+   KHÔNG ->  HỎI THẲNG (làm luôn cho nhanh)
+```
+
+### Bảng quyết định, nhiều tình huống thật (file đã có sẵn trong máy)
+
+| Tình huống | Nên dùng | Vì sao |
+|---|---|---|
+| Tóm tắt riêng 1 CV của anh Nam | Hỏi thẳng | Một file, một lần |
+| Đọc 20 CV, chọn 5 người hợp vị trí Sale | Subagent | Nặng, nhiều file, chỉ cần bảng tóm tắt, làm một lần |
+| Mỗi lần có nhân viên mới, soạn checklist đón + email + lịch | Agent | Lặp lại, giao hẳn một vai |
+| Soạn một email trả lời khách hôm nay | Hỏi thẳng | Một lần, đơn giản |
+| Quét cả thư mục hợp đồng, tìm cái sắp hết hạn | Subagent | Nặng, đọc nhiều, một lần |
+| Mỗi đợt tuyển, sàng lọc CV theo đúng bộ tiêu chí | Agent | Lặp lại, có quy tắc cố định |
+| Đọc 30 biên bản họp quý, rút ra các quyết định | Subagent | Nặng, một lần |
+| Mỗi tuần soạn báo cáo tuần theo mẫu | Agent hoặc Skill | Lặp lại |
+
+**Câu chốt cho lớp:** "Lặp lại thì nuôi một nhân viên riêng, đó là agent. Việc nặng đọc một lần thì thuê trợ lý đọc giúp, đó là subagent."
+
+---
+
+## Bối cảnh demo, file đã chuẩn bị sẵn
+
+Thư mục `demo/buoi-04/phong-nhan-su/`:
+- `01-ung-vien/` : 5 CV rút gọn: `cv-nguyen-van-nam.md`, `cv-tran-thi-hoa.md`, `cv-le-van-hung.md`, `cv-pham-thi-lan.md`, `cv-do-van-minh.md`
+- `02-nhan-vien-moi/` : `nhan-vien-moi-hoa.md` (chị Hoa, vào làm vị trí Sale)
+- `03-noi-quy/` : `noi-quy-cong-ty.md`, `quy-trinh-onboarding.md`
+- `04-slide/` : nơi lưu ảnh slide
+- `CLAUDE.md` : hồ sơ phòng Nhân sự
+
+> Bộ file demo này chưa có, sẽ tạo khi anh duyệt outline.
 
 ---
 
 ## Timeline
 
-| Khối | Phút | Nội dung | Kiểu |
-|---|---|---|---|
-| K0 | 00:00-00:10 | Mở đầu, recap Buổi 3, nêu nỗi đau | Demo + hỏi lớp |
-| K1 | 00:10-00:40 | MCP tạo slide | Demo + thực hành |
-| K2 | 00:40-01:15 | Lập 1 agent và cơ chế hoạt động | Lý thuyết + demo + thực hành |
-| Nghỉ | 01:15-01:25 | Giải lao | |
-| K3 | 01:25-01:50 | Cách tính token | Lý thuyết + hoạt động |
-| K4 | 01:50-02:20 | Subagent và cách làm việc với subagent | Lý thuyết + demo + thực hành |
-| K5 | 02:20-02:30 | Chốt, giao bài, xem trước Buổi 5 | |
+| Khối | Phút | Nội dung |
+|---|---|---|
+| K0 | 00:00-00:12 | Mở đầu + sơ đồ 2 câu hỏi "dùng cái nào" |
+| K1 | 00:12-00:40 | MCP tạo slide |
+| K2 | 00:40-01:15 | Lập agent, cơ chế hoạt động, ngân hàng ví dụ agent |
+| Nghỉ | 01:15-01:25 | |
+| K3 | 01:25-01:48 | Cách tính token |
+| K4 | 01:48-02:20 | Subagent, cách làm việc, ngân hàng ví dụ subagent |
+| K5 | 02:20-02:30 | Chốt, bảng so sánh agent vs subagent |
 
-Mốc cứng: K1 xong trước 00:40, K2 xong trước 01:15. K2 và K4 không cắt.
+Mốc cứng: K2 xong trước 01:15, K4 xong trước 02:20. K2 và K4 không cắt.
 
 ---
 
-## K0: Mở đầu (10 phút)
+## K0: Mở đầu (12 phút)
 
-**Nỗi đau mở màn:** "Ai từng ngồi cả buổi làm slide đào tạo, rồi lại đọc cả chục hồ sơ ứng viên tới hoa mắt? Tối nay mình để AI làm phần nặng đó, và hiểu rõ nó làm việc thế nào, tốn kém ra sao."
+**Nỗi đau mở màn:** "Ba buổi rồi cả lớp nghe chat, skill, agent, MCP, giờ thêm subagent. Ai thấy rối chưa biết lúc nào dùng cái nào thì giơ tay. Tối nay tôi gỡ đúng nút đó, và cho anh chị một sơ đồ hai câu hỏi là tự quyết được."
 
-- Recap Buổi 3 nhanh, 2 câu: CLAUDE.md để làm gì; agent đọc file trên máy có cần MCP không (không).
-- Nêu bản đồ tối nay: tạo slide bằng MCP, lập agent, hiểu token, dùng subagent.
-- **Việc giao lớp gõ ngay (2 phút):**
-
-**PROMPT K0:**
+- Chiếu bảng "Bốn cách nhờ Claude" và sơ đồ 2 câu hỏi ở phần nền.
+- Đưa 3 tình huống, cho lớp giơ tay chọn hỏi thẳng / agent / subagent. Sửa tại chỗ.
+- **PROMPT K0 (giao lớp gõ):**
 ```
 Bạn đang mở thư mục nào, trong đây có những file gì? Trả lời ngắn gọn.
 ```
 
 ---
 
-## K1: MCP tạo slide (30 phút)
+## K1: MCP tạo slide (28 phút)
 
-**Ẩn dụ:** MCP tạo slide giống thuê một họa sĩ. Anh chị tả nội dung một trang, họa sĩ vẽ ra ảnh trang đó.
+**Ẩn dụ:** MCP tạo slide giống thuê họa sĩ. Tả một trang, nó vẽ ra ảnh trang đó.
 
-### Phần 1: Khái niệm (4 phút)
-- MCP này sinh ẢNH. Làm slide nghĩa là mỗi trang là một ảnh: tả trọn một trang, nó vẽ ra ảnh trang đó, rồi ghép nhiều ảnh thành bộ.
-- Nhắc lại từ Buổi 3: MCP là cổng nối ra công cụ ngoài. Buổi 3 nối Drive và Gmail, tối nay nối công cụ vẽ ảnh.
-
-### Phần 2: Kiểm công cụ sẵn sàng (2 phút)
+### Kiểm công cụ (2 phút)
 **PROMPT K1-1:**
 ```
 Kiểm tra giúp tôi công cụ tạo ảnh đã đăng nhập chưa và còn dùng được không.
 ```
-Kết quả mong đợi: báo đã đăng nhập, còn quota.
 
-### Phần 3: Demo GV (7 phút)
-
-**PROMPT K1-2 (slide bìa, bản GV chạy ngay):**
+### Demo GV (7 phút)
+**PROMPT K1-2 (slide bìa):**
 ```
 Tạo cho tôi một ảnh slide bìa, tỷ lệ 16:9, nền trắng, phong cách công sở trang trọng.
 Tiêu đề lớn: NỘI QUY CÔNG TY. Dòng phụ: Buổi đào tạo nhân viên mới. Góc dưới: Phòng Nhân sự.
-Chữ tiếng Việt có dấu đầy đủ, bố cục gọn, không dùng emoji.
+Chữ tiếng Việt có dấu đầy đủ, không dùng emoji.
 ```
-Kết quả mong đợi: một ảnh slide bìa, chữ tiếng Việt đúng dấu.
-
-**PROMPT K1-3 (slide nội dung lấy từ file thật):**
+**PROMPT K1-3 (slide lấy nội dung từ file có sẵn):**
 ```
-Đọc file 03-noi-quy/noi-quy-cong-ty.md, lấy 4 quy định quan trọng nhất, tạo một ảnh slide 16:9 nền trắng liệt kê 4 quy định đó dạng gạch đầu dòng, tiêu đề "4 điều nhân viên mới cần nhớ". Chữ tiếng Việt có dấu.
+Đọc file 03-noi-quy/noi-quy-cong-ty.md, lấy 4 quy định quan trọng nhất, tạo một ảnh slide 16:9
+nền trắng liệt kê 4 quy định đó dạng gạch đầu dòng, tiêu đề "4 điều nhân viên mới cần nhớ".
+Chữ tiếng Việt có dấu.
 ```
-Kết quả mong đợi: ảnh slide đúng 4 quy định lấy từ file, không bịa thêm.
+Kết quả mong đợi: ảnh slide đúng 4 quy định lấy từ file, không bịa.
 
-### Phần 4: Thực hành (17 phút)
-Mỗi học viên tạo 2 tới 3 ảnh slide cho một chủ đề nhân sự của mình.
-
-**PROMPT K1-4 (bản học viên tự điền):**
+### Thực hành (17 phút)
+**PROMPT K1-4 (bản học viên):**
 ```
 Tạo ảnh slide 16:9 nền trắng, phong cách công sở, chủ đề [chủ đề của bạn].
 Tiêu đề: [tiêu đề]. Nội dung: [3 tới 4 ý chính]. Chữ tiếng Việt có dấu, không emoji.
 ```
-*Gợi ý điền: chủ đề như quy trình nghỉ phép, giới thiệu phúc lợi, các bước onboarding.*
-
-Mốc cứng phút 40: mỗi người dán 1 ảnh slide vào chat Zoom.
-
-**Ghi chú an toàn:** ảnh có thể sai chính tả hoặc thừa chữ. Luôn đọc lại trước khi đưa vào bộ slide thật. Chữ trong ảnh sai thì sinh lại với prompt rõ hơn, không sửa tay được.
+Mốc cứng phút 40: dán 1 ảnh slide vào chat Zoom.
+**An toàn:** chữ trong ảnh sai thì sinh lại với prompt rõ hơn, không sửa tay được.
 
 ---
 
-## K2: Lập 1 agent và cơ chế hoạt động (35 phút)
+## K2: Lập agent và cơ chế hoạt động (35 phút)
 
-**Ẩn dụ:** agent chuyên trách là một nhân viên chính thức có bản mô tả công việc riêng, làm mãi một loại việc. Khác với anh chị nhờ Claude làm lặt vặt, đây là giao hẳn một vai.
+### Phần 1: Cơ chế hoạt động, người mới phải thấy agent không phải hộp đen (8 phút)
 
-### Phần 1: Cơ chế hoạt động của một agent (10 phút)
-Đây là phần lý thuyết quan trọng nhất buổi. Vẽ lên bảng 4 bước một agent chạy khi được giao việc:
+Vẽ lên bảng 4 bước một agent chạy khi nhận việc:
 
 ```
-1. NHẬN VIỆC        Anh chị giao một yêu cầu.
-2. ĐỌC BỐI CẢNH     Agent đọc: CLAUDE.md (biết bạn là ai), file liên quan,
-                    skill phù hợp nếu có. Đây là lúc nó nạp thông tin.
-3. SUY NGHĨ + DÙNG   Agent nghĩ cách làm, dùng công cụ được cấp (đọc file,
-   CÔNG CỤ          ghi file, tra web, gọi MCP) để làm từng bước.
-4. TRẢ KẾT QUẢ      Agent viết ra kết quả cho anh chị.
+1. NHẬN VIỆC       Bạn giao một yêu cầu.
+2. ĐỌC BỐI CẢNH    Agent đọc CLAUDE.md (biết bạn là ai), đọc các file bạn chỉ,
+                   nạp skill phù hợp nếu có.
+3. DÙNG CÔNG CỤ    Agent dùng công cụ được cấp (đọc file, ghi file, tra web, gọi MCP)
+                   làm từng bước.
+4. TRẢ KẾT QUẢ     Agent viết ra kết quả cho bạn.
 ```
 
-- Nhấn: agent không phải hộp đen. Nó luôn đi qua đúng 4 bước này. Hiểu vậy thì biết vì sao CLAUDE.md quan trọng (bước 2), vì sao tools quan trọng (bước 3).
-- Nhấn: mỗi lần đọc ở bước 2 và viết ở bước 4 đều tốn token. Đây là cầu nối sang K3.
-- **Ba dòng khai báo của một agent:** name (tên gọi), description (quyết định khi nào tự được gọi), tools (giới hạn công cụ cho an toàn).
+- Người mới cần thấy: agent luôn đi qua đúng 4 bước này. Vì thế CLAUDE.md quan trọng (bước 2), tools quan trọng (bước 3).
+- Mỗi lần đọc ở bước 2 và viết ở bước 4 đều tốn token (nối sang K3).
 
-**Câu hỏi tương tác:** "Theo cả lớp, nếu một agent viết báo cáo thì ở bước 2 nó cần đọc gì, bước 3 cần công cụ gì?"
+### Phần 2: Người mới hỏi "tạo agent xong thì dùng thế nào?" (nói kỹ, đây là chỗ hay khựng)
 
-### Phần 2: Demo GV lập agent onboarding (8 phút)
-**PROMPT K2-1:**
+Ba việc, đúng thứ tự:
+1. **Tạo file agent một lần** trong `.claude/agents/`. Đây là lúc viết bản mô tả công việc.
+2. **Mở phiên mới** thì Claude mới nạp agent vừa tạo. Không mở phiên mới là gọi không ra.
+3. **Gọi việc bằng tên**: "nhờ agent-onboarding làm...". Agent tự đọc file theo mô tả trong phần thân, mình không phải chỉ lại từng file.
+
+### Phần 3: Demo GV lập agent-onboarding (7 phút)
+
+**PROMPT K2-1 (tạo agent):**
 ```
 Tạo file .claude/agents/agent-onboarding.md, một agent chuyên chuẩn bị đón nhân viên mới.
 - name: agent-onboarding
@@ -161,28 +170,51 @@ Tạo file .claude/agents/agent-onboarding.md, một agent chuyên chuẩn bị 
 - Phần thân: đọc thông tin nhân viên mới trong 02-nhan-vien-moi và nội quy trong 03-noi-quy. Soạn checklist đón, email chào mừng văn phong công sở không emoji, và lịch tuần đầu. Chỉ dùng thông tin có thật, thiếu thì ghi [đợi bổ sung], không dừng lại hỏi.
 Tạo xong in lại nội dung file.
 ```
-Kết quả mong đợi: file agent đúng cấu trúc, 3 dòng khai báo rõ.
 
-**Bước bắt buộc sau khi tạo (ghi đỏ):** mở phiên mới rồi mới gọi agent, không thì Claude chưa nạp.
-**PROMPT K2-2 (giao việc, chạy ở phiên mới):**
+**PROMPT K2-2 (mở phiên mới rồi gọi):**
 ```
 Nhờ agent-onboarding chuẩn bị gói đón nhân viên mới theo thông tin trong 02-nhan-vien-moi.
 ```
-Kết quả mong đợi: agent trả về checklist, email chào mừng không emoji, lịch tuần đầu. GV chỉ cho lớp thấy đây chính là 4 bước cơ chế vừa học.
+Kết quả mong đợi: agent đọc file chị Hoa và nội quy, trả về checklist đón, email chào mừng chị Hoa không emoji, lịch tuần đầu. GV chỉ ra từng bước khớp cơ chế 4 bước.
 
-### Phần 3: Thực hành (17 phút)
-Mỗi học viên lập 1 agent cho việc nhân sự của mình. Gợi ý: agent-tuyen-dung (tóm tắt hồ sơ ứng viên), agent-dao-tao (soạn dàn ý đào tạo).
+### Phần 4: Ngân hàng ví dụ agent (người mới xem để bắt chước cho nghề mình)
 
-**PROMPT K2-3 (bản học viên tự điền):**
+Ba agent nhân sự, mỗi cái kèm mô tả và một prompt gọi khi file đã có:
+
+**Ví dụ A: agent-tuyen-dung** (dùng mỗi đợt tuyển)
+- Mô tả: sàng lọc và chấm CV theo bộ tiêu chí cố định của công ty.
+- Prompt gọi khi đã có file:
+```
+Nhờ agent-tuyen-dung chấm toàn bộ CV trong 01-ung-vien theo tiêu chí vị trí Sale, xếp hạng và giải thích ngắn vì sao.
+```
+
+**Ví dụ B: agent-dao-tao** (dùng mỗi lần mở lớp đào tạo)
+- Mô tả: soạn dàn ý buổi đào tạo và nội dung từng slide từ tài liệu nội quy.
+- Prompt gọi:
+```
+Nhờ agent-dao-tao soạn dàn ý buổi đào tạo nội quy 45 phút từ 03-noi-quy, chia thành các phần kèm ý chính mỗi phần.
+```
+
+**Ví dụ C: agent cho các phòng khác** (gợi ý để học viên tự nghĩ)
+| Phòng | Agent | Việc lặp lại nó lo |
+|---|---|---|
+| Kế toán | agent-cong-no | Rà công nợ quá hạn, soạn email nhắc |
+| Kinh doanh | agent-bao-gia | Soạn báo giá theo đúng mẫu và chính sách |
+| Quản lý | agent-bao-cao-tuan | Gom số liệu tuần thành báo cáo |
+| Marketing | agent-noi-dung | Soạn bài theo giọng thương hiệu |
+
+### Phần 5: Thực hành (13 phút)
+Mỗi học viên lập 1 agent cho việc lặp lại của nghề mình, mở phiên mới, gọi thử.
+**PROMPT K2-3 (bản học viên):**
 ```
 Tạo file .claude/agents/[ten-agent].md.
 - name: [ten-agent]
 - description: [chuyên việc gì, dùng khi nào]
 - tools: Read, Write, Grep, Glob
 - Phần thân: [các bước agent làm, quy tắc không bịa, không emoji]
-Tạo xong in lại nội dung file. Sau đó tôi sẽ mở phiên mới để gọi.
+Tạo xong in lại nội dung file. Sau đó tôi mở phiên mới để gọi.
 ```
-Mốc cứng phút 75: mỗi người dán tên agent vừa tạo vào chat Zoom.
+Mốc cứng phút 75: dán tên agent vào chat Zoom.
 
 ---
 
@@ -190,165 +222,179 @@ Mốc cứng phút 75: mỗi người dán tên agent vừa tạo vào chat Zoom
 
 ---
 
-## K3: Cách tính token (25 phút)
+## K3: Cách tính token (23 phút)
 
-**Ẩn dụ:** token giống đồng hồ taxi. Mỗi chữ agent đọc vào và viết ra đều tính tiền. Đi càng xa (đọc càng nhiều, viết càng dài) thì càng tốn.
+**Ẩn dụ:** token là đồng hồ taxi. Mỗi chữ đọc vào và viết ra đều tính tiền.
 
-### Phần 1: Token là gì và tính thế nào (8 phút)
-- **Token là đơn vị đo lượng chữ** agent xử lý. Nhớ mức áng chừng: khoảng 4 ký tự tiếng Anh là 1 token. Tiếng Việt có dấu tốn hơn, cùng một nội dung tốn khoảng 1,5 tới 2 lần tiếng Anh.
-- **Tính cả hai chiều:** chữ đọc vào (input) và chữ viết ra (output) đều tốn. Nối lại cơ chế K2: bước 2 đọc bối cảnh tốn token đầu vào, bước 4 trả kết quả tốn token đầu ra.
-- **Mỗi phiên có giới hạn**, khoảng 200 nghìn token. Gần đầy thì Claude nén bớt lịch sử cũ, có thể quên đoạn đầu. Đây là lý do việc dài nên tách phiên.
+### Token là gì (7 phút)
+- Đơn vị đo lượng chữ agent xử lý. Áng chừng: 4 ký tự tiếng Anh khoảng 1 token. Tiếng Việt có dấu tốn hơn, cùng nội dung khoảng 1,5 tới 2 lần.
+- Tính cả hai chiều: chữ đọc vào và chữ viết ra đều tốn. Nối lại cơ chế K2: bước 2 đọc bối cảnh tốn đầu vào, bước 4 trả kết quả tốn đầu ra.
+- Mỗi phiên giới hạn khoảng 200 nghìn token. Gần đầy thì Claude nén lịch sử cũ, có thể quên đoạn đầu.
 
-### Phần 2: Xem đã dùng bao nhiêu (5 phút)
-GV demo các lệnh kiểm token trên bản lớp dùng. Tên lệnh có thể khác theo phiên bản, GV đã kiểm trước:
-- `/context` : xem phiên đang chứa những gì, tốn token vào đâu.
-- `/cost` : tổng token và chi phí đã dùng.
-- `/compact` : nén lịch sử cũ lại cho nhẹ phiên.
+### Xem đã dùng bao nhiêu (5 phút)
+GV demo lệnh (tên có thể khác theo phiên bản, đã kiểm trước): `/context` xem phiên chứa gì; `/cost` tổng đã dùng; `/compact` nén cho nhẹ.
 
-### Phần 3: Bốn cách tiết kiệm token (5 phút)
-1. **Giữ CLAUDE.md ngắn.** Nó đọc lại mỗi phiên, dài là tốn mỗi lần.
-2. **Đừng nạp file không cần.** Chỉ mở file liên quan tới việc đang làm.
-3. **Giao việc nặng cho subagent.** Đọc 10 hồ sơ thì để subagent đọc, phiên chính chỉ nhận tóm tắt. Đây là cầu nối sang K4.
-4. **Việc dài thì `/compact` hoặc mở phiên mới.**
+### Bốn cách tiết kiệm (4 phút)
+1. Giữ CLAUDE.md ngắn (đọc lại mỗi phiên).
+2. Đừng nạp file không cần.
+3. **Giao việc nặng cho subagent** (cầu nối sang K4).
+4. Việc dài thì `/compact` hoặc mở phiên mới.
 
-### Phần 4: Hoạt động (7 phút)
+### Hoạt động (7 phút)
 **PROMPT K3-1:**
 ```
-1. Ước lượng đoạn văn tiếng Việt 100 chữ này tốn khoảng bao nhiêu token: [dán một đoạn của bạn].
-2. Dịch sang tiếng Anh rồi ước lượng lại, so sánh hai con số.
-3. Ước lượng file CLAUDE.md hiện tại của tôi tốn bao nhiêu token mỗi phiên, gợi ý một chỗ rút gọn.
+1. Ước lượng đoạn văn tiếng Việt 100 chữ này tốn khoảng bao nhiêu token: [dán đoạn của bạn].
+2. Dịch sang tiếng Anh, ước lượng lại, so sánh.
+3. Ước lượng CLAUDE.md của tôi tốn bao nhiêu token mỗi phiên, gợi ý một chỗ rút gọn.
 ```
-Kết quả rút ra: tiếng Việt tốn hơn, CLAUDE.md nên gọn.
-
-> Ghi chú GV: nói rõ các con số token là ước lượng để hiểu cơ chế, không phải hóa đơn chính xác.
+> Nói rõ: con số token là ước lượng để hiểu cơ chế, không phải hóa đơn.
 
 ---
 
-## K4: Subagent và cách làm việc với subagent (30 phút)
+## K4: Subagent và cách làm việc với subagent (32 phút)
 
-**Ẩn dụ:** subagent là một trợ lý anh chị gọi tới làm một việc nặng rồi về. Nó ngồi phòng riêng, đọc xong chỉ nộp lại bản tóm tắt, không bày hết giấy tờ ra bàn của anh chị.
+### Phần 1: Người mới cần hiểu subagent qua đúng một hình ảnh (7 phút)
+- Nối từ K3: cách tiết kiệm token số 3 là subagent. Việc đọc nhiều mà chỉ cần tóm tắt thì giao nó.
+- **Subagent là trợ lý gọi tạm.** Ba điều:
+  1. Nó ngồi phòng riêng, đọc nhiều cỡ nào cũng không làm bừa bộn phiên chính của bạn.
+  2. Nó chỉ nộp lại bản tóm tắt, không đổ nguyên nội dung, nên phiên chính đỡ tốn token.
+  3. Nó không nói chuyện với subagent khác, chỉ báo về bạn.
+- **Không cần cài gì**, chỉ nói "dùng một subagent để...".
 
-### Phần 1: Khái niệm và khi nào dùng (8 phút)
-- Nối thẳng từ K3: cách tiết kiệm token số 3 chính là subagent. Việc phải đọc nhiều mà anh chị chỉ cần bản tóm tắt thì giao subagent.
-- **Ba điều về subagent:**
-  1. Làm ở phòng riêng, đọc nhiều cỡ nào cũng không làm bừa bộn phiên chính của anh chị.
-  2. Chỉ nộp lại bản tóm tắt, không đổ nguyên nội dung. Nhờ vậy phiên chính đỡ tốn token.
-  3. Các subagent không nói chuyện với nhau, chỉ báo về agent chính.
-- **Không cần cài gì.** Chỉ nói tự nhiên "dùng một subagent để...".
-- **Khi nào nên dùng:** đọc nhiều file, quét cả thư mục lớn, việc nặng mà chỉ cần kết quả gọn. Khi nào không cần: việc nhỏ một hai file thì làm thẳng cho nhanh.
+### Phần 2: Cách làm việc với subagent (nói kỹ, người mới hay làm sai ở đây)
 
-### Phần 2: Demo GV (7 phút)
+Vì subagent ngồi phòng riêng, **nó không nghe chuyện nãy giờ của bạn**. Nên khi giao việc phải nói đủ ba thứ:
+1. **Đọc ở đâu:** ghi rõ tên thư mục hoặc các file.
+2. **Làm gì với chúng:** tóm tắt, so sánh, lọc, xếp hạng.
+3. **Trả về dạng gì và bao nhiêu:** một bảng, hay mấy dòng, và nhấn "chỉ trả tóm tắt, đừng đổ nguyên nội dung".
+
+Thiếu một trong ba thứ này là subagent hay trả sai ý.
+
+### Phần 3: Demo GV (6 phút)
 **PROMPT K4-1:**
 ```
-Dùng một subagent đọc toàn bộ hồ sơ trong thư mục 01-ung-vien, trả về đúng một bảng: tên ứng viên, vị trí ứng tuyển, điểm mạnh nhất, một điểm cần lưu ý. Chỉ trả bảng, không đổ nguyên nội dung từng hồ sơ.
+Dùng một subagent đọc toàn bộ hồ sơ trong thư mục 01-ung-vien, trả về đúng một bảng:
+tên ứng viên, vị trí ứng tuyển, điểm mạnh nhất, một điểm cần lưu ý.
+Chỉ trả bảng, không đổ nguyên nội dung từng hồ sơ.
 ```
-Kết quả mong đợi: một bảng tóm tắt các ứng viên. GV chỉ ra: Claude báo đang dùng subagent; chỉ bảng tóm tắt về tới phiên chính; nội dung đầy đủ nằm ở phòng riêng của subagent nên phiên chính vẫn gọn và đỡ tốn token.
+Kết quả mong đợi: bảng tóm tắt 5 ứng viên. GV chỉ ra: Claude báo đang dùng subagent; chỉ bảng về tới phiên chính; nội dung 5 CV nằm ở phòng riêng nên phiên chính vẫn gọn.
+**So sánh cho lớp thấy:** nếu bảo đọc thẳng 5 CV thì phiên chính ngốn nguyên nội dung 5 file, tốn token hơn nhiều.
 
-**So sánh cho lớp thấy rõ:** nếu không dùng subagent mà bảo đọc thẳng 5 hồ sơ, phiên chính sẽ ngốn toàn bộ nội dung 5 file đó, tốn token hơn nhiều.
+### Phần 4: Ngân hàng ví dụ subagent (nhiều ca với file có sẵn)
 
-### Phần 3: Thực hành (15 phút)
-Học viên giao subagent đọc một nhóm file thật của mình rồi tóm tắt.
-
-**PROMPT K4-2 (bản học viên tự điền):**
+**Ví dụ 1: chọn người từ nhiều CV**
 ```
-Dùng một subagent đọc toàn bộ file trong thư mục [tên thư mục của bạn], trả về đúng [số] dòng tóm tắt những điểm quan trọng nhất. Chỉ trả tóm tắt, không đổ nguyên nội dung.
+Dùng một subagent đọc 5 CV trong 01-ung-vien, chọn ra 2 người hợp nhất vị trí Sale,
+trả về đúng: tên, lý do chọn, một rủi ro. Chỉ trả kết quả chọn, không đổ nội dung CV.
 ```
-*Gợi ý điền: thư mục hồ sơ ứng viên, thư mục biên bản họp, thư mục hợp đồng.*
 
-Mốc cứng phút 118: mỗi người dán bản tóm tắt subagent trả về vào chat Zoom.
+**Ví dụ 2: quét thư mục tìm cái sắp tới hạn**
+```
+Dùng một subagent đọc toàn bộ file trong thư mục 03-hop-dong, liệt kê những hợp đồng
+sắp hết hạn trong 60 ngày tới, mỗi dòng ghi tên hợp đồng và ngày hết hạn. Chỉ trả danh sách.
+```
+
+**Ví dụ 3: rút quyết định từ nhiều biên bản**
+```
+Dùng một subagent đọc tất cả biên bản trong thư mục 03-bien-ban-hop, rút ra mọi quyết định
+và việc được phân công, trả về một bảng: quyết định, người phụ trách, hạn. Chỉ trả bảng.
+```
+
+**Ví dụ 4: tổng hợp phản hồi**
+```
+Dùng một subagent đọc toàn bộ file khảo sát trong thư mục 04-khao-sat, tóm tắt 5 điều
+khách khen nhiều nhất và 5 điều khách phàn nàn nhiều nhất. Chỉ trả 2 danh sách.
+```
+
+### Phần 5: Thực hành (13 phút)
+**PROMPT K4-2 (bản học viên):**
+```
+Dùng một subagent đọc toàn bộ file trong thư mục [tên thư mục của bạn], trả về đúng
+[số] dòng tóm tắt hoặc một bảng [các cột bạn cần]. Chỉ trả tóm tắt, không đổ nguyên nội dung.
+```
+*Gợi ý điền: thư mục hồ sơ ứng viên, biên bản họp, hợp đồng, khảo sát.*
+Mốc cứng phút 118: dán bản tóm tắt subagent trả về vào chat Zoom.
 
 ---
 
-## K5: Chốt và giao bài (10 phút)
+## K5: Chốt (10 phút)
+
+### Bảng so sánh agent và subagent (chiếu lại cho khắc sâu)
+
+| | Agent chuyên trách | Subagent |
+|---|---|---|
+| Là gì | Nhân viên chính thức, có bản mô tả công việc | Trợ lý gọi tạm cho một việc |
+| Có file định nghĩa không | Có, trong `.claude/agents/` | Không, chỉ nói miệng |
+| Dùng lại nhiều lần không | Có, gọi bằng tên | Không, xong việc là thôi |
+| Hợp với việc | Lặp lại, có quy tắc riêng | Nặng, đọc nhiều, cần tóm tắt, một lần |
+| Ví dụ | agent-onboarding lo đón nhân viên mới | đọc 20 CV chọn 5 người |
 
 **Bốn ý cần nhớ:**
-1. **MCP tạo slide:** tả trọn một trang, nó vẽ ra ảnh. Luôn đọc lại chữ trong ảnh.
-2. **Agent chạy qua 4 bước:** nhận việc, đọc bối cảnh, dùng công cụ, trả kết quả. Tạo xong phải mở phiên mới.
-3. **Token là đồng hồ taxi:** đọc và ghi đều tốn, tiếng Việt tốn hơn, giữ CLAUDE.md gọn.
-4. **Subagent:** giao việc nặng cho trợ lý riêng, chỉ nhận tóm tắt, đỡ tốn token phiên chính.
+1. Sơ đồ 2 câu hỏi: lặp lại thì nuôi agent, việc nặng một lần thì gọi subagent, còn lại hỏi thẳng.
+2. Agent chạy qua 4 bước: nhận việc, đọc bối cảnh, dùng công cụ, trả kết quả. Tạo xong phải mở phiên mới.
+3. Token là đồng hồ taxi: đọc và ghi đều tốn, tiếng Việt tốn hơn.
+4. Giao việc cho subagent phải nói đủ: đọc ở đâu, làm gì, trả về dạng gì.
 
 **Bài về nhà:**
-- Tạo bộ 3 tới 5 ảnh slide cho một chủ đề nhân sự thật.
-- Lập 1 agent chuyên trách cho việc mình làm nhiều nhất, chạy thử 3 lần.
-- Một lần dùng subagent đọc một nhóm file của mình.
+- Lập 1 agent cho việc mình làm nhiều nhất, chạy thử 3 lần.
+- Một lần dùng subagent đọc một nhóm file thật.
+- Tự phân loại 3 việc trong tuần của mình theo sơ đồ 2 câu hỏi, ghi lại dùng cái nào.
 - Chụp kết quả gửi Zalo lớp.
 
-**Xem trước Buổi 5:** khi đã có nhiều agent, cách cho cả một đội agent phối hợp làm cùng một quy trình.
+**Xem trước Buổi 5:** khi đã có nhiều agent, cho cả một đội agent phối hợp làm cùng một quy trình.
 
 ---
 
 ## Bảng prompt tổng hợp (tra nhanh)
 
-| # | Prompt | Dùng ở khối | Kết quả mong đợi |
+| # | Prompt tóm tắt | Khối | Kết quả mong đợi |
 |---|---|---|---|
-| K0 | Bạn đang mở thư mục nào, có file gì? | K0 | Liệt kê đúng thư mục và file |
-| K1-1 | Kiểm công cụ tạo ảnh đã đăng nhập và còn dùng được không | K1 | Báo đã đăng nhập, còn quota |
-| K1-2 | Tạo ảnh slide bìa NỘI QUY CÔNG TY, 16:9 nền trắng | K1 | Ảnh slide bìa, chữ Việt đúng dấu |
-| K1-3 | Từ file nội quy, tạo ảnh slide 4 quy định quan trọng | K1 | Ảnh slide đúng 4 quy định từ file |
-| K1-4 | Tạo ảnh slide chủ đề của bạn (bản học viên) | K1 | Ảnh slide theo chủ đề học viên |
-| K2-1 | Tạo file agent-onboarding trong .claude/agents | K2 | File agent đúng cấu trúc |
-| K2-2 | Nhờ agent-onboarding chuẩn bị gói đón nhân viên mới | K2 | Checklist + email + lịch tuần đầu |
-| K2-3 | Tạo agent cho việc của bạn (bản học viên) | K2 | File agent của học viên |
-| K3-1 | Ước lượng token đoạn Việt, so với Anh, và CLAUDE.md | K3 | Thấy tiếng Việt tốn hơn |
-| K4-1 | Dùng subagent đọc thư mục ứng viên, trả về 1 bảng | K4 | Bảng tóm tắt ứng viên, phiên chính gọn |
-| K4-2 | Dùng subagent đọc thư mục của bạn (bản học viên) | K4 | Bản tóm tắt do subagent trả |
-
-## Câu hỏi tương tác gợi ý
-- "Một agent viết báo cáo thì ở bước đọc bối cảnh nó cần đọc gì?"
-- "Vì sao tạo agent xong phải mở phiên mới?"
-- "Tiếng Việt hay tiếng Anh tốn token hơn? Vì sao?"
-- "Khi nào nên gọi subagent, khi nào làm thẳng cho nhanh?"
-- "Dùng subagent giúp tiết kiệm token ở chỗ nào?"
+| K0 | Thư mục này có file gì | K0 | Liệt kê đúng file |
+| K1-1 | Kiểm công cụ tạo ảnh | K1 | Đã đăng nhập, còn quota |
+| K1-2 | Ảnh slide bìa NỘI QUY | K1 | Ảnh bìa chữ Việt đúng |
+| K1-3 | Ảnh slide 4 quy định từ file | K1 | Đúng 4 quy định, không bịa |
+| K2-1 | Tạo agent-onboarding | K2 | File agent đúng cấu trúc |
+| K2-2 | Gọi agent-onboarding (phiên mới) | K2 | Checklist + email + lịch |
+| A | Gọi agent-tuyen-dung chấm CV | K2 | Xếp hạng ứng viên |
+| B | Gọi agent-dao-tao soạn dàn ý | K2 | Dàn ý đào tạo từ nội quy |
+| K3-1 | Ước lượng token Việt vs Anh | K3 | Thấy Việt tốn hơn |
+| K4-1 | Subagent đọc thư mục ứng viên | K4 | Bảng tóm tắt, phiên gọn |
+| VD1 | Subagent chọn 2 người từ 5 CV | K4 | Kết quả chọn + rủi ro |
+| VD2 | Subagent tìm hợp đồng sắp hết hạn | K4 | Danh sách theo hạn |
+| VD3 | Subagent rút quyết định từ biên bản | K4 | Bảng quyết định |
+| VD4 | Subagent tổng hợp khảo sát | K4 | 2 danh sách khen/chê |
 
 ## Tình huống hay gặp và cách xử lý
 
 | Tình huống | Cách xử lý |
 |---|---|
-| **Cài MCP tạo slide chưa xong hoặc lỗi đăng nhập** | Chuyển sang phương án B: cho agent soạn nội dung slide dạng văn bản, phần vẽ ảnh làm sau. Cả buổi vẫn chạy trọn phần agent, token, subagent |
-| **Chữ trong ảnh slide sai chính tả** | Sinh lại với prompt rõ hơn. Không sửa tay được vì chữ nằm trong ảnh |
-| **Tạo agent xong gọi tên thì Claude không biết** | Chưa mở phiên mới. Mở phiên mới rồi gọi |
-| **Agent đặt file sai chỗ, không nằm trong .claude/agents** | Nhờ Claude đặt lại đúng đường dẫn |
-| **Lệnh xem token khác tên trên bản lớp dùng** | GV đã kiểm trước giờ. Nếu không có lệnh nào, dạy token ở mức khái niệm và mẹo tiết kiệm, bỏ phần demo lệnh |
-| **Subagent trả về nguyên nội dung thay vì tóm tắt** | Nhắc lại trong prompt: chỉ trả tóm tắt, không đổ nguyên nội dung. Nêu rõ số dòng |
-| **Học viên hỏi subagent khác agent chuyên trách chỗ nào** | Agent chuyên trách là nhân viên chính thức có file định nghĩa, dùng lại nhiều lần. Subagent là trợ lý gọi tạm cho một việc nặng rồi thôi, không cần file |
-| **Cháy giờ** | Cắt theo thứ tự: phần demo lệnh token, rồi rút K1 còn 20 phút. Không cắt K2 (cơ chế agent) và K4 (subagent) |
-
-## Cách kiểm học viên qua Zoom
-| Cách | Làm thế nào |
-|---|---|
-| Dán chat Zoom | Sau mỗi thực hành, dán 3 dòng đầu kết quả vào chat |
-| Mốc đồng bộ cứng | Phút 40 có 1 ảnh slide. Phút 75 có 1 agent. Phút 118 có 1 bản tóm tắt subagent |
-| Xoay vòng share màn hình | Mỗi buổi gọi 3 tới 4 người share 30 giây |
-| Danh sách đỏ | Trợ giảng ghi tên ai chưa làm được, kèm 1-1 sau buổi |
+| Học viên vẫn không biết chọn agent hay subagent | Quay lại sơ đồ 2 câu hỏi. Hỏi: việc này lặp lại không? Nếu không, nặng không? |
+| Tạo agent xong gọi tên không ra | Chưa mở phiên mới. Mở phiên mới rồi gọi |
+| Subagent trả nguyên nội dung thay vì tóm tắt | Prompt thiếu câu "chỉ trả tóm tắt, không đổ nội dung". Thêm vào, nêu rõ số dòng |
+| Subagent trả sai ý | Thiếu một trong ba thứ: đọc ở đâu, làm gì, trả dạng gì. Bổ sung cho đủ |
+| Cài MCP slide chưa xong | Phương án B: cho agent soạn nội dung slide dạng văn bản, vẽ ảnh sau |
+| Chữ trong ảnh slide sai | Sinh lại với prompt rõ hơn |
+| Lệnh xem token khác tên | GV đã kiểm trước. Không có thì dạy token ở mức khái niệm và mẹo tiết kiệm |
+| Cháy giờ | Cắt theo thứ tự: demo lệnh token, rồi rút K1 còn 20 phút. Không cắt K2 và K4 |
 
 ## Ba câu kiểm hiểu cuối buổi
-1. "Kể 4 bước một agent chạy khi được giao việc." (nhận việc, đọc bối cảnh, dùng công cụ, trả kết quả)
-2. "Vì sao tiếng Việt tốn token hơn tiếng Anh?" (có dấu, cùng nội dung tốn nhiều token hơn)
-3. "Dùng subagent tiết kiệm token ở chỗ nào?" (việc nặng làm ở phòng riêng, phiên chính chỉ nhận tóm tắt)
+1. "Việc lặp lại thì dùng agent hay subagent? Việc đọc 20 file một lần thì dùng cái nào?"
+2. "Kể 4 bước một agent chạy khi nhận việc."
+3. "Giao việc cho subagent phải nói đủ ba thứ nào?" (đọc ở đâu, làm gì, trả về dạng gì)
 
 ## Tiêu chí hoàn thành buổi
-- [ ] Tạo được ít nhất 1 ảnh slide nhân sự bằng MCP
-- [ ] Lập được 1 agent chuyên trách, mở phiên mới gọi chạy được
-- [ ] Nói lại được 4 bước cơ chế hoạt động của agent
-- [ ] Biết xem token đã dùng và nói được 2 cách tiết kiệm
-- [ ] Giao được subagent đọc một nhóm file và nhận về bản tóm tắt
+- [ ] Tự phân loại được một việc thật của mình theo sơ đồ 2 câu hỏi
+- [ ] Tạo được 1 ảnh slide nhân sự bằng MCP
+- [ ] Lập được 1 agent, mở phiên mới gọi chạy được
+- [ ] Nói lại được 4 bước cơ chế của agent
+- [ ] Giao được subagent đọc một nhóm file và nhận về bản tóm tắt đúng ý
 
 ---
 
-## Ghi chú cài MCP tạo slide (đọc kỹ trước khi lên lớp)
+## Ghi chú cài MCP tạo slide
+Cài kỹ thuật (git clone, uv, Python, OAuth). Không để học viên tự cài trong lớp. Anh cài sẵn hoặc phát cấu hình sẵn, buổi học chỉ dạy DÙNG. Phương án B nếu chưa sẵn sàng: cho agent soạn nội dung slide dạng văn bản, vẽ ảnh sau.
 
-MCP tạo slide cài khá kỹ thuật: cần git clone, công cụ uv, Python, và đăng nhập OAuth dán lại đường link callback. Khối văn phòng làm live trong lớp gần như chắc chắn tắc.
-
-**Hướng khuyến nghị:**
-1. Anh cài sẵn trên máy lớp, hoặc phát sẵn file cấu hình để học viên chỉ dán vào Claude Desktop.
-2. Đăng nhập sẵn một tài khoản dùng chung cho lớp, hoặc để buổi kỹ thuật riêng.
-3. Buổi 4 chỉ dạy DÙNG, không dạy cài. Phần cài để tài liệu riêng cho ai muốn tự dựng ở nhà.
-
-**Phương án B nếu MCP chưa sẵn sàng:** dạy K1 bằng cách cho agent soạn nội dung từng slide dạng văn bản (dàn ý slide), phần vẽ ảnh để sau. Cả buổi vẫn trọn vẹn phần agent, token, subagent.
-
----
-
-## Câu chưa rõ, cần anh chốt trước khi tôi giãn thành bản chi tiết đầy đủ
-1. MCP tạo slide đã cài sẵn máy lớp chưa, hay tối nay mới cài?
-2. Tài khoản sinh ảnh dùng chung cho lớp hay mỗi người một cái? Ảnh hưởng quota khi nhiều người cùng sinh.
-3. Bối cảnh nhân sự có giữ không, hay đổi sang bối cảnh khác?
+## Câu chưa rõ, cần anh chốt trước khi giãn thành bản chi tiết đầy đủ
+1. MCP tạo slide đã cài sẵn máy lớp chưa?
+2. Tài khoản sinh ảnh dùng chung hay riêng?
+3. Bối cảnh nhân sự giữ hay đổi?
