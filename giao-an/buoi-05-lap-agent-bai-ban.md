@@ -58,6 +58,18 @@ CÂU HỎI: Phần sau có CẦN kết quả phần trước mới làm được
 ```
 Câu thuộc lòng: **"Người sau phải chờ người trước thì làm tuần tự. Không phải chờ thì làm song song."**
 
+**Bảng ví dụ để lớp phân loại (chiếu lên, cho giơ tay):**
+
+| Việc | Nối chuỗi hay song song | Vì sao |
+|---|---|---|
+| Chọn 3 ứng viên rồi soạn thư mời cho 3 người đó | Nối chuỗi | Chưa chọn xong thì chưa biết mời ai |
+| Tổng hợp báo cáo 3 chi nhánh, mỗi chi nhánh một thư mục | Song song | Ba phần độc lập, không chờ nhau |
+| Soạn đề xuất rồi viết email trình sếp dựa trên đề xuất | Nối chuỗi | Không có đề xuất thì chưa viết email được |
+| Đón nhân viên mới: checklist + slide + email chào mừng | Song song | Ba việc làm riêng được |
+| Chốt số liệu quý rồi mới vẽ biểu đồ | Nối chuỗi | Chưa có số thì chưa vẽ |
+| Đọc 5 hợp đồng, mỗi hợp đồng rút điều khoản thanh toán | Song song | Năm việc độc lập |
+| Rà khách cần nhắc rồi soạn email nhắc đúng khách đó | Nối chuỗi | Chưa rà xong thì chưa biết nhắc ai |
+
 ---
 
 ## Bối cảnh demo (file có sẵn, chạy được ngay)
