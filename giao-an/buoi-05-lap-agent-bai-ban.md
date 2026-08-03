@@ -1,71 +1,72 @@
-# Outline Buổi 05 (viết cho người học mới): Lập agent bài bản, agent với skill, tạo và test 2 agent
+# Outline Buổi 05: Lập agent bài bản và cho đội agent phối hợp
 
-> Đổi nội dung: hiện lớp chưa có agent nào nên chưa chạy được đội agent, và Buổi 4 chưa dạy kỹ agent.
-> Buổi này dạy lập agent cho chắc. Đội agent (nối chuỗi, song song) chuyển sang buổi sau.
-> Thứ tự: agent là gì, agent khác skill thế nào, tạo 2 agent, agent dùng tool và skill, cách gọi, rồi mới test.
+> Buổi này gộp hai phần: (A) lập agent cho chắc, (B) cho chính hai agent vừa tạo phối hợp làm việc.
+> Mạch: agent là gì, agent khác skill thế nào, tạo 2 agent, gọi và test, rồi cho 2 agent đó nối chuỗi và chạy song song.
+> Lý do gộp: Buổi 4 chưa dạy kỹ agent, và lớp chưa có agent nào để chạy đội agent.
 
 ## Thông tin buổi
 - **Buổi:** 05 / 6
-- **Khái niệm chính:** agent là gì, agent với skill, tạo agent, tools, tích hợp skill, cách gọi và test agent
-- **Bối cảnh:** dùng lại file demo có sẵn (số liệu bán hàng, hồ sơ khách hàng)
+- **Khái niệm chính:** agent là gì, agent với skill, tạo agent, tools, cách gọi, test; đội agent nối chuỗi và song song
+- **Bối cảnh:** dùng file demo có sẵn (số liệu bán hàng, hồ sơ khách hàng)
 - **Thời lượng:** 150 phút
 
 ---
 
 ## PHẦN NỀN cho người học mới
 
-### 1. Agent là gì (nói kỹ, vì Buổi 4 chưa sâu)
-
-Agent là **một nhân viên AI có bản mô tả công việc riêng**, do mình lập ra bằng một file. Khác với việc mình hỏi Claude lặt vặt, agent là giao hẳn một vai: mình đặt tên nó, ghi rõ nó chuyên việc gì, cho nó dùng công cụ nào, và dặn nó làm theo quy tắc gì.
-
-Mỗi khi được giao việc, agent chạy qua 4 bước:
+### 1. Agent là gì
+Agent là **một nhân viên AI có bản mô tả công việc riêng**, lập bằng một file. Mình đặt tên, ghi rõ nó chuyên việc gì, cho dùng công cụ nào, dặn quy tắc gì. Mỗi khi nhận việc, nó chạy 4 bước:
 ```
-1. NHẬN VIỆC       Bạn giao một yêu cầu.
-2. ĐỌC BỐI CẢNH    Agent đọc mô tả công việc của chính nó, đọc các file bạn chỉ, nạp skill nếu cần.
-3. DÙNG CÔNG CỤ    Agent dùng đúng các công cụ được cấp (đọc file, ghi file, tra web) làm từng bước.
-4. TRẢ KẾT QUẢ     Agent trả kết quả cho bạn.
+1. NHẬN VIỆC     Bạn giao yêu cầu.
+2. ĐỌC BỐI CẢNH  Agent đọc mô tả của chính nó, đọc file bạn chỉ, nạp skill nếu cần.
+3. DÙNG CÔNG CỤ  Agent dùng đúng công cụ được cấp làm từng bước.
+4. TRẢ KẾT QUẢ   Agent trả kết quả.
 ```
+File agent gồm 3 dòng khai báo: `name` (tên gọi), `description` (chuyên gì, dùng khi nào, quyết định khi nào tự được gọi), `tools` (công cụ được phép dùng), và phần thân dặn việc.
 
-Một file agent gồm 3 dòng khai báo và một phần thân:
-- `name`: tên gọi, để mình gọi đích danh.
-- `description`: chuyên việc gì, dùng khi nào. Dòng này quyết định khi nào Claude tự gọi nó ra.
-- `tools`: danh sách công cụ nó được phép dùng. Đây là cách khoanh vùng cho an toàn.
-- Phần thân: dặn nó làm gì, theo quy tắc nào.
-
-### 2. Khi nào tạo agent, khi nào tạo skill (câu hỏi quan trọng nhất buổi)
-
-Cả skill và agent đều để chuẩn hóa một việc. Khác nhau ở chỗ:
-
-- **Skill là tờ công thức.** Claude chính cầm công thức và tự nấu. Vẫn là Claude chính làm, chỉ là làm theo đúng các bước ghi sẵn.
-- **Agent là thuê hẳn một đầu bếp chuyên món đó.** Có bếp riêng, dụng cụ riêng, mình giao hẳn việc rồi nhận món.
-
-Bảng chọn:
+### 2. Khi nào tạo agent, khi nào tạo skill
+- **Skill là tờ công thức.** Claude chính cầm công thức tự nấu.
+- **Agent là thuê hẳn một đầu bếp** chuyên món đó, có bếp riêng, dụng cụ riêng, giao hẳn việc rồi nhận món.
 
 | Bạn muốn | Nên dùng |
 |---|---|
-| Chuẩn hóa CÁCH làm một việc, Claude chính tự làm là được | Skill |
-| Một quy trình ngắn, dùng lại nhiều lần | Skill |
-| Giao hẳn một vai lặp lại cho một "nhân viên" riêng | Agent |
-| Giới hạn công cụ cho an toàn (ví dụ chỉ được đọc, không được sửa) | Agent |
-| Việc nặng, muốn nó làm ở cửa sổ ngữ cảnh riêng cho khỏi lấp phiên chính | Agent |
+| Chuẩn hóa cách làm một việc, Claude chính tự làm là được | Skill |
+| Một quy trình ngắn dùng lại nhiều lần | Skill |
+| Giao hẳn một vai lặp lại cho một nhân viên riêng | Agent |
+| Giới hạn công cụ cho an toàn (ví dụ chỉ đọc, không sửa) | Agent |
+| Việc nặng, muốn chạy ở cửa sổ ngữ cảnh riêng | Agent |
 
-Câu chốt cho lớp: **"Chỉ cần công thức thì làm skill. Muốn giao hẳn cho một người có bếp riêng thì lập agent."**
+Câu chốt: **"Chỉ cần công thức thì skill. Muốn giao hẳn cho người có bếp riêng thì agent."**
 
 ### 3. Agent điều khiển tool và skill thế nào
+- **Tool:** dòng `tools` là danh sách công cụ agent được dùng. Cấp `Read` thì đọc được, cấp `Write` thì ghi được, không cấp `Write` thì không sửa được dù có nhờ. Đây là cách điều khiển agent qua công cụ.
+- **Skill:** agent dùng lại được skill đã có. Bước con nào đã có skill chuẩn thì để agent gọi lại, đừng viết lại vào agent. Skill lo cách làm một việc nhỏ, agent lo cả một vai.
 
-- **Tool (công cụ):** dòng `tools` trong file agent là danh sách công cụ nó được dùng. Cấp `Read` thì nó đọc được file; cấp `Write` thì ghi được; không cấp `Write` thì nó không sửa được file, dù có muốn. Đây là cách mình điều khiển agent qua công cụ: cho gì dùng nấy.
-- **Skill:** agent cũng dùng lại được skill đã có. Nếu trong lúc làm việc nó gặp một bước đã có skill chuẩn (ví dụ tóm tắt tài liệu), nó tự nạp skill đó để làm cho đúng.
-- **Khi nào nên tích hợp skill vào agent:** khi một bước con của agent đã có skill tốt rồi thì để agent dùng lại, đừng viết lại quy trình đó vào agent. Nguyên tắc: skill lo "cách làm một việc nhỏ", agent lo "cả một vai". Ghép lại thì agent gọn mà vẫn chuẩn.
+### 4. Đội agent là gì, nối chuỗi hay song song
+Khi có nhiều agent, mình đóng vai trưởng nhóm: chia việc, gom kết quả. Hai kiểu phối hợp:
+
+| Kiểu | Nghĩa là | Ví dụ |
+|---|---|---|
+| **Nối chuỗi (tuần tự)** | Agent A xong đưa kết quả cho agent B | Rà ra khách cần nhắc xong mới soạn email nhắc |
+| **Chạy song song** | Nhiều agent làm cùng lúc, mỗi agent một phần độc lập | Một agent rà khách, một agent soạn báo cáo, cùng lúc |
+
+Sơ đồ một câu hỏi (chiếu lên bảng):
+```
+CÂU HỎI: Phần sau có CẦN kết quả phần trước mới làm được không?
+   CÓ CẦN    ->  NỐI CHUỖI (làm lần lượt)
+   KHÔNG CẦN ->  SONG SONG (làm cùng lúc)
+```
+Câu thuộc lòng: **"Người sau phải chờ người trước thì làm tuần tự. Không phải chờ thì làm song song."**
 
 ---
 
-## Bối cảnh demo (dùng file có sẵn, chạy được ngay)
-- `tai-lieu-phat/demo/buoi-04/so-lieu-ban-hang-thang.md` : số liệu bán hàng tháng 3 thô, dùng test agent soạn báo cáo.
-- `tai-lieu-phat/demo/buoi-03/phong-kinh-doanh-mau/01-khach-hang/` : 3 hồ sơ khách (Minh Long, Hải Nam, An Phát), dùng test agent rà soát khách.
+## Bối cảnh demo (file có sẵn, chạy được ngay)
+- `tai-lieu-phat/demo/buoi-04/so-lieu-ban-hang-thang.md` : số liệu bán hàng tháng 3 thô.
+- `tai-lieu-phat/demo/buoi-03/phong-kinh-doanh-mau/01-khach-hang/` : 3 hồ sơ khách (Minh Long, Hải Nam, An Phát).
 
-Hai agent sẽ lập:
-- **agent-soan-bao-cao** : soạn báo cáo và email từ số liệu thô. Có quyền ghi file.
-- **agent-ra-soat-khach** : đọc hồ sơ khách, chỉ ra khách nào cần hành động. Chỉ đọc, KHÔNG có quyền ghi.
+Hai agent sẽ lập rồi cho phối hợp:
+- **agent-soan-bao-cao** : soạn báo cáo và email từ dữ liệu. Có quyền Write.
+- **agent-ra-soat-khach** : đọc hồ sơ khách, chỉ ra ai cần hành động. Chỉ đọc, KHÔNG Write.
 
 ---
 
@@ -73,84 +74,65 @@ Hai agent sẽ lập:
 
 | Khối | Phút | Nội dung |
 |---|---|---|
-| K0 | 00:00-00:10 | Mở đầu, nêu lại vì sao học lập agent |
-| K1 | 00:10-00:35 | Agent là gì + khi nào agent, khi nào skill |
-| K2 | 00:35-01:05 | Tạo agent 1 (agent-soan-bao-cao), giải thích từng dòng |
-| Nghỉ | 01:05-01:15 | |
-| K3 | 01:15-01:45 | Tạo agent 2 (agent-ra-soat-khach) + tools + tích hợp skill |
-| K4 | 01:45-02:15 | Cách gọi agent + test cả 2 agent |
-| K5 | 02:15-02:30 | Chốt |
+| K0 | 00:00-00:08 | Mở đầu, bản đồ buổi |
+| K1 | 00:08-00:30 | Agent là gì + agent vs skill + tools |
+| K2 | 00:30-00:58 | Tạo 2 agent (giải thích từng dòng) |
+| Nghỉ | 00:58-01:08 | |
+| K3 | 01:08-01:35 | Gọi và test cả 2 agent |
+| K4 | 01:35-02:05 | Đội agent: nối chuỗi 2 agent vừa tạo |
+| K5 | 02:05-02:30 | Đội agent: song song + khi nào dùng cái nào + chốt |
 
-Mốc cứng: K2 xong trước 01:05. K2 và K4 không cắt.
+Mốc cứng: K2 xong trước 00:58, K3 xong trước 01:35. K2, K3, K4 không cắt.
 
 ---
 
-## K0: Mở đầu (10 phút)
+## K0: Mở đầu (8 phút)
 
-**Lời dẫn GV:** "Buổi trước mình đã nghe qua agent, nhưng chưa ai tự tay lập một agent chạy được. Tối nay mình làm cho chắc: hiểu agent là gì, phân biệt với skill, rồi tự tay tạo hai agent, cho chúng dùng công cụ, gọi ra và test. Xong buổi, mỗi anh chị có hai nhân viên AI thật, dùng được ngay."
-
-- Nêu bản đồ: agent là gì, agent vs skill, tạo 2 agent, gọi, test.
-- **PROMPT K0 (giao lớp gõ, kiểm thư mục):**
+**Lời dẫn GV:** "Tối nay mình làm trọn một mạch: hiểu agent là gì, tự tay lập hai agent, test cho chạy, rồi cho chính hai agent đó phối hợp làm chung một việc. Xong buổi, mỗi anh chị có hai nhân viên AI biết làm việc cùng nhau."
+- Nêu bản đồ: agent vs skill, tạo 2 agent, test, rồi nối chuỗi và song song.
+- **PROMPT K0:**
 ```
 Thư mục này đang có những file và thư mục con nào? Trả lời ngắn gọn.
 ```
 
 ---
 
-## K1: Agent là gì và khi nào dùng agent hay skill (25 phút)
+## K1: Agent là gì, agent vs skill, tools (22 phút)
 
-### Phần 1: Agent là gì (10 phút)
-- Trình bày 4 bước hoạt động và 3 dòng khai báo (phần nền mục 1). Vẽ lên bảng.
-- Nhấn: agent là một file, không phải cài đặt gì phức tạp. Mình tả cho Claude, nó tạo file giúp.
-- **Câu hỏi tương tác:** "Một agent chuyên soạn báo cáo thì ở bước đọc bối cảnh nó cần đọc gì, bước dùng công cụ nó cần công cụ nào?"
+### Phần 1: Agent là gì (8 phút)
+- Trình bày 4 bước hoạt động và 3 dòng khai báo (phần nền mục 1), vẽ lên bảng.
+- Nhấn: agent chỉ là một file, mình tả cho Claude nó tạo giúp.
+- **Câu hỏi:** "Agent chuyên soạn báo cáo thì bước đọc bối cảnh cần đọc gì, bước dùng công cụ cần công cụ nào?"
 
-### Phần 2: Agent khác skill thế nào (10 phút)
-- Ẩn dụ công thức và đầu bếp (phần nền mục 2). Chiếu bảng chọn.
-- Cho lớp phân loại 3 tình huống, giơ tay chọn agent hay skill:
-  - "Mỗi lần soạn email chào hàng đều theo đúng một mẫu" (skill, chỉ cần công thức)
-  - "Muốn một nhân viên chuyên rà soát công nợ, chỉ được đọc không được sửa" (agent, cần giới hạn công cụ)
-  - "Chuẩn hóa cách tóm tắt một hợp đồng" (skill)
-- **Câu chốt:** "Chỉ cần công thức thì skill. Muốn giao hẳn một người có bếp riêng thì agent."
+### Phần 2: Agent khác skill (9 phút)
+- Ẩn dụ công thức và đầu bếp, chiếu bảng chọn (phần nền mục 2).
+- Cho lớp phân loại 3 tình huống, giơ tay agent hay skill:
+  - "Mỗi lần soạn email chào hàng theo một mẫu" (skill)
+  - "Một nhân viên chuyên rà công nợ, chỉ được đọc không được sửa" (agent)
+  - "Chuẩn hóa cách tóm tắt hợp đồng" (skill)
 
 ### Phần 3: Agent dùng tool và skill (5 phút)
-- Giải thích dòng `tools` là cấp quyền công cụ (phần nền mục 3).
-- Nói trước: lát tạo agent 1 có quyền ghi file, agent 2 chỉ được đọc, để lớp thấy tác dụng của việc khoanh công cụ.
+- Dòng `tools` là cấp quyền công cụ (phần nền mục 3).
+- Báo trước: agent 1 có Write, agent 2 không có Write, để lát thấy tác dụng khoanh công cụ.
 
 ---
 
-## K2: Tạo agent 1, agent-soan-bao-cao (30 phút)
+## K2: Tạo 2 agent (28 phút)
 
-### Phần 1: Demo GV tạo agent (10 phút)
-**PROMPT K2-1 (tạo agent 1, bản GV chạy ngay):**
+### Phần 1: Demo GV tạo agent 1 (7 phút)
+**PROMPT K2-1 (agent 1, bản GV chạy ngay):**
 ```
 Tạo cho tôi file .claude/agents/agent-soan-bao-cao.md, một agent chuyên soạn báo cáo và email công việc.
 - name: agent-soan-bao-cao
 - description: Chuyên biến số liệu hoặc ý thô thành báo cáo, đề xuất, email hoàn chỉnh theo văn phong công sở. Dùng khi cần soạn văn bản công việc từ dữ liệu có sẵn.
 - tools: Read, Write, Grep, Glob
-- Phần thân: đọc dữ liệu tôi chỉ, soạn theo bố cục tôi yêu cầu. Quy tắc: tiếng Việt công sở, KHÔNG dùng emoji trong email và báo cáo, KHÔNG được tạo ra con số không có trong nguồn, thiếu thì ghi [đợi bổ sung]. Nếu thiếu thông tin thì vẫn soạn đầy đủ, chỗ thiếu để [đợi bổ sung], không dừng lại hỏi tôi.
-Tạo xong in lại toàn bộ nội dung file cho tôi xem.
+- Phần thân: đọc dữ liệu tôi chỉ, soạn theo bố cục tôi yêu cầu. Quy tắc: tiếng Việt công sở, KHÔNG emoji trong email và báo cáo, KHÔNG tạo ra con số không có trong nguồn, thiếu thì ghi [đợi bổ sung]. Nếu thiếu thông tin thì vẫn soạn đầy đủ, chỗ thiếu để [đợi bổ sung], không dừng lại hỏi tôi.
+Tạo xong in lại toàn bộ nội dung file.
 ```
-- **Giải thích từng dòng cho lớp** (đây là phần dạy chính):
-  - `name` để gọi đích danh.
-  - `description` viết rõ "dùng khi cần soạn văn bản từ dữ liệu" nên Claude biết khi nào gọi nó.
-  - `tools` có `Write` vì agent này phải ghi ra văn bản.
-  - Phần thân đặt quy tắc không emoji, không bịa số. Dòng "không dừng lại hỏi" vì agent chạy ở cửa sổ riêng, không hỏi lại mình được.
+Giải thích từng dòng: `description` rõ nên Claude biết khi nào gọi; `tools` có Write vì phải ghi văn bản; phần thân đặt quy tắc không emoji, không bịa số, không dừng lại hỏi (vì agent chạy cửa sổ riêng, không hỏi lại được).
 
-### Phần 2: Thực hành, mỗi học viên tạo agent 1 (20 phút)
-Cả lớp gõ đúng PROMPT K2-1 vào thư mục dự án của mình.
-- Mốc cứng phút 65 (tức 01:05): mỗi người dán 3 dòng đầu file agent vừa tạo vào chat Zoom.
-- **Ghi đỏ:** tạo xong CHƯA gọi vội, phần gọi và test ở K4. Nhắc: phải mở phiên mới thì Claude mới nạp agent.
-
----
-
-## Nghỉ giải lao (10 phút)
-
----
-
-## K3: Tạo agent 2, agent-ra-soat-khach, và tích hợp tool skill (30 phút)
-
-### Phần 1: Demo GV tạo agent 2 (10 phút)
-**PROMPT K3-1 (tạo agent 2, bản GV chạy ngay):**
+### Phần 2: Demo GV tạo agent 2 (7 phút)
+**PROMPT K2-2 (agent 2, bản GV chạy ngay):**
 ```
 Tạo cho tôi file .claude/agents/agent-ra-soat-khach.md, một agent chuyên rà soát hồ sơ khách hàng.
 - name: agent-ra-soat-khach
@@ -159,66 +141,112 @@ Tạo cho tôi file .claude/agents/agent-ra-soat-khach.md, một agent chuyên r
 - Phần thân: đọc toàn bộ hồ sơ khách trong thư mục tôi chỉ. Trả về một bảng: tên khách, trạng thái, việc cần làm, mức ưu tiên. Chỉ dùng thông tin có trong hồ sơ, không suy đoán. KHÔNG tự sửa hay tạo file, chỉ báo cáo.
 Tạo xong in lại toàn bộ nội dung file.
 ```
-- **So sánh 2 agent cho lớp thấy tác dụng của tools:**
-  - agent-soan-bao-cao có `Write` vì phải soạn ra văn bản.
-  - agent-ra-soat-khach KHÔNG có `Write`, chỉ có Read, Grep, Glob. Đây là "người kiểm tra không được cầm bút sửa bài". Dù có muốn nó cũng không sửa được hồ sơ khách. Đây chính là điều khiển agent qua công cụ.
+So sánh 2 agent: agent 1 có `Write` để soạn văn bản; agent 2 KHÔNG có `Write`, chỉ Read/Grep/Glob, là "người kiểm tra không được cầm bút". Dù nhờ nó cũng không sửa được hồ sơ. Đây là điều khiển agent qua công cụ.
 
-### Phần 2: Agent dùng lại skill khi nào (5 phút)
-- Nhắc lại: nếu một bước con đã có skill chuẩn thì để agent dùng lại.
-- Ví dụ: agent-soan-bao-cao khi phải đọc một tài liệu dài trước khi soạn, nó có thể dùng skill tóm tắt tài liệu đã có từ buổi trước, thay vì tự đọc thô.
-- **Nguyên tắc tích hợp:** skill lo cách làm một việc nhỏ, agent lo cả một vai. Đừng nhồi mọi thứ vào agent; bước nào đã có skill tốt thì để agent gọi lại.
-
-### Phần 3: Thực hành, mỗi học viên tạo agent 2 (15 phút)
-Cả lớp gõ PROMPT K3-1. Ai muốn có thể đổi agent 2 thành agent hợp nghề mình (agent rà công nợ, agent sàng lọc CV), miễn là **cố tình không cấp Write** để tập khoanh công cụ.
-- Mốc cứng phút 45 (của giờ thứ hai): dán tên 2 agent vào chat Zoom.
+### Phần 3: Thực hành, cả lớp tạo 2 agent (14 phút)
+Gõ K2-1 rồi K2-2 vào thư mục dự án của mình.
+- Mốc cứng phút 58: dán tên 2 agent vào chat Zoom.
+- **Ghi đỏ:** tạo xong chưa gọi vội. Phải mở phiên mới thì Claude mới nạp agent.
 
 ---
 
-## K4: Cách gọi agent và test cả 2 agent (30 phút)
+## Nghỉ giải lao (10 phút)
 
-### Phần 1: Ba cách gọi agent (7 phút)
-1. **Gọi đích danh:** "nhờ agent-soan-bao-cao làm...". Chắc chắn đúng agent.
-2. **Để Claude tự gọi:** nếu `description` rõ, Claude chính tự giao cho agent khớp việc. Không chắc chắn bằng gọi tên.
-3. **Bắt buộc:** tạo hoặc sửa agent xong phải mở phiên mới thì Claude mới nạp.
+---
 
-### Phần 2: Test agent 1 (10 phút)
-**PROMPT K4-1 (mở phiên mới rồi gọi):**
+## K3: Gọi và test cả 2 agent (27 phút)
+
+### Phần 1: Ba cách gọi agent (5 phút)
+1. Gọi đích danh: "nhờ agent-soan-bao-cao làm...". Chắc chắn nhất.
+2. Để Claude tự gọi nếu description rõ. Không chắc bằng gọi tên.
+3. Bắt buộc: tạo hoặc sửa agent xong phải mở phiên mới.
+
+### Phần 2: Test agent 1 (9 phút)
+**PROMPT K3-1 (mở phiên mới rồi gọi):**
 ```
 Nhờ agent-soan-bao-cao soạn báo cáo bán hàng tháng 3 từ file tai-lieu-phat/demo/buoi-04/so-lieu-ban-hang-thang.md. Bố cục: kết quả tháng 3, số liệu chính, vướng mắc, kế hoạch tháng 4. Chỉ dùng con số có trong file. Cuối bản liệt kê các con số đã dùng kèm dòng lấy từ file.
 ```
-Kết quả mong đợi: báo cáo 4 phần, không emoji, có mục liệt kê nguồn số liệu (1.085 triệu tháng 3, 915 triệu tháng 2, 2 đơn chờ thanh toán, 1 đơn hủy). GV mở file gốc so 2 con số trước lớp để chứng minh agent không bịa.
+Kết quả mong đợi: báo cáo 4 phần, không emoji, có mục nguồn số liệu (1.085 triệu tháng 3, 915 triệu tháng 2, 2 đơn chờ thanh toán, 1 đơn hủy). GV mở file gốc so 2 con số trước lớp.
 
-### Phần 3: Test agent 2 (10 phút)
-**PROMPT K4-2 (phiên mới hoặc cùng phiên):**
+### Phần 3: Test agent 2 (8 phút)
+**PROMPT K3-2:**
 ```
 Nhờ agent-ra-soat-khach đọc các hồ sơ trong tai-lieu-phat/demo/buoi-03/phong-kinh-doanh-mau/01-khach-hang và chỉ ra khách nào cần hành động, mức ưu tiên ra sao.
 ```
-Kết quả mong đợi: một bảng: An Phát cần nhắc thanh toán lần 3 (ưu tiên cao), Hải Nam cần chăm sóc lại sau khi hủy đơn, Minh Long cần chốt gia hạn trước 11/5/2027. Agent KHÔNG tạo hay sửa file nào (vì không có Write). GV nhấn: đây là tác dụng của việc khoanh công cụ.
+Kết quả mong đợi: bảng: An Phát cần nhắc thanh toán lần 3 (ưu tiên cao), Hải Nam chăm sóc lại sau khi hủy đơn, Minh Long chốt gia hạn trước 11/5/2027. Agent không tạo hay sửa file nào.
 
-### Phần 4: Thử điều mình chưa cấp quyền (3 phút, điểm nhấn)
-**PROMPT K4-3:**
+### Phần 4: Thử điều chưa cấp quyền (5 phút, điểm nhấn)
+**PROMPT K3-3:**
 ```
-Nhờ agent-ra-soat-khach cập nhật lại file hồ sơ khách An Phát, ghi thêm dòng đã nhắc lần 3.
+Nhờ agent-ra-soat-khach cập nhật file hồ sơ khách An Phát, ghi thêm dòng đã nhắc lần 3.
 ```
-Kết quả mong đợi: agent báo nó không có quyền ghi file, chỉ rà soát và báo cáo được. GV chốt: "Thấy chưa, mình chỉ cấp Read nên nó không sửa được, dù mình có nhờ. Đó là cách agent an toàn."
+Kết quả mong đợi: agent báo không có quyền ghi, chỉ rà soát được. GV chốt: "Mình chỉ cấp Read nên nó không sửa được dù mình nhờ. Đó là agent an toàn."
 
 ---
 
-## K5: Chốt (15 phút)
+## K4: Đội agent, nối chuỗi 2 agent vừa tạo (30 phút)
 
-**Bốn ý cần nhớ:**
-1. Agent là một nhân viên AI lập bằng một file, có 3 dòng khai báo: name, description, tools.
-2. Chỉ cần công thức thì làm skill; muốn giao hẳn một vai có bếp riêng thì lập agent.
-3. `tools` là cách điều khiển agent: cấp công cụ nào dùng nấy, không cấp thì không làm được, dù có nhờ.
-4. Tạo agent xong phải mở phiên mới, rồi gọi đích danh cho chắc.
+**Ẩn dụ:** giờ mình có hai nhân viên rồi, cho họ làm dây chuyền. Người rà soát tìm ra khách cần nhắc, chuyển sang người soạn thảo viết email nhắc. Việc sau chờ việc trước.
+
+### Phần 1: Khái niệm nối chuỗi (5 phút)
+- Nối chuỗi: agent A xong, kết quả thành đầu vào cho agent B.
+- Mấu chốt: nói rõ "làm lần lượt, xong bước 1 mới sang bước 2", và chỉ rõ file trung gian A lưu ra để B đọc.
+
+### Phần 2: Demo GV, chuỗi rà khách tới soạn email nhắc (10 phút)
+**PROMPT K4-1:**
+```
+Làm lần lượt hai bước, xong bước 1 mới sang bước 2:
+Bước 1: nhờ agent-ra-soat-khach đọc thư mục tai-lieu-phat/demo/buoi-03/phong-kinh-doanh-mau/01-khach-hang, chỉ ra khách CẦN NHẮC THANH TOÁN GẤP NHẤT, lưu kết quả vào ket-qua/khach-can-nhac.md.
+Bước 2: sau khi có file đó, nhờ agent-soan-bao-cao đọc ket-qua/khach-can-nhac.md và soạn một email nhắc thanh toán gửi đúng khách đó, văn phong công sở, không emoji.
+```
+Kết quả mong đợi: có file `ket-qua/khach-can-nhac.md` (agent 2 chỉ ra An Phát), rồi agent 1 soạn email nhắc thanh toán gửi An Phát. GV chỉ ra: bước 2 phải chờ bước 1, vì chưa biết khách nào thì chưa soạn email được. Đây đúng là nối chuỗi.
+
+### Phần 3: Thực hành nối chuỗi (15 phút)
+**PROMPT K4-2 (bản học viên):**
+```
+Làm lần lượt hai bước, xong bước 1 mới sang bước 2:
+Bước 1: nhờ [agent 1] làm [việc 1], lưu kết quả vào ket-qua/[ten-file].md.
+Bước 2: sau khi có file đó, nhờ [agent 2] đọc file đó và làm [việc 2].
+```
+*Gợi ý điền: rà công nợ rồi soạn email nhắc; chọn ứng viên rồi soạn thư mời; phân tích số liệu rồi viết báo cáo.*
+Mốc cứng phút 65 (giờ hai): dán tên file trung gian vào chat Zoom.
+
+---
+
+## K5: Đội agent song song, khi nào dùng cái nào, và chốt (25 phút)
+
+### Phần 1: Chạy song song (10 phút)
+**Ẩn dụ:** song song là giao hai việc độc lập cho hai người cùng lúc, rồi gom lại.
+- **Ba quy tắc:** ép rõ "gọi cùng lúc, không tự làm thay"; mỗi agent một phần độc lập; bắt mỗi agent khai nguồn.
+- **Demo GV, PROMPT K5-1:**
+```
+Giao SONG SONG hai việc độc lập, gọi cùng lúc, không tự làm thay:
+- agent-ra-soat-khach: rà thư mục 01-khach-hang, chỉ ra khách cần hành động.
+- agent-soan-bao-cao: soạn báo cáo bán hàng tháng 3 từ tai-lieu-phat/demo/buoi-04/so-lieu-ban-hang-thang.md.
+Mỗi agent kết thúc bằng mục "Nguồn": file đã đọc. Xong gom hai kết quả thành một bản tình hình chung.
+```
+Kết quả mong đợi: hai phần chạy riêng (rà khách và báo cáo), gom thành một bản. GV nhấn: hai việc này không chờ nhau nên chạy song song được.
+
+### Phần 2: Khi nào tuần tự, khi nào song song (7 phút)
+- Chiếu sơ đồ một câu hỏi (phần nền mục 4).
+- Cho lớp phân loại nhanh 3 việc: chọn người rồi soạn thư mời (tuần tự); tổng hợp 3 chi nhánh mỗi cái một thư mục (song song); chốt số liệu rồi vẽ biểu đồ (tuần tự).
+- **Cảnh báo:** song song kết quả không phải lúc nào cũng đều, Claude có khi làm tuần tự. Bình thường. Nối chuỗi chắc ăn hơn.
+
+### Phần 3: Chốt (8 phút)
+**Năm ý cần nhớ:**
+1. Agent là nhân viên AI lập bằng một file, có name, description, tools.
+2. Chỉ cần công thức thì skill; giao hẳn một vai có bếp riêng thì agent.
+3. `tools` điều khiển agent: cấp gì dùng nấy, không cấp thì không làm được.
+4. Người sau phải chờ người trước thì nối chuỗi, không chờ thì song song.
+5. Tạo agent xong phải mở phiên mới, gọi đích danh cho chắc.
 
 **Bài về nhà:**
-- Lập 1 agent cho việc mình làm nhiều nhất, chọn kỹ dòng tools nên cấp gì.
-- Test agent đó 3 lần trên dữ liệu thật.
-- Ghi lại một việc bạn nghĩ nên làm skill (không nên làm agent), giải thích vì sao.
+- Lập 1 agent cho việc mình làm nhiều nhất, chọn kỹ tools.
+- Dựng một chuỗi 2 agent cho việc thật của mình, chạy thử.
+- Ghi lại một việc nên làm skill (không nên làm agent), giải thích vì sao.
 - Chụp kết quả gửi Zalo lớp.
 
-**Xem trước buổi sau:** khi đã có nhiều agent, cho chúng phối hợp làm chung một quy trình (đội agent: nối chuỗi và chạy song song).
+**Xem trước Buổi 6 (capstone):** ghép tất cả (CLAUDE.md, skill, MCP, agent, đội agent) thành một quy trình công việc thật, chạy đầu-cuối rồi trình bày.
 
 ---
 
@@ -227,38 +255,43 @@ Kết quả mong đợi: agent báo nó không có quyền ghi file, chỉ rà s
 | # | Prompt tóm tắt | Khối | Kết quả mong đợi |
 |---|---|---|---|
 | K0 | Thư mục có file gì | K0 | Liệt kê đúng file |
-| K2-1 | Tạo agent-soan-bao-cao (có Write) | K2 | File agent 3 dòng khai báo, có Write |
-| K3-1 | Tạo agent-ra-soat-khach (không Write) | K3 | File agent chỉ Read, Grep, Glob |
-| K4-1 | Test agent 1 soạn báo cáo từ số liệu | K4 | Báo cáo 4 phần, có nguồn, không emoji |
-| K4-2 | Test agent 2 rà soát khách | K4 | Bảng khách cần hành động, đúng 3 khách |
-| K4-3 | Nhờ agent 2 sửa file (nó không có Write) | K4 | Agent báo không có quyền ghi |
+| K2-1 | Tạo agent-soan-bao-cao (có Write) | K2 | File agent, có Write |
+| K2-2 | Tạo agent-ra-soat-khach (không Write) | K2 | File agent, chỉ Read/Grep/Glob |
+| K3-1 | Test agent 1 soạn báo cáo | K3 | Báo cáo 4 phần, có nguồn, không emoji |
+| K3-2 | Test agent 2 rà khách | K3 | Bảng 3 khách cần hành động |
+| K3-3 | Nhờ agent 2 sửa file (không có Write) | K3 | Agent báo không có quyền ghi |
+| K4-1 | Nối chuỗi: rà khách rồi soạn email nhắc | K4 | File trung gian + email nhắc An Phát |
+| K4-2 | Nối chuỗi của học viên | K4 | File trung gian + kết quả bước 2 |
+| K5-1 | Song song: rà khách và soạn báo cáo | K5 | Hai phần + bản gom |
 
 ## Tình huống hay gặp và cách xử lý
 
 | Tình huống | Cách xử lý |
 |---|---|
 | Tạo agent xong gọi tên không ra | Chưa mở phiên mới. Mở phiên mới rồi gọi |
-| Agent đặt file sai chỗ, không nằm trong .claude/agents | Nhờ Claude đặt lại đúng đường dẫn |
-| Khối YAML đầu file hỏng, thiếu dấu gạch | Nhờ Claude sửa lại định dạng, đừng để học viên tự sửa tay |
-| Học viên không phân biệt được agent với skill | Quay lại ẩn dụ: công thức thì skill, đầu bếp có bếp riêng thì agent |
-| Agent bịa số trong báo cáo | Kiểm phần thân có dòng không bịa số chưa. Bắt agent liệt kê nguồn rồi mở file gốc so |
-| Agent 2 vẫn sửa được file dù không cấp Write | Kiểm lại dòng tools có đúng chỉ Read, Grep, Glob không. Sửa lại rồi mở phiên mới |
-| Cháy giờ | Cắt phần thử chưa cấp quyền K4-3, rồi rút K1 phần 3. Không cắt K2 và K4 test |
+| Agent đặt file sai chỗ | Nhờ Claude đặt lại đúng .claude/agents |
+| Khối YAML đầu file hỏng | Nhờ Claude sửa định dạng, đừng để học viên tự sửa tay |
+| Không phân biệt được agent với skill | Ẩn dụ: công thức thì skill, đầu bếp có bếp riêng thì agent |
+| Agent bịa số | Kiểm phần thân có dòng không bịa số. Bắt liệt kê nguồn, mở file gốc so |
+| Agent 2 vẫn sửa được file dù không cấp Write | Kiểm lại dòng tools, sửa rồi mở phiên mới |
+| Bước 2 nối chuỗi chạy khi bước 1 chưa xong | Nhấn "xong bước 1 mới sang bước 2", chỉ rõ file trung gian |
+| Song song mà Claude làm tuần tự | Bình thường. Thêm "gọi cùng lúc, không tự làm thay". Vẫn tuần tự thì chấp nhận |
+| Cháy giờ | Cắt K5 song song còn demo GV, bỏ K3-3. Không cắt K2, K3 test, K4 nối chuỗi |
 
 ## Ba câu kiểm hiểu cuối buổi
-1. "Khi nào nên tạo agent, khi nào chỉ cần skill?" (giao hẳn một vai, cần giới hạn công cụ thì agent; chỉ cần chuẩn hóa cách làm thì skill)
-2. "Ba dòng khai báo của một agent là gì, dòng nào quyết định khi nào nó tự được gọi?" (name, description, tools; description)
-3. "Muốn một agent không sửa được file thì làm sao?" (không cấp Write trong dòng tools)
+1. "Khi nào tạo agent, khi nào chỉ cần skill?"
+2. "Muốn một agent không sửa được file thì làm sao?" (không cấp Write trong tools)
+3. "Khi nào cho agent làm nối tiếp, khi nào làm cùng lúc?" (người sau chờ người trước thì nối tiếp)
 
 ## Tiêu chí hoàn thành buổi
 - [ ] Nói được agent khác skill thế nào, khi nào dùng cái nào
-- [ ] Tạo được agent-soan-bao-cao (có Write) chạy đúng
-- [ ] Tạo được agent-ra-soat-khach (không Write) chạy đúng
-- [ ] Test được cả 2 agent trên file demo, kết quả đúng số liệu
+- [ ] Tạo được 2 agent (một có Write, một không Write), test chạy đúng
 - [ ] Giải thích được tools là cách khoanh công cụ cho an toàn
+- [ ] Chạy được một chuỗi 2 agent, có file trung gian
+- [ ] Chạy được hoặc hiểu được đội agent song song
 
 ---
 
 ## Câu chưa rõ, cần anh chốt trước khi giãn thành bản chi tiết
 1. Giữ 2 agent này (soạn báo cáo, rà soát khách) hay đổi sang bối cảnh nhân sự?
-2. Có cần thêm phần demo agent dùng lại skill tóm tắt không, hay chỉ nói khái niệm?
+2. Phần song song cho lớp thực hành thật hay chỉ GV demo cho an toàn?
