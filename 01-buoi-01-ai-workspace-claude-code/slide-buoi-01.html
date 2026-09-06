@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI Workspace - Buổi 01: Claude Code & GitHub | CES Global</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       MODERN PRESENTATION ENGINE: TASTE-SKILL V4 (Full-Viewport Keynote Experience)
+       No clunky inner cards, no clipped scrollbars, full 100vw/100vh immersion,
+       SVG vector iconography, graphic cards, micro-animations, Apple Keynote feel.
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace !important;
+    }
+
+    :root {
+      /* Luminous Theme Canvas */
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --surface-alt: #f1f5f9;
+      --surface-glass: rgba(255, 255, 255, 0.88);
+      --terminal-bg: #090d16;
+
+      /* Crisp Borders */
+      --border-subtle: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --border-blue: #bfdbfe;
+
+      /* Deep Modern Slate Typography */
+      --text-main: #0f172a;       /* Slate 900 */
+      --text-body: #334155;       /* Slate 700 */
+      --text-muted: #64748b;      /* Slate 500 */
+      --text-light: #94a3b8;      /* Slate 400 */
+      --text-white: #ffffff;
+
+      /* High-Impact Vibrant Accents */
+      --brand-blue: #2563eb;      /* Blue 600 */
+      --brand-blue-deep: #1e3a8a; /* Blue 900 */
+      --brand-indigo: #4f46e5;    /* Indigo 600 */
+      --brand-cyan: #0284c7;      /* Sky 600 */
+      --brand-emerald: #059669;   /* Emerald 600 */
+      --brand-amber: #d97706;     /* Amber 600 */
+      --brand-rose: #e11d48;      /* Rose 600 */
+      --brand-purple: #7c3aed;    /* Purple 600 */
+
+      /* Multi-Layered Soft Elevation */
+      --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 8px 20px -3px rgba(15, 23, 42, 0.07), 0 3px 6px -2px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 20px 35px -8px rgba(15, 23, 42, 0.1), 0 6px 12px -3px rgba(15, 23, 42, 0.05);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text-main);
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Ambient Dynamic Mesh Canvas */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 12% 15%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 88% 22%, rgba(79, 70, 229, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 88%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    /* ==========================================================================
+       TOP FLOATING MINIMAL HEADER BAR
+       ========================================================================== */
+    .top-navbar {
+      position: relative;
+      z-index: 50;
+      height: 58px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ces-logo-badge {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.06em;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .course-breadcrumb {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .session-chip {
+      background: #eff6ff;
+      color: var(--brand-blue);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-blue);
+    }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slide-badge {
+      background: var(--surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .nav-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-keynote {
+      background: var(--surface-white);
+      border: 1px solid var(--border-medium);
+      color: var(--text-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-keynote:hover {
+      background: var(--surface-alt);
+      border-color: var(--brand-blue);
+      color: var(--brand-blue);
+      transform: translateY(-1px);
+    }
+
+    .btn-keynote-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-keynote-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Top Progress Line */
+    .top-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #e2e8f0;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
+      width: 4.54%;
+      transition: width 0.3s ease;
+    }
+
+    /* ==========================================================================
+       FULL-VIEWPORT SLIDE CANVAS (NO TRAPPING INNER CARD)
+       ========================================================================== */
+    .slide-canvas {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100vw;
+      height: calc(100vh - 58px);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .slide-page {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 26px 54px 34px;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      animation: keynoteIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide-page.active {
+      display: flex;
+    }
+
+    @keyframes keynoteIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scrollbar style if needed on small screens */
+    .slide-page::-webkit-scrollbar {
+      width: 6px;
+    }
+    .slide-page::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    /* ==========================================================================
+       SLIDE HEADER BLOCK
+       ========================================================================== */
+    .slide-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-text-group {
+      flex: 1;
+    }
+
+    .slide-badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--brand-blue);
+      border: 1px solid var(--border-blue);
+      margin-bottom: 5px;
+    }
+
+    .slide-h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-lead {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .slide-pill-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-body);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       SLIDE BODY CONTENT & BENTO GRIDS
+       ========================================================================== */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .bento-grid {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-1-2 { grid-template-columns: 1fr 2fr; }
+    .grid-2-1 { grid-template-columns: 2fr 1fr; }
+
+    .bento-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .bento-card:hover {
+      border-color: var(--border-medium);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .bento-card-featured {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      border: 1.5px solid #93c5fd;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+    }
+
+    .bento-card-dark {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border: 1px solid #1e293b;
+    }
+
+    .bento-card-dark * {
+      color: #ffffff !important;
+    }
+
+    .bento-card-dark .text-muted {
+      color: #94a3b8 !important;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-text {
+      font-size: 0.92rem;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .icon-chip-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.84rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+    }
+
+    .icon-chip-svg {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-blue);
+      flex-shrink: 0;
+    }
+
+    /* Comparison Panels */
+    .compare-card-bad {
+      background: #fffafa;
+      border: 1.5px solid #fecaca;
+    }
+    .compare-card-bad .card-title {
+      color: var(--brand-rose);
+    }
+
+    .compare-card-good {
+      background: #f8fafc;
+      border: 1.5px solid #bfdbfe;
+    }
+    .compare-card-good .card-title {
+      color: var(--brand-blue);
+    }
+
+    /* Structured Feature List */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 8px;
+    }
+
+    .bullet-list li {
+      font-size: 0.93rem;
+      color: var(--text-body);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.48;
+    }
+
+    .bullet-check {
+      color: var(--brand-emerald);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .bullet-cross {
+      color: var(--brand-rose);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .bullet-dot {
+      color: var(--brand-blue);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    /* Executive Data Table */
+    .table-container {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.93rem;
+    }
+
+    .modern-table th {
+      background: #f8fafc;
+      color: var(--text-main);
+      font-weight: 700;
+      padding: 11px 18px;
+      border-bottom: 2px solid var(--border-subtle);
+      font-size: 0.88rem;
+    }
+
+    .modern-table td {
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-body);
+      line-height: 1.48;
+    }
+
+    .modern-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .modern-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Sleek Developer Terminal Box for Prompts */
+    .terminal-box {
+      background: var(--terminal-bg);
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-md);
+      margin-top: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .terminal-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .terminal-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .terminal-tag {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-copy {
+      background: #334155;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-copy:hover {
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      color: #ffffff;
+    }
+
+    .btn-copy.copied {
+      background: var(--brand-emerald);
+      border-color: var(--brand-emerald);
+      color: #ffffff;
+    }
+
+    .terminal-code {
+      padding: 12px 18px;
+      color: #f1f5f9;
+      font-size: 0.91rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'JetBrains Mono', Consolas, monospace !important;
+      user-select: text;
+    }
+
+    /* Highlight Notification Box */
+    .callout-banner {
+      border-left: 4px solid var(--brand-blue);
+      background: #eff6ff;
+      padding: 12px 18px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-top: 10px;
+      font-size: 0.94rem;
+      color: var(--brand-blue-deep);
+      line-height: 1.5;
+    }
+
+    .callout-amber {
+      border-left-color: var(--brand-amber);
+      background: #fffbeb;
+      color: var(--brand-amber);
+    }
+
+    .callout-emerald {
+      border-left-color: var(--brand-emerald);
+      background: #ecfdf5;
+      color: var(--brand-emerald);
+    }
+
+    /* Tree View Box */
+    .tree-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      font-size: 0.91rem;
+      line-height: 1.58;
+      color: var(--text-main);
+      white-space: pre;
+      font-family: 'JetBrains Mono', monospace !important;
+      overflow-x: auto;
+    }
+
+    /* ==========================================================================
+       HERO COVER (SLIDE 1) SPLIT LAYOUT WITH GRAPHIC BLOCK
+       ========================================================================== */
+    .hero-split-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+      height: 100%;
+      padding: 10px 10px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .hero-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      color: var(--brand-blue-deep);
+      font-weight: 700;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
+    }
+
+    .hero-h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .hero-h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--brand-blue);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-session-pill {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 22px;
+      padding: 8px 20px;
+      background: #ffffff;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .hero-meta-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-meta-card .meta-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-blue);
+    }
+
+    .hero-meta-card .meta-info .lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .hero-meta-card .meta-info .val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .btn-hero-cta {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Hero Right Graphic Console */
+    .hero-console-card {
+      background: #090d16;
+      border-radius: var(--radius-xl);
+      border: 1px solid #1e293b;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: floatSlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .hero-console-top {
+      background: #1e293b;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .hero-console-content {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .console-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .status-active-pill {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .hero-agent-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hero-agent-tag {
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      color: #93c5fd;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* ==========================================================================
+       PRACTICE COUNTDOWN TIMER (SLIDE 17)
+       ========================================================================== */
+    .timer-card-panel {
+      background: #ffffff;
+      border: 2px solid var(--brand-blue);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .timer-digits-text {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--brand-blue-deep);
+      letter-spacing: 2px;
+      margin: 4px 0;
+      font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    .timer-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       MODAL OVERVIEW ('O')
+       ========================================================================== */
+    .overview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .overview-modal.active {
+      display: flex;
+    }
+
+    .overview-dialog {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      max-width: 1200px;
+      width: 100%;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-medium);
+      overflow: hidden;
+    }
+
+    .overview-header {
+      padding: 16px 26px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .overview-header h3 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .overview-grid {
+      padding: 24px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .overview-thumb {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .overview-thumb:hover {
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .overview-thumb.active {
+      border-color: var(--brand-blue-deep);
+      background: #eff6ff;
+    }
+
+    .overview-thumb .num {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--brand-blue);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .overview-thumb .ttl {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    /* ==========================================================================
+       SPEAKER NOTES DRAWER ('N')
+       ========================================================================== */
+    .speaker-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 240px;
+      background: #ffffff;
+      border-top: 3px solid var(--brand-blue);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.12);
+      z-index: 80;
+      padding: 16px 36px;
+      overflow-y: auto;
+      display: none;
+      animation: drawerUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .speaker-drawer.active {
+      display: block;
+    }
+
+    @keyframes drawerUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .speaker-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .speaker-badge-chip {
+      background: #eff6ff;
+      color: var(--brand-blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .speaker-body-text {
+      font-size: 0.98rem;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.92rem;
+      font-weight: 600;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: toastIn 0.2s ease;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Luminous Subtle Ambient Canvas Background -->
+  <div class="ambient-canvas"></div>
+
+  <!-- TOP MINIMAL NAVBAR -->
+  <header class="top-navbar">
+    <div class="brand-section">
+      <div class="ces-logo-badge">CES GLOBAL</div>
+      <div class="course-breadcrumb">
+        <span>AI WORKSPACE</span>
+        <span class="session-chip">Buổi 01: Claude Code & GitHub</span>
+      </div>
+    </div>
+
+    <div class="nav-status">
+      <span class="slide-badge" id="slideIndicator">Slide 01 / 22</span>
+    </div>
+
+    <div class="nav-buttons-group">
+      <button class="btn-keynote" id="btnPrev" title="Phím mũi tên trái (←)">◀ Trước</button>
+      <button class="btn-keynote btn-keynote-primary" id="btnNext" title="Phím mũi tên phải (→) hoặc Phím Cách">Sau ▶</button>
+      <button class="btn-keynote" id="btnOverview" title="Phím tắt: O">📋 Danh sách (O)</button>
+      <button class="btn-keynote" id="btnNotes" title="Phím tắt: N">📝 Ghi chú (N)</button>
+      <button class="btn-keynote" id="btnFullscreen" title="Phím tắt: F">⛶ Toàn màn hình</button>
+    </div>
+
+    <!-- Active Progress Line -->
+    <div class="top-progress-track">
+      <div class="top-progress-fill" id="progressBar"></div>
+    </div>
+  </header>
+
+  <!-- FULL-VIEWPORT STAGE -->
+  <main class="slide-canvas">
+
+    <!-- ====================================================================
+         SLIDE 01: HERO COVER (SPLIT LAYOUT WITH ANIMATED CONSOLE BLOCK)
+         ==================================================================== -->
+    <section class="slide-page active" data-slide="1" data-title="Slide Tiêu Đề">
+      <div class="hero-split-layout">
+        <div class="hero-left">
+          <div class="hero-badge-tag">✦ CES GLOBAL — AI TECHNOLOGY TRAINING CENTER</div>
+          <h1 class="hero-h1">AI WORKSPACE</h1>
+          <h2 class="hero-h2">Làm Chủ 6 AI Agent Thực Chiến Với Claude Code</h2>
+          <div class="hero-session-pill">
+            BUỔI 01: XÂY DỰNG HỆ ĐIỀU HÀNH AI, CLAUDE CODE & GITHUB NỀN TẢNG
+          </div>
+
+          <div class="hero-meta-grid">
+            <div class="hero-meta-card">
+              <div class="meta-icon">🏢</div>
+              <div class="meta-info">
+                <div class="lbl">Đơn vị tổ chức</div>
+                <div class="val">CES Global Center</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">⏱️</div>
+              <div class="meta-info">
+                <div class="lbl">Thời lượng</div>
+                <div class="val">150 Phút (2,5 Giờ)</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">💻</div>
+              <div class="meta-info">
+                <div class="lbl">Hình thức</div>
+                <div class="val">Live Zoom & VIP LMS</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">🌐</div>
+              <div class="meta-info">
+                <div class="lbl">Cổng đào tạo</div>
+                <div class="val">nhanvienai.cesglobal.com.vn</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-hero-cta" onclick="nextSlide()">
+            <span>Bắt Đầu Khóa Học Ngay</span>
+            <span>▶</span>
+          </button>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-console-card">
+            <div class="hero-console-top">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <span class="terminal-tag">claude-code-agentic-v1.0</span>
+            </div>
+            <div class="hero-console-content">
+              <div class="console-status-row">
+                <span style="color: #94a3b8; font-family: 'JetBrains Mono', monospace;">● Claude Code Core:</span>
+                <span class="status-active-pill">CONNECTED</span>
+              </div>
+              <div class="console-status-row">
+                <span style="color: #94a3b8; font-family: 'JetBrains Mono', monospace;">● Privacy Engine:</span>
+                <span class="status-active-pill" style="background: rgba(37,99,235,0.2); color:#93c5fd; border-color: rgba(147,197,253,0.3);">100% PROTECTED</span>
+              </div>
+              <div class="console-status-row">
+                <span style="color: #94a3b8; font-family: 'JetBrains Mono', monospace;">● Physical Memory:</span>
+                <span class="status-active-pill" style="background: rgba(245,158,11,0.2); color:#fcd34d; border-color: rgba(252,211,77,0.3);">CLAUDE.md LOADED</span>
+              </div>
+
+              <div style="margin-top: 6px;">
+                <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+                  ĐỘI NGŨ 6 AGENT SẴN SÀNG:
+                </div>
+                <div class="hero-agent-pill-row">
+                  <span class="hero-agent-tag">1. Trợ lý Điều phối (Orchestrator)</span>
+                  <span class="hero-agent-tag">2. Quản lý Tài liệu</span>
+                  <span class="hero-agent-tag">3. Phân tích Dữ liệu</span>
+                  <span class="hero-agent-tag">4. Lập Báo cáo</span>
+                  <span class="hero-agent-tag">5. Deep Research</span>
+                  <span class="hero-agent-tag">6. Hệ Multi-Agent</span>
+                </div>
+              </div>
+
+              <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #a5f3fc;">
+                &gt; ai-workspace --init --mode=orchestrator<br>
+                <span style="color: #34d399;">✓ AI Workspace initialized successfully.</span><br>
+                <span style="color: #cbd5e1;">Ready for Session 01 practical training...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 02: MỤC TIÊU & CHUẨN ĐẦU RA
+         ==================================================================== -->
+    <section class="slide-page" data-slide="2" data-title="Mục Tiêu & Chuẩn Đầu Ra">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Chuẩn Đầu Ra Khóa Học</span>
+          <h2 class="slide-h2">Mục Tiêu & Thành Tựu Sau Buổi 01</h2>
+          <p class="slide-lead">6 năng lực cốt lõi học viên làm chủ ngay tại lớp hôm nay</p>
+        </div>
+        <span class="slide-pill-meta">150 Phút Thực Chiến</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">1</span>
+              <span class="card-title">Cài Đặt & Giao Diện</span>
+            </div>
+            <p class="card-text">Kích hoạt ứng dụng Claude Desktop và thành thạo thao tác chuyển sang tab Claude Code (<code>&lt;/&gt; Code</code>) để làm việc trực tiếp với file hệ thống.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">2</span>
+              <span class="card-title">Bảo Mật Dữ Liệu 100%</span>
+            </div>
+            <p class="card-text">Thiết lập Privacy Settings để toàn bộ hợp đồng, bảng lương và báo cáo tài chính công ty không bị đưa vào tập huấn luyện AI của bên thứ ba.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">3</span>
+              <span class="card-title">Bộ Thông Số Vận Hành</span>
+            </div>
+            <p class="card-text">Nắm vững 5 Mode hoạt động, lựa chọn Model Claude (Haiku, Sonnet, Opus), chỉnh thanh trượt Effort và kiểm soát Context Window không bị quá tải.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">4</span>
+              <span class="card-title">Hiến Pháp CLAUDE.md</span>
+            </div>
+            <p class="card-text">Thiết lập hồ sơ cá nhân, chuẩn chữ Times New Roman, Nghị định 30, bố cục Excel chống tràn chữ và kỷ luật cấm bịa số liệu.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">5</span>
+              <span class="card-title">Tự Động Sinh Thư Mục</span>
+            </div>
+            <p class="card-text">Dùng prompt ra lệnh cho AI tự đọc CLAUDE.md để kiến tạo cây thư mục phòng ban đánh số <code>01-</code>, <code>02-</code>..., <code>_backup/</code> và <code>00-index.md</code>.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">6</span>
+              <span class="card-title">GitHub & Agent Điều Phối</span>
+            </div>
+            <p class="card-text">Hiểu GitHub như kho đám mây an toàn, tải trọn gói học liệu về máy và kích hoạt Trợ lý Điều phối (Orchestrator Agent) lập kế hoạch tự động hóa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 03: THỰC TRẠNG VS AI WORKSPACE
+         ==================================================================== -->
+    <section class="slide-page" data-slide="3" data-title="Thực Trạng vs AI Workspace">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Chuyển Dịch Tư Duy</span>
+          <h2 class="slide-h2">Thực Trạng Dùng AI Rời Rạc vs Giải Pháp AI Workspace</h2>
+          <p class="slide-lead">Khoảng cách giữa người dùng AI thông thường và chuyên gia sở hữu AI Workspace</p>
+        </div>
+        <span class="slide-pill-meta">So sánh toàn diện</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card compare-card-bad">
+            <div class="card-title-row">
+              <span class="card-title">❌ Nỗi Đau Khi Dùng Chatbot Thông Thường</span>
+            </div>
+            <ul class="bullet-list">
+              <li><span class="bullet-cross">✕</span> <strong>Hỏi từng câu rồi tắt:</strong> Mỗi phiên chat mới lại phải giải thích lại: <em>"Tôi là ai, công ty tôi kinh doanh gì, sếp tôi tên gì..."</em></li>
+              <li><span class="bullet-cross">✕</span> <strong>Copy - Paste thủ công:</strong> Mất hàng giờ sao chép dữ liệu qua lại giữa Word, Excel và cửa sổ chat rồi dán ngược về máy.</li>
+              <li><span class="bullet-cross">✕</span> <strong>Không có trí nhớ & dữ liệu riêng:</strong> AI không đọc được file trong máy tính, dẫn đến hiện tượng bịa số liệu và trả lời chung chung.</li>
+              <li><span class="bullet-cross">✕</span> <strong>Làm việc thụ động:</strong> Chỉ biết trả lời câu hỏi đơn lẻ, không thể tự lập kế hoạch nhiều bước phức tạp.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card compare-card-good">
+            <div class="card-title-row">
+              <span class="card-title">✅ Bước Nhảy Vọt Với AI Workspace (Claude Code)</span>
+            </div>
+            <ul class="bullet-list">
+              <li><span class="bullet-check">✓</span> <strong>Cắm trực tiếp vào máy tính:</strong> AI đọc, hiểu và trực tiếp thao tác trên toàn bộ kho tài liệu Word, Excel, PDF của bạn.</li>
+              <li><span class="bullet-check">✓</span> <strong>Trí nhớ vĩnh viễn (<code>CLAUDE.md</code>):</strong> Luôn nhớ chức danh, quy tắc phông chữ Times New Roman, cấu trúc phòng ban.</li>
+              <li><span class="bullet-check">✓</span> <strong>Chống bịa số liệu 100%:</strong> Xử lý dữ liệu thật từ bảng tính, đối soát chuẩn từng dòng, không bao giờ bịa đặt.</li>
+              <li><span class="bullet-check">✓</span> <strong>Cơ chế Agentic tự vận hành:</strong> Nhận 1 đầu việc lớn, tự chia nhỏ thành các bước, điều phối đội ngũ và báo cáo kết quả.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner">
+          💡 <strong>Kết luận:</strong> AI Workspace không thay thế bạn, nhưng sẽ biến 1 nhân sự thành <strong>Giám đốc điều hành của 6 nhân viên AI</strong> tinh nhuệ!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 04: MÔ HÌNH 4 TẦNG CỐT LÕI (GRAPHIC STACK)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="4" data-title="Mô Hình 4 Tầng Cốt Lõi">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Kiến Trúc Hệ Thống</span>
+          <h2 class="slide-h2">Mô Hình AI Workspace 4 Tầng Cốt Lõi</h2>
+          <p class="slide-lead">Cấu trúc phân tầng chuẩn doanh nghiệp giúp Agent hoạt động chuẩn xác và bền vững</p>
+        </div>
+        <span class="slide-pill-meta">Kiến trúc 4 Layers</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid" style="grid-template-rows: repeat(4, auto); gap: 11px;">
+          <div class="bento-card bento-card-dark" style="padding: 13px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="card-title-row" style="margin-bottom: 0;">
+                <span class="card-title">👑 TẦNG 1: TRỢ LÝ ĐIỀU PHỐI (Orchestrator Agent)</span>
+              </div>
+              <span class="slide-pill-meta" style="background: rgba(255,255,255,0.2); color:#fff; border:none;">Buổi 01</span>
+            </div>
+            <p class="card-text text-muted" style="margin-top: 3px; font-size: 0.9rem;">Bộ não tiếp nhận bài toán lớn, phân tích yêu cầu, lập kế hoạch chi tiết và chia việc cho các agent chuyên môn bên dưới.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 13px 20px; background: #eff6ff; border-color: #bfdbfe;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="card-title-row" style="margin-bottom: 0;">
+                <span class="card-title" style="color: var(--brand-blue-deep);">⚡ TẦNG 2: 5 AGENT CHUYÊN MÔN THỰC THI (Execution Layer)</span>
+              </div>
+              <span class="slide-pill-meta">Buổi 02 → 06</span>
+            </div>
+            <p class="card-text" style="margin-top: 3px; font-size: 0.9rem;">Đội ngũ chuyên trách: Quản lý Tài liệu (Buổi 2) · Phân tích Dữ liệu (Buổi 3) · Lập Báo cáo (Buổi 4) · Deep Research (Buổi 5) · Hệ Thống Capstone (Buổi 6).</p>
+          </div>
+
+          <div class="bento-card" style="padding: 13px 20px; background: #fffbeb; border-color: #fde68a;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="card-title-row" style="margin-bottom: 0;">
+                <span class="card-title" style="color: var(--brand-amber);">📦 TẦNG 3: SKILL & SYSTEM PROMPT (Reusability Layer)</span>
+              </div>
+              <span class="slide-pill-meta">Tái Sử Dụng</span>
+            </div>
+            <p class="card-text" style="margin-top: 3px; font-size: 0.9rem;">Đóng gói các quy trình làm việc lặp lại thành các lệnh tắt (Skill) có thể tái sử dụng vĩnh viễn, chia sẻ dễ dàng trong toàn bộ công ty.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 13px 20px; background: #ecfdf5; border-color: #a7f3d0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="card-title-row" style="margin-bottom: 0;">
+                <span class="card-title" style="color: var(--brand-emerald);">🏛️ TẦNG 4: KNOWLEDGE & CONTEXT (Grounding Layer)</span>
+              </div>
+              <span class="slide-pill-meta" style="background: #059669; color:#fff; border:none;">Nền Móng Bắt Buộc</span>
+            </div>
+            <p class="card-text" style="margin-top: 3px; font-size: 0.9rem;">Hồ sơ <code>CLAUDE.md</code>, cây thư mục <code>01-</code>, <code>02-</code>..., thư mục <code>_backup/</code> và dữ liệu gốc trên ổ đĩa máy tính của chính bạn.</p>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald" style="margin-top: 8px; padding: 9px 16px;">
+          📌 <strong>Nguyên tắc sống còn:</strong> Muốn tầng 1 và tầng 2 chạy chuẩn, tầng 4 (CLAUDE.md & Cây thư mục) phải được xây dựng vững chắc ngay từ Buổi 1!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 05: ĐỘI NGŨ 6 AI AGENT
+         ==================================================================== -->
+    <section class="slide-page" data-slide="5" data-title="Đội Ngũ 6 AI Agent">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Lộ Trình Toàn Khóa</span>
+          <h2 class="slide-h2">Đội Ngũ 6 AI Agent Đồng Hành Cùng Bạn</h2>
+          <p class="slide-lead">Mỗi buổi học là một Agent chuyên môn hóa được chuyển giao hoàn chỉnh</p>
+        </div>
+        <span class="slide-pill-meta">6 Buổi Học</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="table-container">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th style="width: 8%; text-align: center;">STT</th>
+                <th style="width: 25%;">Tên Agent</th>
+                <th style="width: 52%;">Nhiệm vụ chính trong doanh nghiệp</th>
+                <th style="width: 15%; text-align: center;">Buổi học</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #eff6ff; font-weight: 600;">
+                <td style="text-align: center; color: var(--brand-blue); font-family: 'JetBrains Mono', monospace;">01</td>
+                <td><strong>Trợ lý Điều phối</strong> <em>(Orchestrator)</em></td>
+                <td>Tiếp nhận đề bài lớn, lập kế hoạch đa bước, điều phối toàn đội ngũ thực thi.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta" style="background: var(--brand-blue); color:#fff;">Buổi 01</span></td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'JetBrains Mono', monospace;">02</td>
+                <td><strong>Quản lý Tài liệu</strong> <em>(Document Agent)</em></td>
+                <td>Đọc báo cáo 40 trang trong 3 phút, tóm tắt hợp đồng, chống bịa số liệu 100%.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta">Buổi 02</span></td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'JetBrains Mono', monospace;">03</td>
+                <td><strong>Phân tích Dữ liệu</strong> <em>(Data Agent)</em></td>
+                <td>Làm sạch Excel/CSV, phân tích doanh thu, vẽ biểu đồ, cắm MCP Google Drive.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta">Buổi 03</span></td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'JetBrains Mono', monospace;">04</td>
+                <td><strong>Lập Báo cáo</strong> <em>(Reporting Agent)</em></td>
+                <td>Soạn báo cáo tuần/tháng, đề xuất proposal, thiết kế dàn ý bài thuyết trình chuyên nghiệp.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta">Buổi 04</span></td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'JetBrains Mono', monospace;">05</td>
+                <td><strong>Deep Research</strong> <em>(Research Agent)</em></td>
+                <td>Thu thập dữ liệu thị trường, nghiên cứu đối thủ, tổng hợp tài liệu có nguồn dẫn chứng.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta">Buổi 05</span></td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'JetBrains Mono', monospace;">06</td>
+                <td><strong>Hệ Thống Multi-Agent</strong> <em>(Capstone)</em></td>
+                <td>Ráp nối toàn bộ 5 Agent thành 1 chuỗi tự động hóa đầu-cuối hoàn chỉnh cho doanh nghiệp.</td>
+                <td style="text-align: center;"><span class="slide-pill-meta">Buổi 06</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 06: KHÁM PHÁ CLAUDE DESKTOP & TAB CODE
+         ==================================================================== -->
+    <section class="slide-page" data-slide="6" data-title="Khám Phá Claude Desktop & Tab Code">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Giao Diện Vận Hành</span>
+          <h2 class="slide-h2">Khám Phá Claude Desktop & Kích Hoạt Tab Claude Code</h2>
+          <p class="slide-lead">Sự khác biệt cốt lõi giữa giao diện trò chuyện và môi trường Agentic AI</p>
+        </div>
+        <span class="slide-pill-meta">Kích hoạt &lt;/&gt; Code</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card" style="background: var(--surface-alt);">
+            <div class="card-title-row">
+              <span class="card-title">💬 1. Tab Chat Thông Thường</span>
+            </div>
+            <p class="card-text">Giao diện hỏi đáp truyền thống của Claude:</p>
+            <ul class="bullet-list" style="margin-top: 10px;">
+              <li><span class="bullet-dot">•</span> Dùng để dịch thuật, tra cứu thông tin nhanh, hỏi đáp ý tưởng.</li>
+              <li><span class="bullet-cross">✕</span> <strong>Hạn chế:</strong> Hoàn toàn cô lập với máy tính, không thể mở file, không thể tạo folder hay sửa file trên ổ đĩa.</li>
+              <li><span class="bullet-cross">✕</span> Mọi thao tác đều phải copy/paste thủ công qua lại.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="card-title" style="color: var(--brand-blue-deep);">⚡ 2. Tab Claude Code (<code>&lt;/&gt; Code</code>) — Môi Trường Agentic</span>
+            </div>
+            <p class="card-text">Không gian chỉ huy chuyên nghiệp dành riêng cho AI Workspace:</p>
+            <ul class="bullet-list" style="margin-top: 10px;">
+              <li><span class="bullet-check">✓</span> <strong>Cắm thẳng vào thư mục dự án:</strong> AI nhìn thấy trọn vẹn cây thư mục và tất cả tài liệu của bạn.</li>
+              <li><span class="bullet-check">✓</span> <strong>Toàn quyền thao tác:</strong> Tự động tạo thư mục, đọc dữ liệu Excel, cập nhật báo cáo Word, chạy script.</li>
+              <li><span class="bullet-check">✓</span> <strong>Tích hợp thanh lệnh tương tác:</strong> Cho phép kiểm soát từng bước thay đổi trực tiếp trên màn hình.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-amber">
+          👉 <strong>Thao tác:</strong> Mở Claude Desktop > Nhìn lên thanh tiêu đề trên cùng > Bấm vào tab <strong><code>&lt;/&gt; Code</code></strong> để bắt đầu phiên học hôm nay!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 07: BẢO MẬT DỮ LIỆU DOANH NGHIỆP
+         ==================================================================== -->
+    <section class="slide-page" data-slide="7" data-title="Bảo Mật Dữ Liệu Doanh Nghiệp">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">An Toàn Dữ Liệu</span>
+          <h2 class="slide-h2">Bảo Mật Dữ Liệu Doanh Nghiệp (Privacy Settings)</h2>
+          <p class="slide-lead">Quy tắc số 1 trước khi đưa AI vào bất kỳ tổ chức hay doanh nghiệp nào</p>
+        </div>
+        <span class="slide-pill-meta" style="background: #fff1f2; color: var(--brand-rose); border-color: #fecaca;">Bắt buộc 100%</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card compare-card-bad">
+            <div class="card-title-row">
+              <span class="card-title">⚠️ Nguy Cơ Rò Rỉ Dữ Liệu Khi Không Cài Đặt</span>
+            </div>
+            <p class="card-text">Nếu để mặc định:</p>
+            <ul class="bullet-list">
+              <li><span class="bullet-cross">✕</span> Nội dung trao đổi, file hợp đồng, báo cáo tài chính nội bộ có thể bị các hãng AI thu thập để huấn luyện (train) mô hình tiếp theo.</li>
+              <li><span class="bullet-cross">✕</span> Vi phạm các thỏa thuận bảo mật kinh doanh (NDA) với khách hàng và đối tác.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card compare-card-good">
+            <div class="card-title-row">
+              <span class="card-title">🔒 4 Bước Thiết Lập Bảo Vệ Tuyệt Đối</span>
+            </div>
+            <ol style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; font-size: 0.94rem; color: var(--text-body);">
+              <li>Mở ứng dụng <strong>Claude Desktop</strong> trên máy tính.</li>
+              <li>Bấm vào <strong>Ảnh đại diện / Tài khoản</strong> ở góc dưới bên trái > Chọn <strong><code>Settings</code></strong>.</li>
+              <li>Nhấp vào mục <strong><code>Privacy</code></strong>.</li>
+              <li>Tắt công tắc: <strong><code>Help improve our AI models</code></strong> (Chuyển sang <strong>OFF</strong>).</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald">
+          🛡️ <strong>Cam kết từ Anthropic:</strong> Khi tắt tùy chọn này, toàn bộ dữ liệu file và prompt của bạn được xử lý trong môi trường độc lập, cam kết 100% không dùng để huấn luyện AI.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 08: CHẾ ĐỘ CẤP QUYỀN THỰC THI (MODE)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="8" data-title="Chế Độ Cấp Quyền Thực Thi">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Cấu Hình Vận Hành</span>
+          <h2 class="slide-h2">Làm Chủ Chế Độ Cấp Quyền Thực Thi (Mode)</h2>
+          <p class="slide-lead">Kiểm soát mức độ tự chủ của Claude Code phù hợp với từng tính chất công việc</p>
+        </div>
+        <span class="slide-pill-meta">5 Execution Modes</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="table-container">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Chế độ (Mode)</th>
+                <th style="width: 50%;">Cơ chế hoạt động</th>
+                <th style="width: 28%;">Khuyên dùng khi nào?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #eff6ff; font-weight: 600;">
+                <td><strong style="color: var(--brand-blue);"><code>Auto</code></strong> <em>(Mặc định)</em></td>
+                <td>AI tự động đọc, phân tích và thực thi các bước thông thường, chỉ dừng khi gặp lệnh rủi ro cao.</td>
+                <td><span class="slide-pill-meta" style="background: #ecfdf5; color: var(--brand-emerald);">Khuyên dùng tại lớp</span></td>
+              </tr>
+              <tr>
+                <td><strong><code>Manual</code></strong></td>
+                <td>Mỗi thao tác đọc file, tạo file hay chạy lệnh, AI đều dừng lại xin xác nhận của bạn.</td>
+                <td>Khi xử lý dữ liệu đặc biệt nhạy cảm.</td>
+              </tr>
+              <tr>
+                <td><strong><code>Accept edits</code></strong></td>
+                <td>Tự động chấp thuận mọi thay đổi nội dung file mà không cần bấm xác nhận từng lần.</td>
+                <td>Khi giao việc sửa văn bản, đổi từ ngữ hàng loạt.</td>
+              </tr>
+              <tr>
+                <td><strong><code>Plan</code></strong></td>
+                <td>AI chỉ suy nghĩ và lập kế hoạch chi tiết ra màn hình, tuyệt đối chưa can thiệp vào file.</td>
+                <td>Khi tiếp nhận đề bài lớn, cần phản biện trước.</td>
+              </tr>
+              <tr>
+                <td><strong><code>Bypass permissions</code></strong></td>
+                <td>Bỏ qua mọi rào chắn xác nhận, AI chạy với quyền tự động hóa tối đa.</td>
+                <td>Dành cho chuyên gia chạy script tự động.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 09: MODEL AI & THANH TRƯỢT EFFORT
+         ==================================================================== -->
+    <section class="slide-page" data-slide="9" data-title="Model AI & Thanh Trượt Effort">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Cấu Hình Vận Hành</span>
+          <h2 class="slide-h2">Lựa Chọn Model AI & Thanh Trượt Tư Duy (Effort)</h2>
+          <p class="slide-lead">Chọn đúng "công nhân" cho từng công việc để tối ưu chi phí và chất lượng</p>
+        </div>
+        <span class="slide-pill-meta">Model & Thinking Effort</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title">🤖 1. Bộ 3 Mô Hình Claude Thế Hệ Mới</span>
+            </div>
+            <ul class="bullet-list" style="margin-top: 8px;">
+              <li>
+                <span class="bullet-dot">•</span>
+                <div>
+                  <strong><code>Haiku 4.5</code> (Tốc độ & Tiết kiệm):</strong><br>
+                  Cực nhanh, chi phí siêu rẻ. Phù hợp lọc danh sách, phân loại email, sắp xếp dữ liệu đơn giản.
+                </div>
+              </li>
+              <li>
+                <span class="bullet-check">✓</span>
+                <div>
+                  <strong style="color: var(--brand-blue);"><code>Sonnet 5</code> ("Ngựa chiến" chính):</strong><br>
+                  Cân bằng hoàn hảo giữa tốc độ và chiều sâu trí tuệ. Lập luận sắc bén, viết báo cáo hay. <em>Khuyên dùng suốt khóa học!</em>
+                </div>
+              </li>
+              <li>
+                <span class="bullet-dot">•</span>
+                <div>
+                  <strong><code>Opus 5</code> / <code>Fable 5.1</code> (Bộ não tối thượng):</strong><br>
+                  Suy luận đa tầng, xử lý bài toán tài chính phức tạp và hoạch định chiến lược cấp cao.
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title">🧠 2. Thanh Trượt Nỗ Lực Suy Nghĩ (Effort Slider)</span>
+            </div>
+            <p class="card-text">Điều chỉnh mức độ AI "suy nghĩ ngầm" trước khi trả lời:</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+              <div style="background: var(--surface-alt); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px;">
+                <div style="font-weight: 700; color: var(--brand-cyan);">⚡ Faster (Low Effort)</div>
+                <div style="font-size: 0.9rem; color: var(--text-body); margin-top: 2px;">Trả lời tức thì, bỏ qua bước lập luận nội tâm. Thích hợp cho việc ngắn, tra cứu nhanh.</div>
+              </div>
+
+              <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 12px;">
+                <div style="font-weight: 700; color: var(--brand-blue);">🎯 Smarter (Medium / High Effort)</div>
+                <div style="font-size: 0.9rem; color: var(--text-body); margin-top: 2px;">AI tự kích hoạt chuỗi suy nghĩ (Thinking Process), tự phản biện lỗi logic trước khi xuất văn bản. Chất lượng vượt trội!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 10: QUOTA, TOKEN & CONTEXT WINDOW
+         ==================================================================== -->
+    <section class="slide-page" data-slide="10" data-title="Quota, Token & Context Window">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Cơ Chế Bộ Nhớ</span>
+          <h2 class="slide-h2">Quota, Token & Cửa Sổ Ngữ Cảnh (Context Window)</h2>
+          <p class="slide-lead">Bí quyết khắc phục triệt để hiện tượng AI "bị lú" và bắt đầu nói linh tinh</p>
+        </div>
+        <span class="slide-pill-meta">Kiểm Soát Context</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card compare-card-bad">
+            <div class="card-title-row">
+              <span class="card-title">⚠️ Tại Sao Dùng Một Lúc Thì AI Bị "Quên"?</span>
+            </div>
+            <ul class="bullet-list">
+              <li><span class="bullet-cross">✕</span> <strong>Context Window là gì:</strong> Là bộ nhớ ngắn hạn trong 1 phiên làm việc (biểu thị bằng vòng tròn phần trăm % ở góc dưới).</li>
+              <li><span class="bullet-cross">✕</span> <strong>Hiện tượng quá tải:</strong> Khi nạp quá nhiều file nặng (bảng tính lớn, tài liệu cả trăm trang), vòng tròn chuyển sang màu vàng/đỏ.</li>
+              <li><span class="bullet-cross">✕</span> <strong>Hậu quả:</strong> AI bắt đầu quên quy tắc trong <code>CLAUDE.md</code>, nhầm lẫn dữ liệu và dễ bịa số.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card compare-card-good">
+            <div class="card-title-row">
+              <span class="card-title">💡 3 Nguyên Tắc Vàng Giữ AI Luôn Chuẩn Xác</span>
+            </div>
+            <ul class="bullet-list">
+              <li><span class="bullet-check">✓</span> <strong>Mở phiên mới đúng lúc:</strong> Khi xong một đầu việc lớn, dùng lệnh <code>/clear</code> hoặc bấm <strong>New Session</strong>.</li>
+              <li><span class="bullet-check">✓</span> <strong>Chỉ nạp đúng file cần thiết:</strong> Tránh đưa cả thư mục hàng gigabyte vào context nếu chỉ cần xử lý 1 file Excel.</li>
+              <li><span class="bullet-check">✓</span> <strong>Yên tâm tuyệt đối:</strong> Vì toàn bộ danh tính và quy tắc đã được lưu trong file <code>CLAUDE.md</code>, mở phiên mới AI vẫn nhớ bạn là ai 100%!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner">
+          🔄 <strong>Thói quen chuẩn:</strong> Mỗi đầu việc độc lập = 1 phiên làm việc mới (New Session) để đảm bảo tốc độ và độ chính xác tối đa.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 11: PHÂN BIỆT 3 TẦNG KÝ ỨC AI
+         ==================================================================== -->
+    <section class="slide-page" data-slide="11" data-title="Phân Biệt 3 Tầng Ký Ức AI">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Kiến Trúc Bộ Nhớ</span>
+          <h2 class="slide-h2">Phân Biệt 3 Tầng Ký Ức Khi Dùng AI</h2>
+          <p class="slide-lead">Hiểu rõ sự khác biệt giữa Chat Prompt, Claude Memory và File CLAUDE.md</p>
+        </div>
+        <span class="slide-pill-meta">3 Memory Levels</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">1</span>
+              <span class="card-title">Chat Prompt</span>
+            </div>
+            <p style="font-size: 0.84rem; font-weight: 700; color: var(--brand-rose); text-transform: uppercase;">Ký ức tức thời (Tạm thời)</p>
+            <p class="card-text" style="margin-top: 8px;">Chỉ nhớ trong nội dung 1 câu chat hoặc 1 phiên chat hiện tại. Khi bạn tắt cửa sổ hoặc mở phiên mới, toàn bộ bối cảnh biến mất hoàn toàn.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="icon-chip-num">2</span>
+              <span class="card-title">Claude Memory</span>
+            </div>
+            <p style="font-size: 0.84rem; font-weight: 700; color: var(--brand-amber); text-transform: uppercase;">Ký ức tài khoản cá nhân</p>
+            <p class="card-text" style="margin-top: 8px;">Lưu trên đám mây của tài khoản cá nhân (Settings > Memory). Nhớ sở thích chung của bạn nhưng không thể chia sẻ cho đồng nghiệp và không gắn vào dự án.</p>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="icon-chip-num">3</span>
+              <span class="card-title" style="color: var(--brand-blue-deep);">File CLAUDE.md</span>
+            </div>
+            <p style="font-size: 0.84rem; font-weight: 700; color: var(--brand-blue); text-transform: uppercase;">Ký ức dự án doanh nghiệp</p>
+            <p class="card-text" style="margin-top: 8px;"><strong>Tiêu chuẩn vàng của AI Workspace:</strong> Lưu thành file vật lý ngay tại thư mục dự án trên ổ cứng máy tính. Bền vững, đồng bộ cho cả nhóm và đưa lên GitHub được!</p>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald" style="margin-top: 12px;">
+          ✨ <strong>Lợi thế vượt trội của <code>CLAUDE.md</code>:</strong> Bạn làm việc trên máy nào, chuyển giao cho đồng nghiệp nào, hay đưa lên GitHub, AI vẫn vận hành đồng nhất 100% không suy suyển!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 12: TRIẾT LÝ NỀN TẢNG: THIẾT LẬP CLAUDE.MD TRƯỚC HẾT
+         ==================================================================== -->
+    <section class="slide-page" data-slide="12" data-title="Triết Lý Nền Tảng CLAUDE.md">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Triết Lý Sư Phạm CES Global</span>
+          <h2 class="slide-h2">Triết Lý Nền Tảng: Thiết Lập CLAUDE.md TRƯỚC HẾT</h2>
+          <p class="slide-lead">Tại sao phải định danh bản thân trước khi cho AI bắt tay vào hành động?</p>
+        </div>
+        <span class="slide-pill-meta">Quy Trình 2 Bước</span>
+      </div>
+
+      <div class="slide-body">
+        <div style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color:#ffffff; padding: 20px 26px; border-radius: var(--radius-lg); margin-bottom: 14px; box-shadow: var(--shadow-md);">
+          <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: #bfdbfe; font-weight: 700;">NGUYÊN TẮC CỐT LÕI CỦA AI WORKSPACE:</div>
+          <div style="font-size: 1.3rem; font-weight: 800; line-height: 1.4; margin-top: 6px; color: #ffffff;">
+            "Muốn AI làm việc đúng, trước hết phải dạy AI hiểu: TÔI LÀ AI, TÔI LÀM VIỆC GÌ, Ở PHÒNG BAN NÀO, VÀ TÔI CÓ NHU CẦU GÌ ĐỐI VỚI DỰ ÁN NÀY."
+          </div>
+        </div>
+
+        <div class="bento-grid grid-2">
+          <div class="bento-card compare-card-bad">
+            <div class="card-title-row">
+              <span class="card-title">❌ Sai Lầm Kinh Điển Của Người Mới</span>
+            </div>
+            <p class="card-text">Vừa mở AI lên đã vội ra lệnh: <em>"Tạo cây thư mục giúp tôi"</em>.</p>
+            <p class="card-text" style="margin-top: 6px;">➔ Hậu quả: AI không biết bạn là Kế toán, Nhân sự hay Sale, nên tạo ra cây thư mục chung chung vô hồn, hoàn toàn không sát với thực tế công việc hàng ngày.</p>
+          </div>
+
+          <div class="bento-card compare-card-good">
+            <div class="card-title-row">
+              <span class="card-title">✅ Quy Trình Chuẩn Của Chuyên Gia</span>
+            </div>
+            <p class="card-text"><strong>Bước 1:</strong> Nạp file <code>CLAUDE.md</code> định danh vai trò và mục tiêu dự án cụ thể trước tiên.</p>
+            <p class="card-text" style="margin-top: 6px;"><strong>Bước 2:</strong> Ra lệnh cho AI tự đọc <code>CLAUDE.md</code> để suy luận và kiến tạo không gian làm việc chuyên nghiệp tối ưu nhất cho chính bạn!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 13: HIẾN PHÁP CLAUDE.MD CHUẨN DOANH NGHIỆP
+         ==================================================================== -->
+    <section class="slide-page" data-slide="13" data-title="Hiến Pháp CLAUDE.md Chuẩn">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Cấu Trúc Hồ Sơ</span>
+          <h2 class="slide-h2">"Hiến Pháp" CLAUDE.md Chuẩn Doanh Nghiệp Gồm Gì?</h2>
+          <p class="slide-lead">8 trụ cột nguyên tắc biến AI thành trợ lý kỷ luật thép</p>
+        </div>
+        <span class="slide-pill-meta">8 Trụ Cột Doanh Nghiệp</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-4">
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">1</span> <span class="card-title" style="font-size: 0.98rem;">Hồ Sơ Cá Nhân</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Họ tên, phòng ban, vị trí công tác, cách xưng hô chuẩn mực với sếp và đối tác.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">2</span> <span class="card-title" style="font-size: 0.98rem;">Times New Roman</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">100% tài liệu Word, Excel, PDF, Báo cáo bắt buộc dùng phông Times New Roman.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">3</span> <span class="card-title" style="font-size: 0.98rem;">Nghị Định 30</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Chuẩn thể thức hành chính Việt Nam (cỡ chữ 13-14, lề, giãn dòng 1.15-1.5 lines).</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">4</span> <span class="card-title" style="font-size: 0.98rem;">Bố Cục Excel Rộng</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Tách riêng cột STT, độ rộng thoải mái, tự động tính chiều cao dòng, chống đè dồn chữ.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">5</span> <span class="card-title" style="font-size: 0.98rem;">Chống Bịa Số Liệu</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Không có trong file phải ghi <em>[Tài liệu không đề cập]</em>, cấm tự suy diễn bịa số.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">6</span> <span class="card-title" style="font-size: 0.98rem;">Cấm Xóa Thư Mục</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Bảo toàn an toàn dữ liệu 100%, tuyệt đối cấm lệnh xóa folder hay xóa hàng loạt.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">7</span> <span class="card-title" style="font-size: 0.98rem;">Single File & _backup</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Bên ngoài chỉ giữ 1 file mới nhất, các bản cũ tự động lưu trữ vào thư mục <code>_backup/</code>.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 14px 16px;">
+            <div class="card-title-row" style="font-size: 0.98rem;"><span class="icon-chip-num">8</span> <span class="card-title" style="font-size: 0.98rem;">Đánh Số 01-, 02-</span></div>
+            <p class="card-text" style="font-size: 0.88rem;">Mọi thư mục nghiệp vụ luôn có tiền tố 2 chữ số tuần tự, ngăn nắp và khoa học.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 14: DEMO GV BƯỚC 1: KHỞI TẠO CLAUDE.MD
+         ==================================================================== -->
+    <section class="slide-page" data-slide="14" data-title="Demo GV: Khởi Tạo CLAUDE.md">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Thực Chiến Tại Lớp</span>
+          <h2 class="slide-h2">Demo GV — Bước 1: Khởi Tạo File CLAUDE.md Chuẩn</h2>
+          <p class="slide-lead">Nạp danh tính và nhu cầu dự án vào hệ thống trước khi bắt đầu</p>
+        </div>
+        <span class="slide-pill-meta" style="background: #ecfdf5; color: var(--brand-emerald);">Bước 1 / 3</span>
+      </div>
+
+      <div class="slide-body">
+        <div style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 4px;">
+          🎤 <strong>Lời dẫn Giảng viên:</strong> <em>"Tôi bắt đầu bằng việc nạp danh tính và nhu cầu dự án của tôi vào file CLAUDE.md để Claude Code hiểu rõ tôi là ai."</em>
+        </div>
+
+        <div class="terminal-box">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <span class="terminal-tag" style="margin-left: 8px;">terminal - tab code</span>
+            </div>
+            <button class="btn-copy" onclick="copyPrompt('promptDemo1', this)">📋 Sao chép Prompt</button>
+          </div>
+          <pre class="terminal-code" id="promptDemo1">Dựa trên mẫu demo/CLAUDE.md, hãy tạo file CLAUDE.md tại thư mục gốc cho tôi:
+- Họ tên: Nguyễn Văn An - Chuyên viên Kinh doanh cấp cao tại CES Global
+- Mục tiêu & Nhu cầu dự án: Quản lý toàn diện quy trình kinh doanh, lưu trữ hồ sơ khách hàng, phát hành báo giá, theo dõi hợp đồng, phân tích doanh số Excel/CSV và lập báo cáo tuần/tháng.
+- Cấp trên: Chị Mai (Trưởng phòng), xưng "em", gọi "chị"
+- Tuân thủ nghiêm ngặt: 100% Times New Roman, Nghị định 30/2020/NĐ-CP, bố cục Excel chống tràn chữ, tuyệt đối không bịa số liệu, cấm xóa folder, và duy trì _backup/.</pre>
+        </div>
+
+        <div class="callout-banner callout-emerald">
+          ✨ <strong>Kết quả:</strong> File <code>CLAUDE.md</code> được tạo ngay tại thư mục gốc mang đầy đủ danh tính và các kỷ luật doanh nghiệp của bạn!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 15: DEMO GV BƯỚC 2: AI TỰ SINH CÂY THƯ MỤC
+         ==================================================================== -->
+    <section class="slide-page" data-slide="15" data-title="Demo GV: AI Tự Sinh Cây Thư Mục">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Thực Chiến Tại Lớp</span>
+          <h2 class="slide-h2">Demo GV — Bước 2: AI Tự Động Sinh Cây Thư Mục</h2>
+          <p class="slide-lead">Không cần gõ tay từng folder — Để AI tự đọc CLAUDE.md và kiến tạo không gian làm việc</p>
+        </div>
+        <span class="slide-pill-meta" style="background: #ecfdf5; color: var(--brand-emerald);">Bước 2 / 3</span>
+      </div>
+
+      <div class="slide-body">
+        <div style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 4px;">
+          🎤 <strong>Lời dẫn Giảng viên:</strong> <em>"Bây giờ AI đã hiểu rõ tôi là ai rồi. Tôi ra lệnh cho AI tự động thiết kế và tạo toàn bộ cây thư mục tối ưu nhất!"</em>
+        </div>
+
+        <div class="bento-grid grid-1-2">
+          <div class="tree-box">
+📁 THƯ MỤC GỐC DỰ ÁN
+├── 01-khach-hang/
+├── 02-bao-gia/
+├── 03-hop-dong/
+├── 04-so-lieu/
+├── 05-bao-cao/
+├── _backup/
+├── CLAUDE.md
+└── 00-index.md
+          </div>
+
+          <div class="terminal-box" style="margin-top: 0;">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span class="terminal-tag" style="margin-left: 8px;">prompt sinh cây thư mục</span>
+              </div>
+              <button class="btn-copy" onclick="copyPrompt('promptDemo2', this)">📋 Sao chép Prompt</button>
+            </div>
+            <pre class="terminal-code" id="promptDemo2">Đọc file CLAUDE.md vừa tạo. Dựa trên vai trò Chuyên viên Kinh doanh, mục tiêu dự án và các quy tắc quản trị trong đó:
+1. Hãy thiết kế và tự động tạo cây thư mục làm việc chuyên nghiệp (đánh số thứ tự 01-, 02-, 03-...).
+2. Tạo thư mục _backup/ theo đúng quy tắc lưu trữ an toàn.
+3. Tạo sẵn file 00-index.md tại thư mục gốc giải thích mục đích từng thư mục con.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 16: DEMO GV BƯỚC 3: KIỂM TRA SỰ ĐỒNG BỘ
+         ==================================================================== -->
+    <section class="slide-page" data-slide="16" data-title="Demo GV: Kiểm Tra Sự Đồng Bộ">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Thực Chiến Tại Lớp</span>
+          <h2 class="slide-h2">Demo GV — Bước 3: Mở Phiên Mới Kiểm Tra Sự Đồng Bộ</h2>
+          <p class="slide-lead">Chứng minh sức mạnh của CLAUDE.md: New Session mà không hề mất bối cảnh</p>
+        </div>
+        <span class="slide-pill-meta" style="background: #ecfdf5; color: var(--brand-emerald);">Bước 3 / 3</span>
+      </div>
+
+      <div class="slide-body">
+        <div style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 4px;">
+          🎤 <strong>Lời dẫn Giảng viên:</strong> <em>"Tôi mở phiên mới bằng nút New Session hoặc gõ /clear. Tôi không nhắc lại tôi là ai nữa, để xem AI có tự động nhận diện không!"</em>
+        </div>
+
+        <div class="terminal-box">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <span class="terminal-tag" style="margin-left: 8px;">prompt kiểm tra phiên mới</span>
+            </div>
+            <button class="btn-copy" onclick="copyPrompt('promptDemo3', this)">📋 Sao chép Prompt</button>
+          </div>
+          <pre class="terminal-code" id="promptDemo3">Hãy soạn giúp tôi một email ngắn gửi anh Tuấn giới thiệu giải pháp phần mềm của CES Global, và cho tôi biết sau này file báo giá của anh Tuấn sẽ được lưu vào thư mục nào trong dự án này?</pre>
+        </div>
+
+        <div class="bento-grid grid-3" style="margin-top: 12px;">
+          <div class="bento-card" style="padding: 12px 16px;">
+            <div class="card-title-row" style="font-size: 0.95rem; color: var(--brand-emerald);">✓ Xưng Hô Đúng Chuẩn</div>
+            <p class="card-text" style="font-size: 0.88rem;">Tự động xưng <em>"em"</em>, gọi <em>"anh Tuấn"</em> đúng tác phong kinh doanh chuyên nghiệp.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 12px 16px;">
+            <div class="card-title-row" style="font-size: 0.95rem; color: var(--brand-emerald);">✓ Văn Phong Trang Trọng</div>
+            <p class="card-text" style="font-size: 0.88rem;">Không có emoji nhăng nhít, mạch lạc, súc tích chuẩn giao tiếp doanh nghiệp.</p>
+          </div>
+
+          <div class="bento-card" style="padding: 12px 16px;">
+            <div class="card-title-row" style="font-size: 0.95rem; color: var(--brand-emerald);">✓ Định Vị Thư Mục Chuẩn</div>
+            <p class="card-text" style="font-size: 0.88rem;">Trả lời chính xác: Báo giá sẽ được lưu vào thư mục <strong><code>02-bao-gia/</code></strong>!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 17: THỰC HÀNH TẠI LỚP (25 PHÚT)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="17" data-title="Thực Hành Dành Cho Học Viên">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category" style="background: #fffbeb; color: var(--brand-amber); border-color: #fde68a;">Thực Hành Trực Tiếp</span>
+          <h2 class="slide-h2">Thực Hành 1 Dành Cho Học Viên (25 Phút)</h2>
+          <p class="slide-lead">Tự tay thiết lập AI Workspace cá nhân hóa ngay trên máy tính của bạn</p>
+        </div>
+        <span class="slide-pill-meta" style="background: var(--brand-amber); color:#fff; border:none;">25:00 Phút</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2-1">
+          <div class="bento-card" style="padding: 20px 24px;">
+            <div class="card-title-row" style="color: var(--brand-blue-deep);">
+              <span class="card-title">📋 4 Bước Cần Hoàn Thành Tại Chỗ:</span>
+            </div>
+            <ol style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 9px; font-size: 0.93rem; color: var(--text-body);">
+              <li><strong>Bước 1 (Bảo mật):</strong> Vào Settings > Privacy, đảm bảo đã gạt OFF mục Help improve models.</li>
+              <li><strong>Bước 2 (Hiến pháp cá nhân):</strong> Ra lệnh cho Claude tạo file <code>CLAUDE.md</code> mang chính xác Họ tên, phòng ban (Sale/HR/Kế toán/Marketing) và mục tiêu công việc thật của bạn.</li>
+              <li><strong>Bước 3 (AI sinh cây thư mục):</strong> Ra lệnh cho Claude đọc <code>CLAUDE.md</code> và tự động tạo cây thư mục <code>01-</code>, <code>02-</code>..., thư mục <code>_backup/</code> và file <code>00-index.md</code>.</li>
+              <li><strong>Bước 4 (Kiểm tra trí nhớ):</strong> Mở New Session (<code>/clear</code>), gõ thử một câu lệnh để xác nhận AI đã thuộc lòng danh tính và đường dẫn thư mục của bạn!</li>
+            </ol>
+          </div>
+
+          <div class="timer-card-panel">
+            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">Đồng Hồ Thực Hành</div>
+            <div class="timer-digits-text" id="timerDisplay">25:00</div>
+            <div class="timer-buttons">
+              <button class="btn-keynote btn-keynote-primary" id="btnTimerStart" onclick="toggleTimer()">Bắt đầu</button>
+              <button class="btn-keynote" onclick="resetTimer()">Đặt lại</button>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 12px;">Giảng viên & Trợ giảng hỗ trợ trực tiếp qua Zoom</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 18: GITHUB CHO NGƯỜI KHÔNG PHẢI LẬP TRÌNH VIÊN
+         ==================================================================== -->
+    <section class="slide-page" data-slide="18" data-title="GitHub Cho Người Không Phải Dev">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Nền Tảng Lưu Trữ</span>
+          <h2 class="slide-h2">GitHub Nền Tảng Cho Người Không Phải Lập Trình Viên</h2>
+          <p class="slide-lead">Xóa bỏ rào cản tâm lý — Hiểu GitHub đơn giản dưới góc độ quản trị văn phòng</p>
+        </div>
+        <span class="slide-pill-meta">Cloud Backup & Versioning</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="callout-banner" style="margin-top: 0; margin-bottom: 12px;">
+          🌟 <strong>Định nghĩa đơn giản:</strong> GitHub không phải là công cụ viết mã phức tạp! Hãy xem GitHub là một <strong>"Google Drive siêu an toàn"</strong> lưu giữ toàn bộ lịch sử các phiên bản tài liệu mà không bao giờ sợ bị ghi đè mất file.
+        </div>
+
+        <div class="bento-grid grid-4">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title" style="font-size: 1.02rem;">📁 Repository (Repo)</span>
+            </div>
+            <p class="card-text" style="font-size: 0.88rem;">Một "thư mục dự án đám mây" chứa trọn gói toàn bộ giáo án, slide và file thực hành của khóa học.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title" style="font-size: 1.02rem;">📸 Commit</span>
+            </div>
+            <p class="card-text" style="font-size: 0.88rem;">Một "mốc chụp lưu lịch sử" (như phiên bản v1, v2, v3). Bạn có thể quay lại bất kỳ thời điểm nào trong quá khứ.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title" style="font-size: 1.02rem;">⚡ Download ZIP</span>
+            </div>
+            <p class="card-text" style="font-size: 0.88rem;">Cách đơn giản nhất để tải trọn bộ tài liệu từ GitHub về máy tính cá nhân chỉ trong 1 giây mà không cần cài Git.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title" style="font-size: 1.02rem;">🔑 Token (PAT)</span>
+            </div>
+            <p class="card-text" style="font-size: 0.88rem;">Chìa khóa cấp quyền an toàn để AI tự động sao lưu và đồng bộ tài liệu của bạn lên kho lưu trữ đám mây.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 19: DEMO GV: TẢI BỘ HỌC LIỆU VỀ MÁY
+         ==================================================================== -->
+    <section class="slide-page" data-slide="19" data-title="Demo GV: Tải Học Liệu GitHub">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Thao Tác Thực Tế</span>
+          <h2 class="slide-h2">Demo GV: Khám Phá Repo & Tải Bộ Học Liệu Về Máy</h2>
+          <p class="slide-lead">2 thao tác đơn giản học viên cần làm ngay để sẵn sàng dữ liệu cho 6 buổi</p>
+        </div>
+        <span class="slide-pill-meta">Thực hiện ngay</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title">🌐 1. Xem Trực Tiếp Trên Trình Duyệt Web</span>
+            </div>
+            <p class="card-text">Truy cập đường dẫn GitHub khóa học do CES Global cung cấp:</p>
+            <ul class="bullet-list" style="margin-top: 8px;">
+              <li><span class="bullet-dot">•</span> Cấu trúc chia theo từng buổi học cực kỳ trực quan: <code>01-buoi-01-...</code>, <code>02-buoi-02-...</code></li>
+              <li><span class="bullet-dot">•</span> Mỗi buổi có sẵn: Giáo án chi tiết, Slide bài giảng, Bài tập thực hành và thư mục <code>demo/</code>.</li>
+              <li><span class="bullet-dot">•</span> Đọc được trực tiếp mọi file Markdown, hướng dẫn ngay trên web điện thoại hoặc laptop.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="card-title" style="color: var(--brand-blue-deep);">💾 2. Tải Trọn Gói Về Máy Tính (Chưa Đầy 30 Giây)</span>
+            </div>
+            <ol style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; font-size: 0.93rem; color: var(--text-body);">
+              <li>Trên trang GitHub, tìm nút màu xanh lá cây <strong><code>Code</code></strong> ở góc trên bên phải.</li>
+              <li>Bấm vào và chọn tùy chọn cuối cùng: <strong><code>Download ZIP</code></strong>.</li>
+              <li>Giải nén file tải về vào thư mục học tập trên máy tính của bạn.</li>
+              <li>Mở Claude Desktop > Tab <code>&lt;/&gt; Code</code> và trỏ vào thư mục vừa giải nén!</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald">
+          🎉 <strong>Chúc mừng:</strong> Bạn đã có trọn vẹn toàn bộ giáo án, dữ liệu mẫu Excel và kịch bản thực hành của cả 6 buổi học!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 20: KHỞI TẠO AGENT SỐ 1: ORCHESTRATOR
+         ==================================================================== -->
+    <section class="slide-page" data-slide="20" data-title="Khởi Tạo Agent Số 1">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Kích Hoạt Agent</span>
+          <h2 class="slide-h2">Khởi Tạo Agent Số 1 — Trợ Lý Điều Phối (Orchestrator)</h2>
+          <p class="slide-lead">Bàn giao quyền điều hành không gian làm việc cho vị "tổng quản" AI đầu tiên</p>
+        </div>
+        <span class="slide-pill-meta" style="background: var(--brand-blue-deep); color:#fff;">Agent 1 / 6</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2-1">
+          <div class="terminal-box" style="margin-top: 0;">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span class="terminal-tag" style="margin-left: 8px;">prompt kích hoạt agent 1</span>
+              </div>
+              <button class="btn-copy" onclick="copyPrompt('promptOrchestrator', this)">📋 Sao chép Prompt</button>
+            </div>
+            <pre class="terminal-code" id="promptOrchestrator">Dựa trên file CLAUDE.md vừa tạo, bạn hãy đóng vai Trợ lý Điều phối (Orchestrator Agent) của tôi.
+Hãy quét toàn bộ thư mục hiện tại của tôi, liệt kê danh sách tài liệu đang có và đề xuất kế hoạch 3 bước để tự động hóa công việc của tôi trong tuần này.</pre>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="card-title">🎯 Vai Trò Của Orchestrator</span>
+            </div>
+            <p class="card-text">Trợ lý Điều phối là hạt nhân chỉ huy:</p>
+            <ul class="bullet-list" style="margin-top: 8px;">
+              <li><span class="bullet-check">✓</span> Hiểu toàn cục cấu trúc dự án.</li>
+              <li><span class="bullet-check">✓</span> Phân loại việc nào giao cho Agent Tài liệu (Buổi 2), việc nào cho Agent Dữ liệu (Buổi 3).</li>
+              <li><span class="bullet-check">✓</span> Báo cáo tiến độ chuẩn xác cho bạn.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 21: BẢNG TRA NHANH 4 CÂU PROMPT CỐT LÕI
+         ==================================================================== -->
+    <section class="slide-page" data-slide="21" data-title="Bảng Tra Nhanh 4 Câu Prompt">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Cẩm Nang Bỏ Túi</span>
+          <h2 class="slide-h2">Bảng Tra Nhanh 4 Câu Prompt Cốt Lõi Buổi 01</h2>
+          <p class="slide-lead">Bộ lệnh chuẩn hóa để bạn tự tin ứng dụng ngay vào công việc thực tế mỗi ngày</p>
+        </div>
+        <span class="slide-pill-meta">Cheat Sheet</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="table-container">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th style="width: 5%; text-align: center;">#</th>
+                <th style="width: 18%;">Nhiệm vụ</th>
+                <th style="width: 65%;">Câu lệnh Prompt chính xác</th>
+                <th style="width: 12%; text-align: center;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center; font-weight: 700; font-family: 'JetBrains Mono', monospace;">1</td>
+                <td><strong>Tạo CLAUDE.md</strong></td>
+                <td style="font-size: 0.88rem; color: #1e293b;" id="promptCheat1">Dựa trên demo/CLAUDE.md, hãy tạo file CLAUDE.md tại gốc: Họ tên [Tên], Vị trí [Phòng], Mục tiêu dự án [Mục tiêu], Cấp trên [Tên], tuân thủ 100% Times New Roman, Nghị định 30, Excel chống tràn chữ, cấm emoji, cấm xóa folder, lưu _backup/.</td>
+                <td style="text-align: center;">
+                  <button class="btn-copy" style="padding: 4px 8px;" onclick="copyPrompt('promptCheat1', this)">📋 Chép</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; font-family: 'JetBrains Mono', monospace;">2</td>
+                <td><strong>Sinh cây thư mục</strong></td>
+                <td style="font-size: 0.88rem; color: #1e293b;" id="promptCheat2">Đọc file CLAUDE.md vừa tạo. Dựa trên vai trò và mục tiêu dự án của tôi: hãy thiết kế và tự động tạo cây thư mục chuẩn hóa (01-, 02-...), thư mục _backup/ và file 00-index.md mô tả mục lục.</td>
+                <td style="text-align: center;">
+                  <button class="btn-copy" style="padding: 4px 8px;" onclick="copyPrompt('promptCheat2', this)">📋 Chép</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; font-family: 'JetBrains Mono', monospace;">3</td>
+                <td><strong>Kiểm tra trí nhớ</strong></td>
+                <td style="font-size: 0.88rem; color: #1e293b;" id="promptCheat3">Hãy soạn giúp tôi một email ngắn gửi anh Tuấn đối tác và cho tôi biết sau này file báo giá của anh Tuấn sẽ được lưu vào thư mục nào?</td>
+                <td style="text-align: center;">
+                  <button class="btn-copy" style="padding: 4px 8px;" onclick="copyPrompt('promptCheat3', this)">📋 Chép</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; font-family: 'JetBrains Mono', monospace;">4</td>
+                <td><strong>Kích hoạt Agent 1</strong></td>
+                <td style="font-size: 0.88rem; color: #1e293b;" id="promptCheat4">Dựa trên file CLAUDE.md, hãy đóng vai Trợ lý Điều phối của tôi. Quét thư mục hiện tại và đề xuất kế hoạch làm việc tuần này.</td>
+                <td style="text-align: center;">
+                  <button class="btn-copy" style="padding: 4px 8px;" onclick="copyPrompt('promptCheat4', this)">📋 Chép</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 22: TỔNG KẾT & XEM TRƯỚC BUỔI 02
+         ==================================================================== -->
+    <section class="slide-page" data-slide="22" data-title="Tổng Kết & Xem Trước Buổi 02">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <span class="slide-badge-category">Tổng Kết Khóa Học</span>
+          <h2 class="slide-h2">Tổng Kết Buổi 01 & Xem Trước Buổi 02</h2>
+          <p class="slide-lead">Khép lại buổi học khai phóng nền móng và chuẩn bị cho vũ khí tiếp theo</p>
+        </div>
+        <span class="slide-pill-meta" style="background: var(--brand-emerald); color:#fff; border:none;">Hoàn Thành Buổi 01</span>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <div class="bento-card compare-card-good">
+            <div class="card-title-row">
+              <span class="card-title">🏆 4 Thành Tựu Bạn Cầm Về Hôm Nay:</span>
+            </div>
+            <ul class="bullet-list">
+              <li><span class="bullet-check">✓</span> AI Workspace hoàn chỉnh trên Claude Desktop, bảo mật an toàn 100%.</li>
+              <li><span class="bullet-check">✓</span> Làm chủ bộ thông số Mode, Model, Effort, Quota và Context Window.</li>
+              <li><span class="bullet-check">✓</span> Sở hữu "Hiến pháp" <code>CLAUDE.md</code> và cây thư mục phòng ban chuẩn hóa.</li>
+              <li><span class="bullet-check">✓</span> Kích hoạt thành công Trợ lý Điều phối (Orchestrator Agent).</li>
+            </ul>
+
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle);">
+              <strong>📝 Bài tập về nhà:</strong>
+              <div style="font-size: 0.9rem; color: var(--text-body); margin-top: 4px;">
+                1. Tinh chỉnh <code>CLAUDE.md</code> với 3 đầu việc lặp lại nhiều nhất trong tuần.<br>
+                2. Mở thư mục <code>02-buoi-02-quan-ly-tai-lieu-chong-bia-so/demo/</code> để xem trước dữ liệu.
+              </div>
+            </div>
+          </div>
+
+          <div class="bento-card bento-card-dark">
+            <div class="card-title-row">
+              <span class="card-title" style="color: #93c5fd !important;">🚀 ĐÓN CHỜ BUỔI 02:</span>
+            </div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin-top: 4px; line-height: 1.35;">
+              AGENT QUẢN LÝ TÀI LIỆU & BÍ QUYẾT THÉP CHỐNG BỊA SỐ LIỆU
+            </div>
+            <ul class="bullet-list" style="margin-top: 14px;">
+              <li><span class="bullet-check" style="color: #6ee7b7;">✓</span> Tóm tắt báo cáo dự án dài 40 trang chỉ trong 3 phút.</li>
+              <li><span class="bullet-check" style="color: #6ee7b7;">✓</span> Đóng gói quy trình thành Skill <code>tom-tat-tai-lieu</code> tái sử dụng vĩnh viễn.</li>
+              <li><span class="bullet-check" style="color: #6ee7b7;">✓</span> Kỹ thuật cấm đoán và bẫy phát hiện thông tin bịa đặt.</li>
+            </ul>
+            <div style="margin-top: 16px; background: rgba(255,255,255,0.12); padding: 12px 18px; border-radius: var(--radius-md); font-size: 0.94rem; text-align: center;">
+              Hẹn gặp lại bạn vào <strong>20:00 Buổi Tiếp Theo</strong> trên Zoom!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL OVERVIEW ('O')
+       ======================================================================== -->
+  <div class="overview-modal" id="overviewModal">
+    <div class="overview-dialog">
+      <div class="overview-header">
+        <h3>📋 Danh Sách Toàn Bộ 22 Slide</h3>
+        <button class="btn-keynote" onclick="toggleOverview()">✕ Đóng (O)</button>
+      </div>
+      <div class="overview-grid" id="overviewGrid">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SPEAKER NOTES DRAWER ('N')
+       ======================================================================== -->
+  <div class="speaker-drawer" id="speakerDrawer">
+    <div class="speaker-header-row">
+      <span class="speaker-badge-chip">📝 GHI CHÚ GIẢNG VIÊN (Nhấn N để ẩn/hiện)</span>
+      <button class="btn-keynote" style="padding: 2px 8px; font-size: 0.8rem;" onclick="toggleNotes()">✕ Đóng</button>
+    </div>
+    <div class="speaker-body-text" id="speakerNoteContent">
+      Chào mừng học viên, giới thiệu không khí lớp học. Trấn an học viên không cần biết lập trình, 100% giao tiếp bằng tiếng Việt tự nhiên và tư duy quản trị văn phòng.
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="toastMsg">✓ Đã sao chép prompt vào Clipboard!</div>
+
+  <!-- ========================================================================
+       INTERACTIVE JAVASCRIPT CONTROLLER
+       ======================================================================== -->
+  <script>
+    /* Slide Metadata & Instructor Notes */
+    const slideNotes = {
+      1: "Chào mừng học viên đến với Khóa học AI Workspace. Giới thiệu không khí lớp học, khẳng định phương châm: không cần biết code, chỉ cần tư duy văn phòng và tiếng Việt tự nhiên.",
+      2: "Điểm qua 6 chuẩn đầu ra cụ thể. Giúp học viên hình dung rõ kết quả cầm về sau 2,5 giờ học.",
+      3: "Nhấn mạnh nỗi đau khi dùng Chatbot thông thường (copy/paste mỏi tay, AI bịa số, hỏi lại từ đầu) để làm bật lên giá trị của AI Workspace.",
+      4: "Giải thích mô hình 4 tầng. Nhấn mạnh Tầng 4 (CLAUDE.md & Cây thư mục) là cái móng nhà, móng không chắc thì tầng 1 và 2 không chạy được.",
+      5: "Giới thiệu tổng quan lộ trình 6 Agent. Hôm nay lớp mình sẽ dựng Agent số 1 (Orchestrator) và nền móng cho 5 Agent còn lại.",
+      6: "Hướng dẫn học viên mở Claude Desktop và bấm vào tab </> Code. Giải thích sự khác biệt giữa chat thông thường và môi trường làm việc với file.",
+      7: "BẮT BUỘC: Yêu cầu cả lớp cùng vào Settings > Privacy và tắt ngay mục 'Help improve our AI models' để bảo mật dữ liệu doanh nghiệp.",
+      8: "Giải thích 5 chế độ Mode. Khuyên học viên dùng chế độ Auto trong lớp học.",
+      9: "Phân tích Haiku (nhanh rẻ), Sonnet (chuẩn nhất cho văn phòng), Opus (nghiên cứu sâu). Giới thiệu thanh trượt Effort.",
+      10: "Chỉ cho học viên vòng tròn Context Window. Giải thích tại sao AI dùng lâu bị 'lú' và cách dùng New Session (/clear) giải quyết triệt để.",
+      11: "So sánh Chat Prompt vs Claude Memory vs File CLAUDE.md. Nhấn mạnh CLAUDE.md là file vật lý, bất biến, mang đi đâu cũng chạy đúng.",
+      12: "Nhấn mạnh triết lý: Phải nạp CLAUDE.md trước rồi mới cho AI sinh thư mục, không làm ngược lại.",
+      13: "Điểm qua 8 trụ cột của CLAUDE.md: Phông Times New Roman cho văn bản hành chính, Nghị định 30, Excel chống tràn chữ, cấm bịa số, cấm xóa folder, v.v.",
+      14: "DEMO BƯỚC 1: Giảng viên copy prompt mẫu, dán vào Claude Code để tạo file CLAUDE.md mang thông tin mẫu.",
+      15: "DEMO BƯỚC 2: Giảng viên ra lệnh cho AI đọc CLAUDE.md vừa tạo và tự động sinh toàn bộ cây thư mục 01-, 02-..., _backup/ và 00-index.md.",
+      16: "DEMO BƯỚC 3: Giảng viên mở New Session (/clear), hỏi thử 1 câu để chứng minh AI vẫn nhớ danh tính và thư mục mà không cần nhắc lại.",
+      17: "HỌC VIÊN THỰC HÀNH 25 PHÚT: Bật đồng hồ đếm ngược. Giảng viên và trợ giảng vào các breakout room hoặc hỗ trợ trực tiếp.",
+      18: "Giải thích GitHub đơn giản như Google Drive an toàn, xóa bỏ rào cản tâm lý sợ kỹ thuật của dân văn phòng.",
+      19: "Hướng dẫn học viên cách tải file ZIP học liệu về máy và giải nén.",
+      20: "Chạy prompt kích hoạt Trợ lý Điều phối (Orchestrator Agent), yêu cầu AI quét thư mục và lên kế hoạch tuần.",
+      21: "Trình chiếu bảng tra nhanh 4 câu prompt cốt lõi để học viên lưu lại làm tài liệu thực hành hàng ngày.",
+      22: "Tổng kết 4 thành tựu, giao bài tập về nhà và hé lộ nội dung hấp dẫn của Buổi 02 (Agent Quản Lý Tài Liệu & Chống Bịa Số)."
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 22;
+    const slides = document.querySelectorAll('.slide-page');
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressBar = document.getElementById('progressBar');
+    const speakerNoteContent = document.getElementById('speakerNoteContent');
+    const overviewModal = document.getElementById('overviewModal');
+    const overviewGrid = document.getElementById('overviewGrid');
+    const speakerDrawer = document.getElementById('speakerDrawer');
+
+    /* Build Overview Grid */
+    function buildOverview() {
+      overviewGrid.innerHTML = '';
+      slides.forEach((slide, index) => {
+        const num = index + 1;
+        const title = slide.getAttribute('data-title') || `Slide ${num}`;
+        const thumb = document.createElement('div');
+        thumb.className = `overview-thumb ${num === currentSlide ? 'active' : ''}`;
+        thumb.innerHTML = `
+          <div class="num">Slide ${num < 10 ? '0' + num : num}</div>
+          <div class="ttl">${title}</div>
+        `;
+        thumb.onclick = () => {
+          goToSlide(num);
+          toggleOverview();
+        };
+        overviewGrid.appendChild(thumb);
+      });
+    }
+
+    /* Jump to Slide */
+    function goToSlide(num) {
+      if (num < 1 || num > totalSlides) return;
+
+      slides.forEach(s => s.classList.remove('active'));
+      const target = document.querySelector(`.slide-page[data-slide="${num}"]`);
+      if (target) {
+        target.classList.add('active');
+        target.scrollTop = 0;
+      }
+
+      currentSlide = num;
+      slideIndicator.textContent = `Slide ${currentSlide < 10 ? '0' + currentSlide : currentSlide} / ${totalSlides}`;
+      progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      // Update speaker note
+      speakerNoteContent.textContent = slideNotes[currentSlide] || "Không có ghi chú thêm.";
+
+      // Update active card in modal
+      document.querySelectorAll('.overview-thumb').forEach((thumb, idx) => {
+        thumb.classList.toggle('active', idx + 1 === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) goToSlide(currentSlide - 1);
+    }
+
+    function toggleOverview() {
+      overviewModal.classList.toggle('active');
+      if (overviewModal.classList.contains('active')) {
+        buildOverview();
+      }
+    }
+
+    function toggleNotes() {
+      speakerDrawer.classList.toggle('active');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* 1-Click Copy with Feedback */
+    function copyPrompt(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.innerText || el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        if (btn) {
+          const original = btn.innerHTML;
+          btn.innerHTML = '✓ Đã chép!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = original;
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+        showToast("Đã sao chép prompt vào Clipboard!");
+      }).catch(() => {
+        showToast("Vui lòng chọn văn bản và sao chép thủ công.");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+
+    /* Practice Timer (Slide 17) */
+    let timerSec = 25 * 60;
+    let timerRef = null;
+    const timerDisplay = document.getElementById('timerDisplay');
+    const btnTimerStart = document.getElementById('btnTimerStart');
+
+    function updateTimer() {
+      const m = Math.floor(timerSec / 60);
+      const s = timerSec % 60;
+      timerDisplay.textContent = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    }
+
+    function toggleTimer() {
+      if (timerRef) {
+        clearInterval(timerRef);
+        timerRef = null;
+        btnTimerStart.textContent = 'Tiếp tục';
+        btnTimerStart.classList.remove('btn-keynote-primary');
+      } else {
+        btnTimerStart.textContent = 'Tạm dừng';
+        btnTimerStart.classList.add('btn-keynote-primary');
+        timerRef = setInterval(() => {
+          if (timerSec > 0) {
+            timerSec--;
+            updateTimer();
+          } else {
+            clearInterval(timerRef);
+            timerRef = null;
+            btnTimerStart.textContent = 'Hoàn thành';
+            showToast("⏰ Đã hết 25 phút thực hành!");
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (timerRef) {
+        clearInterval(timerRef);
+        timerRef = null;
+      }
+      timerSec = 25 * 60;
+      updateTimer();
+      btnTimerStart.textContent = 'Bắt đầu';
+      btnTimerStart.classList.add('btn-keynote-primary');
+    }
+
+    /* Keyboard Navigation Shortcuts */
+    document.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'o') {
+        e.preventDefault();
+        toggleOverview();
+      } else if (e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullscreen();
+      } else if (e.key === 'Escape') {
+        if (overviewModal.classList.contains('active')) toggleOverview();
+        if (speakerDrawer.classList.contains('active')) toggleNotes();
+      }
+    });
+
+    /* Button Click Listeners */
+    document.getElementById('btnNext').addEventListener('click', nextSlide);
+    document.getElementById('btnPrev').addEventListener('click', prevSlide);
+    document.getElementById('btnOverview').addEventListener('click', toggleOverview);
+    document.getElementById('btnNotes').addEventListener('click', toggleNotes);
+    document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+
+    // Initialize first slide
+    goToSlide(1);
+  </script>
+</body>
+</html>
