@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI Workspace - Buổi 02: Skill Quản Lý Tài Liệu & Chống Bịa Số | CES Global</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       MODERN PRESENTATION ENGINE: TASTE-SKILL V4 (Full-Viewport Keynote Experience)
+       Clean, immersive, responsive, vector SVG icons, Apple Keynote feel.
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace !important;
+    }
+
+    :root {
+      /* Luminous Theme Canvas */
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --surface-alt: #f1f5f9;
+      --surface-glass: rgba(255, 255, 255, 0.88);
+      --terminal-bg: #090d16;
+
+      /* Crisp Borders */
+      --border-subtle: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --border-blue: #bfdbfe;
+
+      /* Deep Modern Slate Typography */
+      --text-main: #0f172a;       /* Slate 900 */
+      --text-body: #334155;       /* Slate 700 */
+      --text-muted: #64748b;      /* Slate 500 */
+      --text-light: #94a3b8;      /* Slate 400 */
+      --text-white: #ffffff;
+
+      /* High-Impact Vibrant Accents */
+      --brand-blue: #2563eb;      /* Blue 600 */
+      --brand-blue-deep: #1e3a8a; /* Blue 900 */
+      --brand-indigo: #4f46e5;    /* Indigo 600 */
+      --brand-cyan: #0284c7;      /* Sky 600 */
+      --brand-emerald: #059669;   /* Emerald 600 */
+      --brand-amber: #d97706;     /* Amber 600 */
+      --brand-rose: #e11d48;      /* Rose 600 */
+      --brand-purple: #7c3aed;    /* Purple 600 */
+
+      /* Multi-Layered Soft Elevation */
+      --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 8px 20px -3px rgba(15, 23, 42, 0.07), 0 3px 6px -2px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 20px 35px -8px rgba(15, 23, 42, 0.1), 0 6px 12px -3px rgba(15, 23, 42, 0.05);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text-main);
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Ambient Dynamic Mesh Canvas */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 12% 15%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 88% 22%, rgba(79, 70, 229, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 88%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    /* ==========================================================================
+       TOP FLOATING MINIMAL HEADER BAR
+       ========================================================================== */
+    .top-navbar {
+      position: relative;
+      z-index: 50;
+      height: 58px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ces-logo-badge {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.06em;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .course-breadcrumb {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .session-chip {
+      background: #eff6ff;
+      color: var(--brand-blue);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-blue);
+    }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slide-badge {
+      background: var(--surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .nav-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-keynote {
+      background: var(--surface-white);
+      border: 1px solid var(--border-medium);
+      color: var(--text-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-keynote:hover {
+      background: var(--surface-alt);
+      border-color: var(--brand-blue);
+      color: var(--brand-blue);
+      transform: translateY(-1px);
+    }
+
+    .btn-keynote-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-keynote-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Top Progress Line */
+    .top-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #e2e8f0;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
+      width: 4.54%;
+      transition: width 0.3s ease;
+    }
+
+    /* ==========================================================================
+       FULL-VIEWPORT SLIDE CANVAS
+       ========================================================================== */
+    .slide-canvas {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100vw;
+      height: calc(100vh - 58px);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .slide-page {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 26px 54px 34px;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      animation: keynoteIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide-page.active {
+      display: flex;
+    }
+
+    @keyframes keynoteIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-page::-webkit-scrollbar {
+      width: 6px;
+    }
+    .slide-page::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    /* ==========================================================================
+       SLIDE HEADER BLOCK
+       ========================================================================== */
+    .slide-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-text-group {
+      flex: 1;
+    }
+
+    .slide-badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--brand-blue);
+      border: 1px solid var(--border-blue);
+      margin-bottom: 5px;
+    }
+
+    .slide-h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-lead {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .slide-pill-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-body);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       SLIDE BODY CONTENT & BENTO GRIDS
+       ========================================================================== */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .bento-grid {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid-1-2 { grid-template-columns: 1fr 2fr; }
+    .grid-2-1 { grid-template-columns: 2fr 1fr; }
+
+    .bento-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .bento-card:hover {
+      border-color: var(--border-medium);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .bento-card-featured {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      border: 1.5px solid #93c5fd;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+    }
+
+    .bento-card-dark {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border: 1px solid #1e293b;
+    }
+
+    .bento-card-dark * {
+      color: #ffffff !important;
+    }
+
+    .bento-card-dark .text-muted {
+      color: #94a3b8 !important;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-blue { background: #eff6ff; color: var(--brand-blue); }
+    .icon-indigo { background: #eef2ff; color: var(--brand-indigo); }
+    .icon-emerald { background: #ecfdf5; color: var(--brand-emerald); }
+    .icon-amber { background: #fffbeb; color: var(--brand-amber); }
+    .icon-rose { background: #fff1f2; color: var(--brand-rose); }
+    .icon-purple { background: #f5f3ff; color: var(--brand-purple); }
+
+    .card-p {
+      font-size: 0.94rem;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .card-list li {
+      font-size: 0.92rem;
+      color: var(--text-body);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .card-list li::before {
+      content: "✦";
+      color: var(--brand-blue);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .badge-step-num {
+      background: var(--brand-blue);
+      color: #ffffff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Comparison Cards (Red vs Green) */
+    .compare-side-bad {
+      background: #fffafa;
+      border: 1.5px solid #fecdd3;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .compare-side-good {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .compare-title-bad {
+      color: var(--brand-rose);
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #fecdd3;
+    }
+
+    .compare-title-good {
+      color: var(--brand-emerald);
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #bbf7d0;
+    }
+
+    /* Sleek Developer Terminal Box for Prompts */
+    .terminal-box {
+      background: var(--terminal-bg);
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-md);
+      margin-top: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .terminal-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .terminal-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .terminal-tag {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-copy {
+      background: #334155;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-copy:hover {
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      color: #ffffff;
+    }
+
+    .btn-copy.copied {
+      background: var(--brand-emerald);
+      border-color: var(--brand-emerald);
+      color: #ffffff;
+    }
+
+    .terminal-code {
+      padding: 12px 18px;
+      color: #f1f5f9;
+      font-size: 0.91rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'JetBrains Mono', Consolas, monospace !important;
+      user-select: text;
+    }
+
+    /* Highlight Notification Box */
+    .callout-banner {
+      border-left: 4px solid var(--brand-blue);
+      background: #eff6ff;
+      padding: 12px 18px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-top: 10px;
+      font-size: 0.94rem;
+      color: var(--brand-blue-deep);
+      line-height: 1.5;
+    }
+
+    .callout-amber {
+      border-left-color: var(--brand-amber);
+      background: #fffbeb;
+      color: var(--brand-amber);
+    }
+
+    .callout-emerald {
+      border-left-color: var(--brand-emerald);
+      background: #ecfdf5;
+      color: var(--brand-emerald);
+    }
+
+    .callout-rose {
+      border-left-color: var(--brand-rose);
+      background: #fff1f2;
+      color: var(--brand-rose);
+    }
+
+    /* Modern Table */
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.91rem;
+    }
+
+    .modern-table th {
+      background: #f8fafc;
+      color: var(--text-main);
+      font-weight: 700;
+      padding: 10px 16px;
+      border-bottom: 2px solid var(--border-subtle);
+      font-size: 0.86rem;
+    }
+
+    .modern-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-body);
+      line-height: 1.45;
+    }
+
+    .modern-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .modern-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Tree View Box */
+    .tree-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      line-height: 1.58;
+      color: var(--text-main);
+      white-space: pre;
+      font-family: 'JetBrains Mono', monospace !important;
+      overflow-x: auto;
+    }
+
+    /* ==========================================================================
+       HERO COVER (SLIDE 1) SPLIT LAYOUT WITH GRAPHIC BLOCK
+       ========================================================================== */
+    .hero-split-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+      height: 100%;
+      padding: 10px 10px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .hero-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      color: var(--brand-blue-deep);
+      font-weight: 700;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
+    }
+
+    .hero-h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .hero-h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--brand-blue);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-session-pill {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 22px;
+      padding: 8px 20px;
+      background: #ffffff;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .hero-meta-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-meta-card .meta-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-blue);
+    }
+
+    .hero-meta-card .meta-info .lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .hero-meta-card .meta-info .val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .btn-hero-cta {
+      background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      transition: var(--transition);
+    }
+
+    .btn-hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Hero Right Console Graphic Card */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-console-card {
+      width: 100%;
+      max-width: 460px;
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg), 0 0 50px rgba(37, 99, 235, 0.15);
+      overflow: hidden;
+    }
+
+    .hero-console-top {
+      background: #111827;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    .hero-console-content {
+      padding: 22px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #94a3b8;
+    }
+
+    .console-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .status-active-pill {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.74rem;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* ==========================================================================
+       PRACTICE TIMER (SLIDE 17)
+       ========================================================================== */
+    .timer-container {
+      background: #ffffff;
+      border: 2px solid var(--border-blue);
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timer-clock {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--brand-blue);
+      letter-spacing: 0.05em;
+    }
+
+    .timer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       SLIDE OVERVIEW MODAL (Press 'O')
+       ========================================================================== */
+    .overview-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .overview-modal.active {
+      display: flex;
+    }
+
+    .overview-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 1120px;
+      max-height: 85vh;
+      border-radius: var(--radius-xl);
+      padding: 28px 36px;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .overview-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .overview-thumb {
+      background: var(--surface-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .overview-thumb:hover {
+      background: #ffffff;
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .overview-thumb.active {
+      background: #eff6ff;
+      border-color: var(--brand-blue);
+      box-shadow: 0 0 0 2px var(--brand-blue);
+    }
+
+    .overview-thumb .num {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--brand-blue);
+      text-transform: uppercase;
+    }
+
+    .overview-thumb .ttl {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    /* ==========================================================================
+       SPEAKER NOTES DRAWER (Press 'N')
+       ========================================================================== */
+    .speaker-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 2px solid var(--brand-blue);
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+      padding: 16px 40px;
+      z-index: 80;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .speaker-drawer.active {
+      transform: translateY(0);
+    }
+
+    .speaker-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .speaker-badge-chip {
+      background: #eff6ff;
+      color: var(--brand-blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .speaker-body-text {
+      font-size: 0.96rem;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.92rem;
+      font-weight: 600;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: toastIn 0.2s ease;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Luminous Subtle Ambient Canvas Background -->
+  <div class="ambient-canvas"></div>
+
+  <!-- TOP MINIMAL NAVBAR -->
+  <header class="top-navbar">
+    <div class="brand-section">
+      <div class="ces-logo-badge">CES GLOBAL</div>
+      <div class="course-breadcrumb">
+        <span>AI WORKSPACE</span>
+        <span class="session-chip">Buổi 02: Quản Lý Tài Liệu & Skill Chống Bịa Số</span>
+      </div>
+    </div>
+
+    <div class="nav-status">
+      <span class="slide-badge" id="slideIndicator">Slide 01 / 22</span>
+    </div>
+
+    <div class="nav-buttons-group">
+      <button class="btn-keynote" id="btnPrev" title="Phím mũi tên trái (←)">◀ Trước</button>
+      <button class="btn-keynote btn-keynote-primary" id="btnNext" title="Phím mũi tên phải (→) hoặc Phím Cách">Sau ▶</button>
+      <button class="btn-keynote" id="btnOverview" title="Phím tắt: O">📋 Danh sách (O)</button>
+      <button class="btn-keynote" id="btnNotes" title="Phím tắt: N">📝 Ghi chú (N)</button>
+      <button class="btn-keynote" id="btnFullscreen" title="Phím tắt: F">⛶ Toàn màn hình</button>
+    </div>
+
+    <!-- Active Progress Line -->
+    <div class="top-progress-track">
+      <div class="top-progress-fill" id="progressBar"></div>
+    </div>
+  </header>
+
+  <!-- FULL-VIEWPORT STAGE -->
+  <main class="slide-canvas">
+
+    <!-- ====================================================================
+         SLIDE 01: HERO COVER (SPLIT LAYOUT WITH ANIMATED CONSOLE BLOCK)
+         ==================================================================== -->
+    <section class="slide-page active" data-slide="1" data-title="Slide Tiêu Đề">
+      <div class="hero-split-layout">
+        <div class="hero-left">
+          <div class="hero-badge-tag">✦ CES GLOBAL — AI TECHNOLOGY TRAINING CENTER</div>
+          <h1 class="hero-h1">AI WORKSPACE</h1>
+          <h2 class="hero-h2">Làm Chủ 6 AI Agent Thực Chiến Với Claude Code</h2>
+          <div class="hero-session-pill">
+            BUỔI 02: SKILL – ĐÓNG GÓI QUY TRÌNH LẶP LẠI & CHỐNG BỊA SỐ LIỆU
+          </div>
+
+          <div class="hero-meta-grid">
+            <div class="hero-meta-card">
+              <div class="meta-icon">🏢</div>
+              <div class="meta-info">
+                <div class="lbl">Đơn vị tổ chức</div>
+                <div class="val">CES Global Center</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">⏱️</div>
+              <div class="meta-info">
+                <div class="lbl">Thời lượng</div>
+                <div class="val">150 Phút (2,5 Giờ)</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">💻</div>
+              <div class="meta-info">
+                <div class="lbl">Hình thức</div>
+                <div class="val">Live Zoom & VIP LMS</div>
+              </div>
+            </div>
+            <div class="hero-meta-card">
+              <div class="meta-icon">🌐</div>
+              <div class="meta-info">
+                <div class="lbl">Cổng đào tạo</div>
+                <div class="val">nhanvienai.cesglobal.com.vn</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-hero-cta" onclick="nextSlide()">
+            <span>Bắt Đầu Buổi Học Ngay</span>
+            <span>▶</span>
+          </button>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-console-card">
+            <div class="hero-console-top">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <span class="terminal-tag">document-agent-v2.0</span>
+            </div>
+            <div class="hero-console-content">
+              <div class="console-status-row">
+                <span style="color: #94a3b8;">● Document Agent:</span>
+                <span class="status-active-pill">READY</span>
+              </div>
+              <div class="console-status-row">
+                <span style="color: #94a3b8;">● Skill Engine:</span>
+                <span style="color: #60a5fa; font-weight: 700;">.claude/skills/</span>
+              </div>
+              <div class="console-status-row">
+                <span style="color: #94a3b8;">● Target Doc:</span>
+                <span style="color: #cbd5e1;">bao-cao-tong-ket-nam.docx (14p)</span>
+              </div>
+              <div class="console-status-row">
+                <span style="color: #94a3b8;">● Anti-Hallucination:</span>
+                <span style="color: #34d399; font-weight: 700;">STRICT ENFORCED</span>
+              </div>
+              <p style="margin-top: 14px; color: #64748b; font-size: 0.78rem;">
+                &gt; "Từ chat đi chat lại 5 lần sang đóng gói 1 Skill dùng mãi mãi."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 02: MỤC TIÊU & 6 CHUẨN ĐẦU RA BUỔI 02
+         ==================================================================== -->
+    <section class="slide-page" data-slide="2" data-title="Mục Tiêu & Chuẩn Đầu Ra">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">TỔNG QUAN KHÓA HỌC</div>
+          <h2 class="slide-h2">Mục Tiêu & 6 Chuẩn Đầu Ra Buổi 02</h2>
+          <p class="slide-lead">Học xong 150 phút tối nay, bạn sẽ làm chủ hoàn toàn các kỹ năng sau:</p>
+        </div>
+        <div class="slide-pill-meta">Buổi 02 / 06</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📋</div>
+              <div class="card-title">1. Bản chất của Skill</div>
+            </div>
+            <p class="card-p">Hiểu rõ Skill là <strong>tờ quy trình SOP cho AI</strong>: viết chỉ dẫn 1 lần, dùng lại mãi mãi cho cả phòng ban.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-indigo">🔄</div>
+              <div class="card-title">2. Nguồn gốc Skill</div>
+            </div>
+            <p class="card-p">Thấu hiểu Skill sinh ra từ <strong>5 lượt chat thực tế</strong>, không phải file mẫu tải bừa trên mạng về chép.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-purple">📁</div>
+              <div class="card-title">3. Cấu trúc vật lý</div>
+            </div>
+            <p class="card-p">Nắm vững vị trí đặt file: <code>.claude/skills/&lt;ten-skill&gt;/SKILL.md</code> trong thư mục dự án.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-amber">⚡</div>
+              <div class="card-title">4. Tự nạp thông minh</div>
+            </div>
+            <p class="card-p">Làm chủ dòng <code>description</code>: giúp Claude tự nhận diện công việc và kích hoạt skill không cần gọi tên.</p>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-rose">🛡️</div>
+              <div class="card-title">5. Kỷ luật Chống Bịa</div>
+            </div>
+            <p class="card-p">Ép AI chỉ dùng số liệu có thật; chỗ nào tài liệu không có bắt buộc ghi rõ <em>"Tài liệu không đề cập"</em>.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">🎁</div>
+              <div class="card-title">6. Kết quả cầm về</div>
+            </div>
+            <p class="card-p">1 Skill <code>tom-tat-tai-lieu</code> chạy thực tế + 2 bản tóm tắt hợp đồng demo &amp; tài liệu công việc thật.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 03: NỖI ĐAU CHAT THÔNG THƯỜNG VS SỨC MẠNH CỦA SKILL
+         ==================================================================== -->
+    <section class="slide-page" data-slide="3" data-title="Nỗi Đau Chat vs Sức Mạnh Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">BỐI CẢNH VẤN ĐỀ</div>
+          <h2 class="slide-h2">Nỗi Đau Chat Thông Thường vs Sức Mạnh Của Skill</h2>
+          <p class="slide-lead">Tại sao gõ prompt tự do mỗi ngày là lãng phí 80% thời gian và tiền bạc?</p>
+        </div>
+        <div class="slide-pill-meta">Chuyển Dịch Tư Duy</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Bad Side -->
+          <div class="compare-side-bad">
+            <div class="compare-title-bad">
+              <span>✕</span> CHATBOT THÔNG THƯỜNG (NGHĨ GÌ GÕ NẤY)
+            </div>
+            <ul class="card-list">
+              <li><strong>Lặp lại mệt mỏi:</strong> Tuần nào tóm tắt báo cáo cũng phải gõ lại một tràng yêu cầu dài ngoằng.</li>
+              <li><strong>Mất 5 lượt mới đủ ý:</strong> Lượt 1 chung chung $\rightarrow$ Lượt 2 chia phần $\rightarrow$ Lượt 3 đòi số $\rightarrow$ Lượt 4 mới ra mâu thuẫn.</li>
+              <li><strong>Kết quả hên xui:</strong> Hôm nay hỏi kiểu này ra kiểu này, mai hỏi kiểu khác ra kiểu khác; đồng nghiệp hỏi ra kết quả lệch hẳn.</li>
+              <li><strong>Nguy cơ bịa số liệu:</strong> AI có tật thấy thiếu thì tự phỏng đoán hoặc tự điền $\rightarrow$ rủi ro pháp lý chết người!</li>
+            </ul>
+          </div>
+
+          <!-- Good Side -->
+          <div class="compare-side-good">
+            <div class="compare-title-good">
+              <span>✓</span> HỆ THỐNG SKILL TRONG CLAUDE CODE
+            </div>
+            <ul class="card-list">
+              <li><strong>Viết 1 lần, dùng mãi mãi:</strong> Đóng gói toàn bộ tiêu chuẩn và checklist vào 1 file quy trình chuẩn.</li>
+              <li><strong>1 câu lệnh ra đủ 5 mục:</strong> Tóm tắt nhanh, Ý chính, Số liệu &amp; Deadline, Rủi ro, Kỷ luật chống bịa.</li>
+              <li><strong>Chuẩn hóa cả phòng ban:</strong> Bất kỳ ai trong team gọi skill cũng nhận được kết quả cùng một đẳng cấp chất lượng.</li>
+              <li><strong>Chặn đứng 100% ảo giác:</strong> Buộc AI trích xuất nguyên văn, chỗ thiếu phải xác nhận "không đề cập".</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner">
+          💡 <strong>Quy luật thành công:</strong> Không phải AI thông minh hay dở, mà là bạn có cung cấp cho nó một <em>bản quy trình chuẩn (Skill)</em> để thực thi hay không!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 04: BẢN CHẤT CỐT LÕI: SKILL SINH RA TỪ ĐÂU?
+         ==================================================================== -->
+    <section class="slide-page" data-slide="4" data-title="Bản Chất Cốt Lõi Của Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">TRIẾT LÝ THỰC THI</div>
+          <h2 class="slide-h2">Bản Chất Cốt Lõi: Skill Sinh Ra Từ Đâu?</h2>
+          <p class="slide-lead">Skill không phải là một file mẫu tải trên mạng về để chép theo!</p>
+        </div>
+        <div class="slide-pill-meta">Khái Niệm Cốt Lõi</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">1</span>
+              <div class="card-title">Làm Bằng Tay (Manual)</div>
+            </div>
+            <p class="card-p">Tự mình chat với AI qua 3 – 5 lượt. Hỏi, nắn nót, bổ sung cho đến khi kết quả đầu ra thực sự sắc nét và dùng được.</p>
+            <div class="callout-banner" style="margin-top: 10px; font-size: 0.85rem;">
+              Thấy được những gì AI hay bỏ sót nếu không dặn kỹ.
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">2</span>
+              <div class="card-title">Nhận Diện Sự Lặp Lại</div>
+            </div>
+            <p class="card-p">Phát hiện ra các mẫu chỉ dẫn cố định mà bạn luôn phải nhắc lại: <em>"Bóc số liệu riêng ra", "Soi xem có rủi ro gì không", "Cấm đoán mò"</em>.</p>
+            <div class="callout-banner callout-amber" style="margin-top: 10px; font-size: 0.85rem;">
+              Đây chính là bộ khung xương sống của Skill.
+            </div>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="badge-step-num">3</span>
+              <div class="card-title">Đóng Gói Thành Skill</div>
+            </div>
+            <p class="card-p">Ra lệnh gom các chỉ dẫn đó vào file <code>SKILL.md</code>. Từ lần sau, chỉ cần 1 câu lệnh ngắn gọn là AI tự động chạy trọn vẹn quy trình!</p>
+            <div class="callout-banner callout-emerald" style="margin-top: 10px; font-size: 0.85rem;">
+              Tiết kiệm 80% thời gian cho những lần xử lý tiếp theo.
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card bento-card-dark" style="padding: 16px 24px;">
+          <p style="font-size: 1.02rem; font-weight: 600;">
+            🗣️ <strong>Lời dẫn Giảng viên:</strong> "Lát nữa tôi sẽ không đưa sẵn file mẫu cho cả lớp chép. Tôi sẽ làm việc bằng tay trước, rồi cả lớp xem tờ quy trình đó tự hình thành trước mắt như thế nào!"
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 05: VỊ TRÍ LƯU TRỮ & CẤU TRÚC THƯ MỤC SKILL
+         ==================================================================== -->
+    <section class="slide-page" data-slide="5" data-title="Cấu Trúc Thư Mục Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">KIẾN TRÚC WORKSPACE</div>
+          <h2 class="slide-h2">Vị Trí Lưu Trữ &amp; Cấu Trúc Thư Mục Skill</h2>
+          <p class="slide-lead">Skill là 1 thư mục vật lý chứa file SKILL.md nằm đúng vị trí quy định.</p>
+        </div>
+        <div class="slide-pill-meta">Cấu Trúc File</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-1-2">
+          <!-- Left: Tree view -->
+          <div class="tree-box">
+my-workspace/
+├── CLAUDE.md                   <span style="color: #64748b;"># Hiến pháp dự án</span>
+├── .claude/
+│   └── <span style="color: #2563eb; font-weight: 700;">skills/</span>                 <span style="color: #64748b;"># Kho chứa toàn bộ Skill</span>
+│       └── <span style="color: #059669; font-weight: 700;">tom-tat-tai-lieu/</span>   <span style="color: #64748b;"># Tên thư mục = Tên skill</span>
+│           └── <span style="color: #d97706; font-weight: 700;">SKILL.md</span>        <span style="color: #64748b;"># File chỉ dẫn quy trình</span>
+└── demo/
+    ├── bao-cao-2026.docx
+    └── hop-dong-mau.md
+          </div>
+
+          <!-- Right: Rules -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📌</div>
+              <div class="card-title">3 Quy Tắc Sống Còn Cần Nhớ</div>
+            </div>
+            <ul class="card-list">
+              <li>
+                <strong>Vị trí bắt buộc:</strong> Phải nằm trong thư mục ẩn <code>.claude/skills/</code> ngay gốc workspace.
+              </li>
+              <li>
+                <strong>Tên file cố định:</strong> Luôn luôn là <code>SKILL.md</code> (viết hoa chữ SKILL, đuôi mở rộng <code>.md</code>).
+              </li>
+              <li>
+                <strong>Tên thư mục Skill:</strong> Viết thường, không dấu, nối bằng dấu gạch ngang (kebab-case): ví dụ <code>tom-tat-tai-lieu</code>, tuyệt đối không dùng dấu cách hay ký tự đặc biệt.
+              </li>
+              <li>
+                <strong>Không cần cài đặt phức tạp:</strong> Skill chỉ là file văn bản thuần túy, có thể chỉnh sửa, sao chép hoặc chia sẻ cho đồng nghiệp trong nháy mắt.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 06: TRÁI TIM CỦA SKILL: DÒNG DESCRIPTION
+         ==================================================================== -->
+    <section class="slide-page" data-slide="6" data-title="Dòng Description & Cơ Chế Tự Nạp">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">CƠ CHẾ KÍCH HOẠT</div>
+          <h2 class="slide-h2">Trái Tim Của Skill: Dòng Description &amp; Cơ Chế Tự Nạp</h2>
+          <p class="slide-lead">Làm sao Claude biết lúc nào cần tự động lôi Skill ra dùng mà không cần nhắc tên?</p>
+        </div>
+        <div class="slide-pill-meta">Auto-Load Engine</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Left: Code snippet -->
+          <div class="terminal-box" style="margin-top: 0;">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <span class="terminal-tag">SKILL.md (YAML Frontmatter)</span>
+            </div>
+            <div class="terminal-code">---
+name: tom-tat-tai-lieu
+description: Dùng khi người dùng yêu cầu tóm tắt tài liệu, báo cáo, hợp đồng, biên bản, văn bản dài. Tự động bóc tách số liệu, ngày tháng, hạn chót, phát hiện mâu thuẫn rủi ro và tuân thủ kỷ luật chống bịa số.
+---
+
+# Hướng dẫn chi tiết cho Agent...</div>
+          </div>
+
+          <!-- Right: Explanation -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-amber">💡</div>
+              <div class="card-title">Tại Sao Description Lại Quyết Định?</div>
+            </div>
+            <ul class="card-list">
+              <li>
+                <strong>Cơ chế tự quét:</strong> Khi bạn chat, Claude Code quét qua dòng <code>description</code> của mọi Skill để tìm sự trùng khớp ngữ cảnh.
+              </li>
+              <li>
+                <strong>Mô tả càng rõ "Dùng khi nào":</strong> Cơ hội Claude tự nạp skill càng chính xác 100%.
+              </li>
+              <li>
+                <strong>2 Cách kích hoạt Skill:</strong>
+                <div style="margin-top: 6px; padding-left: 12px; font-size: 0.88rem; color: var(--text-body);">
+                  • <em>Tự động (Khuyên dùng):</em> "Tóm tắt giúp tôi báo cáo này..."<br>
+                  • <em>Chỉ định đích danh:</em> "Dùng skill tom-tat-tai-lieu để..."
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-rose">
+          ⚠️ <strong>Lỗi kinh điển:</strong> Nếu viết description mờ nhạt như <em>"Skill tóm tắt"</em>, Claude sẽ không nhận diện được và quay về chế độ chat thông thường!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 07: KỶ LUẬT CHỐNG BỊA SỐ LIỆU (ANTI-HALLUCINATION)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="7" data-title="Kỷ Luật Chống Bịa Số Liệu">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">NGUYÊN TẮC SỐNG CÒN</div>
+          <h2 class="slide-h2">Kỷ Luật Chống Bịa Số Liệu (Anti-Hallucination)</h2>
+          <p class="slide-lead">Trong văn bản pháp lý &amp; số liệu tài chính: Thà nói "Không có" còn hơn đoán bừa!</p>
+        </div>
+        <div class="slide-pill-meta">Bảo Vệ Dữ Liệu</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">1</div>
+              <div class="card-title">Chỉ Dùng Tin Có Thật</div>
+            </div>
+            <p class="card-p">100% dữ liệu xuất ra phải được truy xuất trực tiếp từ văn bản người dùng cung cấp. Không tự ý mở rộng hay phỏng đoán ngoài lề.</p>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-rose">2</div>
+              <div class="card-title">Kỷ Luật "Không Đề Cập"</div>
+            </div>
+            <p class="card-p">Chỗ nào văn bản không nhắc tới $\rightarrow$ <strong>BẮT BUỘC ghi rõ: "Tài liệu không đề cập"</strong>. Tuyệt đối cấm tự điền số hay điều khoản!</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">3</div>
+              <div class="card-title">Trích Dẫn Bằng Chứng</div>
+            </div>
+            <p class="card-p">Khi chỉ ra mâu thuẫn, điều khoản phạt hoặc cam kết rủi ro, phải trích nguyên văn câu chữ đặt trong ngoặc kép <code>"..."</code> kèm số trang/mục.</p>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-amber">
+          ⚖️ <strong>Góc nhìn Pháp chế &amp; Quản trị:</strong> Một con số bịa ra trong hợp đồng có thể làm mất tiền tỷ. Đây chính là lý do mục <code>QUY TẮC</code> trong Skill là rào chắn bắt buộc phải có!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 08: TÀI LIỆU DEMO 14 TRANG: BÁO CÁO TỔNG KẾT NĂM 2026
+         ==================================================================== -->
+    <section class="slide-page" data-slide="8" data-title="Tài Liệu Demo 14 Trang">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">THỰC CHIẾN DEMO</div>
+          <h2 class="slide-h2">Tài Liệu Demo 14 Trang: Báo Cáo Tổng Kết Năm 2026</h2>
+          <p class="slide-lead">Thử thách: 10 phút trước giờ họp Hội đồng Quản trị, ai đọc hết và nắm trọn con số này?</p>
+        </div>
+        <div class="slide-pill-meta">Demo Giảng Viên</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-1-2">
+          <!-- Left: Document Overview -->
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📄</div>
+              <div class="card-title">Hồ Sơ Tài Liệu Demo</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; margin-bottom: 8px;">
+              <code>demo/bao-cao-tong-ket-nam-2026.docx</code>
+            </p>
+            <ul class="card-list" style="font-size: 0.88rem;">
+              <li><strong>Độ dài thật:</strong> 14 trang A4 đầy ắp chữ &amp; bảng biểu.</li>
+              <li><strong>Bố cục:</strong> 9 phần La Mã (từ Tình hình đến Kiến nghị).</li>
+              <li><strong>Dữ liệu:</strong> 4 bảng doanh thu theo quý/sản phẩm/khu vực.</li>
+              <li><strong>Phụ lục:</strong> 2 phụ lục hợp đồng lớn &amp; danh sách công nợ.</li>
+            </ul>
+          </div>
+
+          <!-- Right: Demonstration Roadmap -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-purple">🎯</div>
+              <div class="card-title">Kịch Bản Diễn 5 Lượt Của Giảng Viên</div>
+            </div>
+            <div class="bento-grid grid-2" style="margin-top: 10px; gap: 10px;">
+              <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                <span style="font-weight: 700; color: var(--brand-blue);">Lượt 1:</span> Tóm tắt thông thường (Thấy rõ sự hời hợt).
+              </div>
+              <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                <span style="font-weight: 700; color: var(--brand-blue);">Lượt 2:</span> Ép bóc tách theo từng phần La Mã.
+              </div>
+              <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                <span style="font-weight: 700; color: var(--brand-blue);">Lượt 3:</span> Bóc triệt để con số &amp; hạn chót.
+              </div>
+              <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--brand-rose); background: #fff1f2;">
+                <span style="font-weight: 700; color: var(--brand-rose);">Lượt 4:</span> Soi mâu thuẫn lệch 95 triệu (WOW).
+              </div>
+            </div>
+            <div style="margin-top: 10px; background: #ecfdf5; padding: 10px; border-radius: 8px; border: 1px solid #a7f3d0;">
+              <span style="font-weight: 700; color: var(--brand-emerald);">Lượt 5:</span> Chặn suy đoán &amp; ĐÓNG GÓI THÀNH SKILL!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 09: DEMO GV LƯỢT 1 & LƯỢT 2
+         ==================================================================== -->
+    <section class="slide-page" data-slide="9" data-title="Demo GV: Lượt 1 & Lượt 2">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">HÀNH TRÌNH TẠO SKILL</div>
+          <h2 class="slide-h2">Demo GV Lượt 1 &amp; Lượt 2: Từ Hời Hợt Đến Bóc Từng Phần</h2>
+          <p class="slide-lead">Quan sát Giảng viên tương tác trực tiếp trên màn hình Claude Code.</p>
+        </div>
+        <div class="slide-pill-meta">Lượt 1 &amp; 2 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Prompt 1 -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--text-main);">
+              Lượt 1: Tóm tắt thông thường (Nghĩ gì gõ nấy)
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <div class="dot dot-red"></div>
+                  <div class="dot dot-yellow"></div>
+                  <div class="dot dot-green"></div>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('prompt1', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="prompt1">Tóm tắt giúp tôi báo cáo trong 02-buoi-02-quan-ly-tai-lieu-chong-bia-so/demo/bao-cao-tong-ket-nam-2026.docx</div>
+            </div>
+            <div class="callout-banner callout-rose" style="font-size: 0.86rem; margin-top: 8px;">
+              ✕ <strong>Nhược điểm:</strong> Ra văn chung chung, thiếu số liệu cốt lõi, không thể dùng mang đi họp!
+            </div>
+          </div>
+
+          <!-- Prompt 2 -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--text-main);">
+              Lượt 2: Ép liệt kê theo từng phần La Mã
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <div class="dot dot-red"></div>
+                  <div class="dot dot-yellow"></div>
+                  <div class="dot dot-green"></div>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('prompt2', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="prompt2">Chưa đủ. Liệt kê lại theo từng phần của báo cáo, mỗi phần vài ý chính.</div>
+            </div>
+            <div class="callout-banner callout-emerald" style="font-size: 0.86rem; margin-top: 8px;">
+              ✓ <strong>Tiền đề:</strong> Mục này sau sẽ biến thành <strong>Ý CHÍNH CHI TIẾT</strong> trong SKILL.md.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 10: DEMO GV LƯỢT 3: BÓC SỐ LIỆU & HẠN CHÓT
+         ==================================================================== -->
+    <section class="slide-page" data-slide="10" data-title="Demo GV: Lượt 3 Bóc Số Liệu">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">HÀNH TRÌNH TẠO SKILL</div>
+          <h2 class="slide-h2">Demo GV Lượt 3: Bóc Sạch Con Số &amp; Mốc Thời Gian Ẩn</h2>
+          <p class="slide-lead">Ép AI trích xuất mọi con số, deadline và phát hiện mốc thời gian chôn sâu.</p>
+        </div>
+        <div class="slide-pill-meta">Lượt 3 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="terminal-box" style="margin-top: 0;">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="terminal-tag">PROMPT LƯỢT 3</span>
+            <button class="btn-copy" onclick="copyPrompt('prompt3', this)">📋 Chép</button>
+          </div>
+          <div class="terminal-code" id="prompt3">Bóc ra mọi con số, mốc thời gian, cam kết quan trọng trong tài liệu.</div>
+        </div>
+
+        <div class="bento-grid grid-3" style="margin-top: 14px;">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">💰</div>
+              <div class="card-title">Chỉ Số Tài Chính</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.88rem;">
+              <li>Lợi nhuận trước thuế: <strong>1.885 triệu</strong></li>
+              <li>Lợi nhuận sau thuế: <strong>1.508 triệu</strong></li>
+              <li>Công nợ: <strong>1.240 triệu</strong> (quá hạn 275 tr)</li>
+              <li>Chi phí Marketing: <strong>485 triệu</strong></li>
+            </ul>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📅</div>
+              <div class="card-title">Mốc Thời Gian Rải Rác</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.88rem;">
+              <li>20/01/2027: Quyết toán năm</li>
+              <li>31/01/2027: Báo cáo dòng tiền</li>
+              <li>15/02/2027: Tuyển dụng đợt 1</li>
+              <li>31/03/2027: Ra mắt sản phẩm mới</li>
+            </ul>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-rose">🎯</div>
+              <div class="card-title">Điểm "Đáng Tiền" Nhất</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              AI bóc được mốc <strong>28/02/2027</strong> chôn sâu ở <em>Phụ lục 2 trang 13</em> (thân báo cáo không hề nhắc!).
+            </p>
+            <div class="callout-banner callout-emerald" style="margin-top: 8px; font-size: 0.82rem;">
+              $\rightarrow$ Biến thành mục <strong>SỐ LIỆU, NGÀY THÁNG, HẠN CHÓT</strong> trong Skill.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 11: DEMO GV LƯỢT 4: SOI LỖI VÊNH SỐ 95 TRIỆU (WOW)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="11" data-title="Demo GV: Lượt 4 Soi Lỗi Vênh 95 Tr">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">KHOẢNH KHẮC WOW</div>
+          <h2 class="slide-h2">Demo GV Lượt 4: Soi Lỗi Vênh Số 95 Triệu &amp; Bẫy Rủi Ro</h2>
+          <p class="slide-lead">Giá trị thật của AI: Không phải viết văn hay, mà là bắt ra điều bất thường!</p>
+        </div>
+        <div class="slide-pill-meta">Lượt 4 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="terminal-box" style="margin-top: 0;">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="terminal-tag">PROMPT LƯỢT 4</span>
+            <button class="btn-copy" onclick="copyPrompt('prompt4', this)">📋 Chép</button>
+          </div>
+          <div class="terminal-code" id="prompt4">Trong báo cáo này có điều khoản nào bất lợi, chỗ nào mâu thuẫn, hoặc chỗ nào mập mờ không?</div>
+        </div>
+
+        <div class="bento-grid grid-3" style="margin-top: 14px;">
+          <div class="bento-card bento-card-featured" style="border-color: #fca5a5; background: #fff5f5;">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-rose">⚠️</div>
+              <div class="card-title" style="color: var(--brand-rose);">Vênh Số 95 Triệu</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              Mục II.1 ghi tổng doanh thu <strong>12.450 triệu</strong>, nhưng các bảng quý, sản phẩm và Phụ lục 1 cộng lại ra <strong>12.545 triệu</strong>! Lệch 95 triệu!
+            </p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-amber">📑</div>
+              <div class="card-title">Bẫy Tự Động Gia Hạn</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              Hợp đồng Đại Tín (1.845 triệu) tự động gia hạn thêm 12 tháng nếu không gửi công văn từ chối trước ngày <strong>28/02/2027</strong>.
+            </p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-indigo">📊</div>
+              <div class="card-title">Rủi Ro Khách Hàng</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              3 khách hàng lớn nhất chiếm tới <strong>42,3%</strong> tổng doanh thu; nợ quá hạn chiếm 22,2% công nợ phải thu.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald" style="margin-top: 10px;">
+          🎯 <strong>Sau này trở thành mục:</strong> <strong>ĐIỂM CẦN LƯU Ý / RỦI RO</strong> trong file SKILL.md!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 12: DEMO GV LƯỢT 5: CHẶN SUY ĐOÁN & RÚT GỌN
+         ==================================================================== -->
+    <section class="slide-page" data-slide="12" data-title="Demo GV: Lượt 5 Chặn Suy Đoán">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">HÀNH TRÌNH TẠO SKILL</div>
+          <h2 class="slide-h2">Demo GV Lượt 5: Chặn Suy Đoán &amp; Chốt 3–5 Gạch Đầu Dòng</h2>
+          <p class="slide-lead">Thiết lập kỷ luật thép chống bịa số và cô đọng báo cáo gửi ban giám đốc.</p>
+        </div>
+        <div class="slide-pill-meta">Lượt 5 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="terminal-box" style="margin-top: 0;">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="terminal-tag">PROMPT LƯỢT 5</span>
+            <button class="btn-copy" onclick="copyPrompt('prompt5', this)">📋 Chép</button>
+          </div>
+          <div class="terminal-code" id="prompt5">Trong những gì bạn vừa trả lời, có chỗ nào bạn tự suy đoán mà tài liệu không nói không? Từ giờ chỉ dùng thông tin có trong tài liệu, chỗ nào tài liệu không nói thì ghi "Tài liệu không đề cập", không được đoán. Rút lại giúp tôi 3 tới 5 gạch đầu dòng quan trọng nhất để tôi gửi sếp.</div>
+        </div>
+
+        <div class="bento-grid grid-2" style="margin-top: 14px;">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-rose">🛡️</div>
+              <div class="card-title">Mục QUY TẮC Trong Skill</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.9rem;">
+              <li>Chỉ dùng thông tin có trong tài liệu.</li>
+              <li>Chỗ không nói: bắt buộc ghi <em>"Tài liệu không đề cập"</em>.</li>
+              <li>Trích dẫn nguyên văn đặt trong ngoặc kép <code>"..."</code>.</li>
+            </ul>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">⚡</div>
+              <div class="card-title">Mục TÓM TẮT NHANH</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.9rem;">
+              <li>3 tới 5 gạch đầu dòng then chốt nhất.</li>
+              <li>Đọc lướt trong 30 giây là nắm toàn cảnh.</li>
+              <li>Đáp ứng ngay lập tức yêu cầu của cấp lãnh đạo.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 13: ĐÓNG GÓI 5 LƯỢT CHAT THÀNH FILE SKILL.MD
+         ==================================================================== -->
+    <section class="slide-page" data-slide="13" data-title="Đóng Gói Thành Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">KHOẢNH KHẮC ĐÓNG GÓI</div>
+          <h2 class="slide-h2">Đóng Gói 5 Lượt Chat Thành File SKILL.md</h2>
+          <p class="slide-lead">Biến toàn bộ công sức hỏi 5 lần thành 1 quy trình vĩnh cửu cho AI.</p>
+        </div>
+        <div class="slide-pill-meta">Đóng Gói Quy Trình</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="terminal-box" style="margin-top: 0;">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="terminal-tag">PROMPT ĐÓNG GÓI SKILL</span>
+            <button class="btn-copy" onclick="copyPrompt('promptDongGoi', this)">📋 Chép</button>
+          </div>
+          <div class="terminal-code" id="promptDongGoi">Tôi thấy kết quả ổn rồi, giờ hãy đóng gói lại thành skill tóm tắt tài liệu cho tôi, để sau này tôi không phải chat nhiều nữa mà bạn vẫn đưa ra kết quả tốt. Sau này tôi muốn khi bảo bạn "Tóm tắt tài liệu abc" thì bạn sẽ tự động kích hoạt skill này cho tôi.
+
+Khi tôi đưa vào một tài liệu nào đó, làm theo các bước:
+1. Đọc toàn bộ tài liệu.
+2. Xuất ra đúng cấu trúc sau:
+- TÓM TẮT NHANH (3 tới 5 gạch đầu dòng ý chính nhất)
+- Ý CHÍNH CHI TIẾT (Liệt kê theo từng mục/phần của tài liệu)
+- SỐ LIỆU, NGÀY THÁNG, HẠN CHÓT (Bóc ra mọi con số, mốc thời gian, cam kết quan trọng)
+- ĐIỂM CẦN LƯU Ý / RỦI RO (Nếu có điều khoản bất lợi, mâu thuẫn, hoặc chỗ mập mờ)
+- QUY TẮC: Chỉ dùng thông tin có trong tài liệu. Không có thì ghi "Tài liệu không đề cập", KHÔNG suy đoán. Trích nguyên văn khi cần bằng chứng, đặt trong ngoặc kép. Trả lời bằng tiếng Việt, rõ ràng.</div>
+        </div>
+
+        <div class="callout-banner callout-emerald" style="margin-top: 10px;">
+          🎉 <strong>Claude Code tự động sinh:</strong> <code>.claude/skills/tom-tat-tai-lieu/SKILL.md</code>. 5 mục trong file chính là biên bản của 5 lượt bạn vừa hỏi!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 14: CHUẨN BỐ CỤC 5 MỤC CỦA SKILL TOM-TAT-TAI-LIEU
+         ==================================================================== -->
+    <section class="slide-page" data-slide="14" data-title="Chuẩn Bố Cục 5 Mục Của Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">TIÊU CHUẨN ĐẦU RA</div>
+          <h2 class="slide-h2">Chuẩn Bố Cục 5 Mục Của Skill tom-tat-tai-lieu</h2>
+          <p class="slide-lead">Bộ khung tóm tắt tài liệu quản trị tiêu chuẩn được áp dụng cho mọi doanh nghiệp.</p>
+        </div>
+        <div class="slide-pill-meta">Tiêu Chuẩn Doanh Nghiệp</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-5">
+          <div class="bento-card">
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">⚡</div>
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--brand-blue); margin-bottom: 6px;">1. TÓM TẮT NHANH</div>
+            <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+              3 – 5 gạch đầu dòng cốt lõi nhất. Đọc 30s là sếp nắm ngay toàn cảnh.
+            </p>
+          </div>
+
+          <div class="bento-card">
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">📑</div>
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--brand-indigo); margin-bottom: 6px;">2. Ý CHÍNH CHI TIẾT</div>
+            <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+              Liệt kê chuẩn xác theo từng phần/chương mục của văn bản gốc.
+            </p>
+          </div>
+
+          <div class="bento-card">
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🔢</div>
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--brand-emerald); margin-bottom: 6px;">3. SỐ LIỆU &amp; HẠN</div>
+            <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+              Tất cả con số tài chính, tỷ lệ %, mốc deadline và cam kết rải rác.
+            </p>
+          </div>
+
+          <div class="bento-card bento-card-featured" style="border-color: #fca5a5;">
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">⚠️</div>
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--brand-rose); margin-bottom: 6px;">4. ĐIỂM LƯU Ý / RỦI RO</div>
+            <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+              Bẫy gia hạn, mâu thuẫn số liệu, phạt hợp đồng, điểm mập mờ.
+            </p>
+          </div>
+
+          <div class="bento-card">
+            <div style="font-size: 1.6rem; margin-bottom: 8px;">🛡️</div>
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--brand-purple); margin-bottom: 6px;">5. QUY TẮC CHỐNG BỊA</div>
+            <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+              "Tài liệu không đề cập" khi thiếu; trích nguyên văn trong ngoặc kép.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-banner">
+          💼 <strong>Tính đa năng:</strong> Áp dụng mượt mà cho: Hợp đồng kinh tế, Báo cáo tài chính, Tờ trình dự án, Biên bản họp HĐQT!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 15: KIỂM CHỨNG: 5 LƯỢT CHAT VS 1 CÂU LỆNH
+         ==================================================================== -->
+    <section class="slide-page" data-slide="15" data-title="Kiểm Chứng: 5 Lượt vs 1 Lệnh">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">ĐỐI CHỨNG THỰC THI</div>
+          <h2 class="slide-h2">Kiểm Chứng: 5 Lượt Chat vs 1 Câu Lệnh Duy Nhất</h2>
+          <p class="slide-lead">Chạy thử Skill trên một tài liệu hoàn toàn khác: Hợp đồng dịch vụ mẫu.</p>
+        </div>
+        <div class="slide-pill-meta">Kiểm Chứng Tự Nạp</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Left: The prompt -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 6px;">
+              Chỉ gõ đúng 1 câu lệnh (Không cần nhắc chữ "Skill"):
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <div class="dot dot-red"></div>
+                  <div class="dot dot-yellow"></div>
+                  <div class="dot dot-green"></div>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('promptChaySkill', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="promptChaySkill">Tóm tắt hợp đồng trong 02-buoi-02-quan-ly-tai-lieu-chong-bia-so/demo/hop-dong-dich-vu-mau.md</div>
+            </div>
+          </div>
+
+          <!-- Right: What happens -->
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">⚡</div>
+              <div class="card-title">Điều Kỳ Diệu Xảy Ra</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.9rem;">
+              <li>Claude tự động báo: <code>Using skill tom-tat-tai-lieu...</code></li>
+              <li>Trả về ngay lập tức bản tóm tắt chuẩn chỉnh <strong>đủ 5 mục</strong>.</li>
+              <li>Bóc sạch các điều khoản phạt, lịch thanh toán, cam kết bảo mật.</li>
+              <li><strong>Hiệu quả:</strong> Báo cáo mất 5 lượt chat $\rightarrow$ Hợp đồng chỉ mất <strong>1 câu lệnh duy nhất</strong>!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-emerald">
+          🚀 <strong>Đây là toàn bộ giá trị của Skill:</strong> Bạn biến kiến thức và kinh nghiệm của mình thành một công cụ tự động hóa dùng lại mãi mãi!
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 16: TEST BẪY CHỐNG BỊA TRÊN HỢP ĐỒNG MẪU
+         ==================================================================== -->
+    <section class="slide-page" data-slide="16" data-title="Thử Nghiệm Chống Bịa Số">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">STRESS TEST</div>
+          <h2 class="slide-h2">Thử Thách Bẫy Chống Bịa Trên Hợp Đồng Mẫu</h2>
+          <p class="slide-lead">Hỏi một câu mà hợp đồng hoàn toàn không quy định để kiểm tra phản xạ của AI.</p>
+        </div>
+        <div class="slide-pill-meta">Kiểm Tra Rào Chắn</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Left: Câu hỏi bẫy -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 6px;">
+              Gõ câu hỏi gài bẫy AI:
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <div class="dot dot-red"></div>
+                  <div class="dot dot-yellow"></div>
+                  <div class="dot dot-green"></div>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('promptBay', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="promptBay">Trong hợp đồng này, mức phạt nếu Bên A tiết lộ bí mật ra ngoài là bao nhiêu tiền?</div>
+            </div>
+          </div>
+
+          <!-- Right: Phản xạ của AI -->
+          <div class="bento-card bento-card-featured" style="border-color: #a7f3d0; background: #f0fdf4;">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">✓</div>
+              <div class="card-title" style="color: var(--brand-emerald);">Phản Xạ Chuẩn Kỷ Luật</div>
+            </div>
+            <p class="card-p" style="font-size: 0.92rem; line-height: 1.6;">
+              <em>"Hợp đồng có điều khoản bảo mật thông tin (Điều 6), nhưng <strong>KHÔNG quy định mức phạt bằng tiền</strong> cho hành vi vi phạm này. <strong>Tài liệu không đề cập</strong> con số này."</em>
+            </p>
+            <div class="callout-banner callout-emerald" style="margin-top: 10px; font-size: 0.85rem;">
+              Tuyệt đối không tự bịa ra 50 triệu hay 100 triệu theo thói quen!
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-banner callout-amber">
+          🛡️ <strong>Sức mạnh của kỷ luật:</strong> Với văn bản kinh doanh, thà để AI nói "tài liệu không có" còn hơn để nó tự đoán sai và làm bạn đưa ra quyết định sai lầm.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 17: THỰC HÀNH 1: HỌC VIÊN TỰ TẠO SKILL (25 PHÚT CÓ TIMER)
+         ==================================================================== -->
+    <section class="slide-page" data-slide="17" data-title="Thực Hành 1: Tạo Skill">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">THỰC HÀNH TẠI LỚP</div>
+          <h2 class="slide-h2">Thực Hành 1: Tự Tạo Skill &amp; Bóc Tách Hợp Đồng</h2>
+          <p class="slide-lead">25 phút để mỗi học viên tự sở hữu 1 Skill chuẩn và chạy thử nghiệm thành công.</p>
+        </div>
+        <div class="slide-pill-meta">Thực Hành 1 (25P)</div>
+      </div>
+
+      <div class="slide-body">
+        <!-- Interactive Timer Box -->
+        <div class="timer-container">
+          <div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+              Đồng hồ thực hành tại lớp
+            </div>
+            <div class="timer-clock" id="timerDisplay">25:00</div>
+          </div>
+          <div class="timer-actions">
+            <button class="btn-keynote btn-keynote-primary" id="btnTimerStart" onclick="toggleTimer()">Bắt đầu</button>
+            <button class="btn-keynote" id="btnTimerReset" onclick="resetTimer()">Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="bento-grid grid-2">
+          <!-- Step 1: Create Skill -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; color: var(--brand-blue);">
+              Bước 1: Tạo file SKILL.md trong dự án
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <span class="terminal-tag">PROMPT TẠO SKILL</span>
+                <button class="btn-copy" onclick="copyPrompt('promptTaoSkillHV', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="promptTaoSkillHV" style="font-size: 0.82rem;">Tạo cho tôi file .claude/skills/tom-tat-tai-lieu/SKILL.md theo đúng quy chuẩn 5 mục đã học.</div>
+            </div>
+          </div>
+
+          <!-- Step 2: Run on Contract -->
+          <div>
+            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; color: var(--brand-emerald);">
+              Bước 2: Tóm tắt hợp đồng demo
+            </div>
+            <div class="terminal-box" style="margin-top: 0;">
+              <div class="terminal-header">
+                <span class="terminal-tag">PROMPT CHẠY HỢP ĐỒNG</span>
+                <button class="btn-copy" onclick="copyPrompt('promptChayHopDongHV', this)">📋 Chép</button>
+              </div>
+              <div class="terminal-code" id="promptChayHopDongHV" style="font-size: 0.82rem;">Tóm tắt hợp đồng trong 02-buoi-02-quan-ly-tai-lieu-chong-bia-so/demo/hop-dong-dich-vu-mau.md</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 18: BẢNG ĐỐI CHIẾU SỐ LIỆU HỢP ĐỒNG
+         ==================================================================== -->
+    <section class="slide-page" data-slide="18" data-title="Bảng Đối Chiếu Số Liệu Hợp Đồng">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">ĐÁP ÁN ĐỐI CHIẾU</div>
+          <h2 class="slide-h2">Bảng Đối Chiếu Số Liệu Bóc Tách Hợp Đồng</h2>
+          <p class="slide-lead">Đối chiếu kết quả AI vừa xuất ra trên máy của bạn với bảng đáp án chuẩn sau:</p>
+        </div>
+        <div class="slide-pill-meta">Checklist Tự Chấm</div>
+      </div>
+
+      <div class="slide-body">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Hạng mục bóc tách</th>
+              <th style="width: 60%;">Giá trị chuẩn trong hợp đồng</th>
+              <th style="width: 15%; text-align: center;">Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tổng giá trị hợp đồng</strong></td>
+              <td><strong>120.000.000 đồng</strong> (đã bao gồm thuế VAT)</td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+            <tr>
+              <td><strong>Tiến độ thanh toán</strong></td>
+              <td>Chia <strong>2 đợt 50/50</strong> (Đợt 1: 60 tr sau 5 ngày; Đợt 2: 60 tr sau nghiệm thu)</td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+            <tr>
+              <td><strong>Quy mô &amp; Đào tạo</strong></td>
+              <td>Tối đa <strong>20 người dùng</strong>; Tổ chức <strong>2 buổi đào tạo</strong></td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+            <tr>
+              <td><strong>Thời hạn &amp; Gia hạn</strong></td>
+              <td><strong>12 tháng</strong>; tự động gia hạn nếu không từ chối trước <strong>30 ngày</strong></td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+            <tr>
+              <td><strong>Chế tài phạt chậm trả</strong></td>
+              <td>Phạt <strong>0,05% / ngày</strong> trên số tiền chậm thanh toán</td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+            <tr>
+              <td><strong>Thời hạn bảo mật</strong></td>
+              <td>Còn hiệu lực <strong>2 năm</strong> sau khi hợp đồng chấm dứt</td>
+              <td style="text-align: center; color: var(--brand-emerald); font-weight: 700;">✓ Chuẩn</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 19: THỰC HÀNH 2: ÁP DỤNG VÀO TÀI LIỆU CÔNG VIỆC THẬT
+         ==================================================================== -->
+    <section class="slide-page" data-slide="19" data-title="Thực Hành 2: Tài Liệu Thật">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">ỨNG DỤNG THỰC TẾ</div>
+          <h2 class="slide-h2">Thực Hành 2: Áp Dụng Skill Vào Tài Liệu Công Việc Thật</h2>
+          <p class="slide-lead">Đưa hồ sơ, hợp đồng hoặc báo cáo thực tế của công ty bạn vào xử lý.</p>
+        </div>
+        <div class="slide-pill-meta">Thực Hành 2 (33P)</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">1</span>
+              <div class="card-title">Chuẩn Bị File Thật</div>
+            </div>
+            <p class="card-p">Lấy 1 tài liệu dài trong công việc hàng ngày (Hợp đồng, Biên bản họp, Báo cáo tháng, Đề xuất dự án) đặt vào thư mục dự án.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">2</span>
+              <div class="card-title">Kích Hoạt Skill</div>
+            </div>
+            <p class="card-p">Ra lệnh tự nhiên để Claude tự nạp skill:</p>
+            <code style="font-size: 0.8rem; background: #f1f5f9; padding: 4px 8px; border-radius: 4px; display: block; margin-top: 6px;">
+              Tóm tắt tài liệu trong [đường-dẫn-file]
+            </code>
+          </div>
+
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="badge-step-num">3</span>
+              <div class="card-title">Kiểm Tra &amp; Tùy Biến</div>
+            </div>
+            <p class="card-p">Đọc kết quả 5 mục. Bạn có thể mở <code>SKILL.md</code> để bổ sung thêm các mục riêng theo ngành nghề của mình!</p>
+          </div>
+        </div>
+
+        <div class="callout-banner">
+          💡 <strong>Gợi ý tùy biến:</strong> Dân Kế toán có thể thêm mục <em>"Số tài khoản &amp; Thuế suất"</em>; Dân Pháp chế có thể thêm mục <em>"Cơ quan giải quyết tranh chấp"</em>.
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 20: [NÂNG CAO] THỰC HÀNH 3: TẠO TÀI LIỆU BRAND CES GLOBAL
+         ==================================================================== -->
+    <section class="slide-page" data-slide="20" data-title="[Nâng Cao] Tạo Brand CES">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">MỞ RỘNG CAO CẤP</div>
+          <h2 class="slide-h2">[Nâng Cao] Đóng Gói Quy Trình Tạo Tài Liệu Chuẩn Brand</h2>
+          <p class="slide-lead">Từ nghiên cứu web đến xuất file Word có Logo &amp; Bộ màu nhận diện doanh nghiệp.</p>
+        </div>
+        <div class="slide-pill-meta">Thực Hành 3</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <!-- Step 1 -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">1</span>
+              <div class="card-title">Nghiên Cứu Web</div>
+            </div>
+            <p class="card-p" style="font-size: 0.85rem;">Bảo agent tự tra cứu xu hướng AI 2026 và xuất ra file Markdown.</p>
+            <div class="terminal-box" style="margin-top: 8px;">
+              <div class="terminal-header">
+                <span class="terminal-tag">PROMPT 1</span>
+                <button class="btn-copy" onclick="copyPrompt('promptTH3_1', this)">📋</button>
+              </div>
+              <div class="terminal-code" id="promptTH3_1" style="font-size: 0.78rem;">Tìm hiểu và gửi tôi báo cáo về xu hướng phát triển AI trong năm 2026. Trả kết quả ra file md</div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <span class="badge-step-num">2</span>
+              <div class="card-title">Dựng Word Chuẩn Brand</div>
+            </div>
+            <p class="card-p" style="font-size: 0.85rem;">Chèn Logo header, màu Navy/Teal/Vàng, tiếng Việt đủ dấu UTF-8.</p>
+            <div class="terminal-box" style="margin-top: 8px;">
+              <div class="terminal-header">
+                <span class="terminal-tag">PROMPT 2</span>
+                <button class="btn-copy" onclick="copyPrompt('promptTH3_2', this)">📋</button>
+              </div>
+              <div class="terminal-code" id="promptTH3_2" style="font-size: 0.78rem;">Tổng hợp nội dung báo cáo thành 1 file docx. Dùng bộ nhận diện CES Global: logo header, màu theo bo-nhan-dien-ces.md, tiếng Việt chuẩn UTF-8.</div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <span class="badge-step-num">3</span>
+              <div class="card-title">Đóng Gói Thành Skill</div>
+            </div>
+            <p class="card-p" style="font-size: 0.85rem;">Gói toàn bộ thành skill <code>tao-tai-lieu-ces</code> dùng cho mọi báo cáo sau này!</p>
+            <div class="terminal-box" style="margin-top: 8px;">
+              <div class="terminal-header">
+                <span class="terminal-tag">PROMPT 3</span>
+                <button class="btn-copy" onclick="copyPrompt('promptTH3_3', this)">📋</button>
+              </div>
+              <div class="terminal-code" id="promptTH3_3" style="font-size: 0.78rem;">Tạo cho tôi skill đóng gói tài liệu đẹp và đúng tone màu như trên, sau này khi tôi nói tạo tài liệu theo chuẩn CES Global thì hãy áp dụng.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 21: BẢNG TRA NHANH PROMPT & TROUBLESHOOTING
+         ==================================================================== -->
+    <section class="slide-page" data-slide="21" data-title="Bảng Tra Nhanh & Xử Lý Lỗi">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">SỔ TAY CÔNG VIỆC</div>
+          <h2 class="slide-h2">Bảng Tra Nhanh Prompt &amp; Xử Lý Lỗi Thường Gặp</h2>
+          <p class="slide-lead">Lưu lại để tra cứu và ứng dụng ngay vào công việc hàng ngày.</p>
+        </div>
+        <div class="slide-pill-meta">Cheat Sheet</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-2">
+          <!-- Bảng Prompt -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📋</div>
+              <div class="card-title">Bảng Tra Nhanh Prompt</div>
+            </div>
+            <table class="modern-table" style="font-size: 0.82rem;">
+              <thead>
+                <tr>
+                  <th>Mục đích</th>
+                  <th>Câu lệnh gõ vào Claude Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Tự nạp Skill</strong></td>
+                  <td><code>Tóm tắt tài liệu trong [đường-dẫn-file]</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Gọi đích danh</strong></td>
+                  <td><code>Dùng skill tom-tat-tai-lieu để tóm tắt [file]</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Thử chống bịa</strong></td>
+                  <td><code>Mức phạt khi vi phạm điều khoản X là bao nhiêu?</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Sửa quy trình</strong></td>
+                  <td><code>Mở SKILL.md và thêm mục "Đơn vị phối hợp"</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Xử lý lỗi -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-amber">🛠️</div>
+              <div class="card-title">Xử Lý Các Lỗi Hay Gặp</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.85rem;">
+              <li>
+                <strong>Claude không tự nạp Skill:</strong> Dòng <code>description</code> chưa đủ rõ. Khắc phục: gọi đích danh tên skill hoặc bổ sung thêm từ khóa vào description.
+              </li>
+              <li>
+                <strong>AI vẫn suy đoán số liệu:</strong> Mở <code>SKILL.md</code>, kiểm tra lại xem mục <code>QUY TẮC</code> đã có câu <em>"Không có thì ghi Tài liệu không đề cập"</em> chưa.
+              </li>
+              <li>
+                <strong>Tạo file sai chỗ:</strong> File phải nằm đúng tại <code>.claude/skills/tom-tat-tai-lieu/SKILL.md</code>, không được để ngoài thư mục gốc.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 22: TỔNG KẾT BUỔI 02 & TEASER BUỔI 03
+         ==================================================================== -->
+    <section class="slide-page" data-slide="22" data-title="Tổng Kết Buổi 02 & Teaser Buổi 03">
+      <div class="slide-header">
+        <div class="header-text-group">
+          <div class="slide-badge-category">HOÀN THÀNH BUỔI 02</div>
+          <h2 class="slide-h2">Tổng Kết Buổi 02 &amp; Giới Thiệu Buổi 03</h2>
+          <p class="slide-lead">Chúc mừng bạn đã làm chủ khái niệm Skill và kỷ luật chống bịa số liệu!</p>
+        </div>
+        <div class="slide-pill-meta">Tổng Kết</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="bento-grid grid-3">
+          <!-- Takeaways -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-emerald">🏆</div>
+              <div class="card-title">3 Chân Lý Cốt Lõi</div>
+            </div>
+            <ul class="card-list" style="font-size: 0.88rem;">
+              <li><strong>Skill = 1 Thư mục + 1 File SKILL.md.</strong></li>
+              <li><strong>Description là chìa khóa</strong> để Claude tự động hóa công việc.</li>
+              <li><strong>Kỷ luật chống bịa số</strong> bảo vệ an toàn cho mọi quyết định kinh doanh.</li>
+            </ul>
+          </div>
+
+          <!-- Homework -->
+          <div class="bento-card">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-blue">📝</div>
+              <div class="card-title">Bài Tập Về Nhà</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              Tạo thêm <strong>1 Skill riêng</strong> cho công việc lặp lại hàng ngày của bạn (Soạn email báo giá, lập kế hoạch tuần, duyệt checklist nghiệm thu). Chụp ảnh nộp vào nhóm Zalo lớp!
+            </p>
+          </div>
+
+          <!-- Teaser Buổi 3 -->
+          <div class="bento-card bento-card-featured">
+            <div class="card-title-row">
+              <div class="card-icon-box icon-purple">🚀</div>
+              <div class="card-title">Buổi 03: Phân Tích Dữ Liệu &amp; MCP</div>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem;">
+              Học cách cắm thêm <strong>giác quan ngoại vi (MCP)</strong> cho Claude: Đọc trực tiếp Google Drive, quét bảng tính Excel/CSV và đặt <strong>Routine</strong> tự động chạy định kỳ!
+            </p>
+            <div class="callout-banner callout-emerald" style="margin-top: 8px; font-size: 0.82rem;">
+              Nhớ chuẩn bị 1 file Excel/CSV số liệu công việc thật!
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card bento-card-dark" style="text-align: center; padding: 14px 20px;">
+          <p style="font-size: 1.05rem; font-weight: 700; color: #ffffff;">
+            👏 Chúc cả lớp buổi tối thực chiến thành công! Hẹn gặp lại ở Buổi 03!
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL: SLIDE OVERVIEW GRID (Press 'O')
+       ======================================================================== -->
+  <div class="overview-modal" id="overviewModal">
+    <div class="overview-content">
+      <div class="overview-header-bar">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">
+          📋 Danh Sách Toàn Bộ 22 Slide — Buổi 02
+        </h3>
+        <button class="btn-keynote" onclick="toggleOverview()">✕ Đóng (Esc)</button>
+      </div>
+      <div class="overview-grid" id="overviewGrid">
+        <!-- Generated Dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       DRAWER: SPEAKER NOTES (Press 'N')
+       ======================================================================== -->
+  <div class="speaker-drawer" id="speakerDrawer">
+    <div class="speaker-header-row">
+      <span class="speaker-badge-chip">📝 GHI CHÚ GIẢNG VIÊN (Nhấn N để ẩn/hiện)</span>
+      <button class="btn-keynote" style="padding: 2px 8px; font-size: 0.8rem;" onclick="toggleNotes()">✕ Đóng</button>
+    </div>
+    <div class="speaker-body-text" id="speakerNoteContent">
+      Chào mừng học viên đến với Buổi 02. Nhắc lại Buổi 1 đã có CLAUDE.md để AI nhớ bối cảnh. Hôm nay lớp mình lên một bậc cao hơn: dạy agent một quy trình để nó làm chuẩn mỗi lần, không phải nhắc lại. Cái đó gọi là Skill.
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="toastMsg">✓ Đã sao chép prompt vào Clipboard!</div>
+
+  <!-- ========================================================================
+       INTERACTIVE JAVASCRIPT CONTROLLER
+       ======================================================================== -->
+  <script>
+    /* Slide Metadata & Instructor Notes */
+    const slideNotes = {
+      1: "Chào mừng học viên đến với Buổi 02. Nhắc lại Buổi 1 đã có CLAUDE.md để AI nhớ bối cảnh. Hôm nay lớp mình lên một bậc cao hơn: dạy agent một quy trình để nó làm chuẩn mỗi lần, không phải nhắc lại. Cái đó gọi là Skill.",
+      2: "Điểm qua 6 chuẩn đầu ra cụ thể. Giúp học viên hình dung rõ kết quả cầm về sau 2,5 giờ học: 1 skill chạy được và 2 bản tóm tắt thực chiến.",
+      3: "Nhấn mạnh nỗi đau khi dùng Chatbot thông thường (hỏi 5 lần mới đủ ý, kết quả hên xui, AI tự bịa số) để làm bật lên giá trị vượt trội của Skill.",
+      4: "Nhấn mạnh: Skill không phải file mẫu tải trên mạng về để chép. Skill sinh ra từ việc làm tay vài lượt, thấy mình lặp lại chỉ dẫn nào thì gói chỉ dẫn đó lại.",
+      5: "Giải thích cấu trúc thư mục: .claude/skills/<ten-skill>/SKILL.md. Không cần cài đặt phần mềm gì phức tạp, chỉ là file văn bản đặt đúng chỗ.",
+      6: "Nhấn mạnh: Dòng description là trái tim của Skill. Mô tả càng rõ 'dùng khi nào' thì Claude càng tự động nạp chính xác.",
+      7: "Khắc sâu kỷ luật chống bịa số: Chỗ nào tài liệu không có thì bắt buộc ghi 'Tài liệu không đề cập', tuyệt đối không suy đoán số liệu hay điều khoản.",
+      8: "Mở file Word bao-cao-tong-ket-nam-2026.docx, chiếu số trang (14 trang) lên màn hình: '14 trang này ai đọc hết trong 10 phút trước giờ họp?'",
+      9: "DEMO LƯỢT 1 & 2: Gõ lượt 1 tóm tắt chung chung (để thấy nó chưa đủ dùng), sau đó gõ lượt 2 ép liệt kê theo từng phần La Mã -> thành mục Ý CHÍNH CHI TIẾT.",
+      10: "DEMO LƯỢT 3: Bóc số liệu và hạn chót. Chú ý mốc 28/02/2027 chôn sâu ở Phụ lục 2 trang 13. Kiểm tra xem agent có bắt được không.",
+      11: "DEMO LƯỢT 4 (KHOẢNH KHẮC WOW): Soi mâu thuẫn. Chỉ cho học viên thấy tổng doanh thu ở mục II.1 là 12.450 triệu nhưng các bảng cộng lại ra 12.545 triệu, lệch đúng 95 triệu!",
+      12: "DEMO LƯỢT 5: Chặn suy đoán và rút gọn 3-5 gạch đầu dòng gửi sếp. Dặn kỹ nguyên tắc 'Tài liệu không đề cập'.",
+      13: "ĐÓNG GÓI THÀNH SKILL: Giảng viên gõ prompt gom 5 lượt vừa rồi thành .claude/skills/tom-tat-tai-lieu/SKILL.md. Mở file đối chiếu 5 mục với 5 dòng đã ghi trên bảng.",
+      14: "Giải thích chuẩn 5 mục của Skill: Tóm tắt nhanh, Ý chính chi tiết, Số liệu & Deadline, Rủi ro, Quy tắc chống bịa.",
+      15: "KIỂM CHỨNG TÁI DÙNG: Chỉ gõ 1 câu lệnh trên file hop-dong-dich-vu-mau.md, Claude tự nạp skill và xuất ra ngay đủ 5 mục (tiết kiệm 5 lần hỏi).",
+      16: "THỬ BẪY CHỐNG BỊA: Hỏi mức phạt rò rỉ bí mật trong hợp đồng. Claude trả lời 'Tài liệu không đề cập' vì Điều 6 có bảo mật nhưng không có số tiền phạt.",
+      17: "HỌC VIÊN THỰC HÀNH 1 (25 PHÚT): Bật đồng hồ đếm ngược. Giảng viên và trợ giảng hỗ trợ học viên tạo file SKILL.md và chạy trên hợp đồng demo.",
+      18: "BẢNG ĐỐI CHIẾU: Chiếu bảng đáp án 7 thông số lên màn hình để học viên tự chấm điểm bản tóm tắt hợp đồng của mình.",
+      19: "HỌC VIÊN THỰC HÀNH 2: Cho học viên đưa tài liệu thật của mình vào tóm tắt. Hướng dẫn tùy biến SKILL.md theo từng chuyên môn.",
+      20: "PHẦN NÂNG CAO: Giới thiệu quy trình nghiên cứu web -> dựng file Word chuẩn nhận diện CES Global -> đóng gói thành skill tao-tai-lieu-ces.",
+      21: "Chiếu bảng tra nhanh prompt và cách xử lý lỗi khi Claude không tự nạp skill hoặc bịa số liệu.",
+      22: "Tổng kết 3 chân lý cốt lõi, giao bài tập về nhà và hé lộ nội dung hấp dẫn của Buổi 03 (Phân tích dữ liệu & MCP)."
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 22;
+    const slides = document.querySelectorAll('.slide-page');
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressBar = document.getElementById('progressBar');
+    const speakerNoteContent = document.getElementById('speakerNoteContent');
+    const overviewModal = document.getElementById('overviewModal');
+    const overviewGrid = document.getElementById('overviewGrid');
+    const speakerDrawer = document.getElementById('speakerDrawer');
+
+    /* Build Overview Grid */
+    function buildOverview() {
+      overviewGrid.innerHTML = '';
+      slides.forEach((slide, index) => {
+        const num = index + 1;
+        const title = slide.getAttribute('data-title') || `Slide ${num}`;
+        const thumb = document.createElement('div');
+        thumb.className = `overview-thumb ${num === currentSlide ? 'active' : ''}`;
+        thumb.innerHTML = `
+          <div class="num">Slide ${num < 10 ? '0' + num : num}</div>
+          <div class="ttl">${title}</div>
+        `;
+        thumb.onclick = () => {
+          goToSlide(num);
+          toggleOverview();
+        };
+        overviewGrid.appendChild(thumb);
+      });
+    }
+
+    /* Jump to Slide */
+    function goToSlide(num) {
+      if (num < 1 || num > totalSlides) return;
+
+      slides.forEach(s => s.classList.remove('active'));
+      const target = document.querySelector(`.slide-page[data-slide="${num}"]`);
+      if (target) {
+        target.classList.add('active');
+        target.scrollTop = 0;
+      }
+
+      currentSlide = num;
+      slideIndicator.textContent = `Slide ${currentSlide < 10 ? '0' + currentSlide : currentSlide} / ${totalSlides}`;
+      progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      // Update speaker note
+      speakerNoteContent.textContent = slideNotes[currentSlide] || "Không có ghi chú thêm.";
+
+      // Update active card in modal
+      document.querySelectorAll('.overview-thumb').forEach((thumb, idx) => {
+        thumb.classList.toggle('active', idx + 1 === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) goToSlide(currentSlide - 1);
+    }
+
+    function toggleOverview() {
+      overviewModal.classList.toggle('active');
+      if (overviewModal.classList.contains('active')) {
+        buildOverview();
+      }
+    }
+
+    function toggleNotes() {
+      speakerDrawer.classList.toggle('active');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* 1-Click Copy with Feedback */
+    function copyPrompt(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.innerText || el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        if (btn) {
+          const original = btn.innerHTML;
+          btn.innerHTML = '✓ Đã chép!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = original;
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+        showToast("Đã sao chép prompt vào Clipboard!");
+      }).catch(() => {
+        showToast("Vui lòng chọn văn bản và sao chép thủ công.");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+
+    /* Practice Timer (Slide 17) */
+    let timerSec = 25 * 60;
+    let timerRef = null;
+    const timerDisplay = document.getElementById('timerDisplay');
+    const btnTimerStart = document.getElementById('btnTimerStart');
+
+    function updateTimer() {
+      const m = Math.floor(timerSec / 60);
+      const s = timerSec % 60;
+      timerDisplay.textContent = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    }
+
+    function toggleTimer() {
+      if (timerRef) {
+        clearInterval(timerRef);
+        timerRef = null;
+        btnTimerStart.textContent = 'Tiếp tục';
+        btnTimerStart.classList.remove('btn-keynote-primary');
+      } else {
+        btnTimerStart.textContent = 'Tạm dừng';
+        btnTimerStart.classList.add('btn-keynote-primary');
+        timerRef = setInterval(() => {
+          if (timerSec > 0) {
+            timerSec--;
+            updateTimer();
+          } else {
+            clearInterval(timerRef);
+            timerRef = null;
+            btnTimerStart.textContent = 'Hoàn thành';
+            showToast("⏰ Đã hết 25 phút thực hành!");
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (timerRef) {
+        clearInterval(timerRef);
+        timerRef = null;
+      }
+      timerSec = 25 * 60;
+      updateTimer();
+      btnTimerStart.textContent = 'Bắt đầu';
+      btnTimerStart.classList.add('btn-keynote-primary');
+    }
+
+    /* Keyboard Navigation Shortcuts */
+    document.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'o') {
+        e.preventDefault();
+        toggleOverview();
+      } else if (e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullscreen();
+      } else if (e.key === 'Escape') {
+        if (overviewModal.classList.contains('active')) toggleOverview();
+        if (speakerDrawer.classList.contains('active')) toggleNotes();
+      }
+    });
+
+    /* Button Click Listeners */
+    document.getElementById('btnNext').addEventListener('click', nextSlide);
+    document.getElementById('btnPrev').addEventListener('click', prevSlide);
+    document.getElementById('btnOverview').addEventListener('click', toggleOverview);
+    document.getElementById('btnNotes').addEventListener('click', toggleNotes);
+    document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+
+    // Initialize first slide
+    goToSlide(1);
+  </script>
+</body>
+</html>
