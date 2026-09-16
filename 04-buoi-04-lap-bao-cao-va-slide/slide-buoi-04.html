@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="vi" data-themes="tokyo-night,pitch-deck-vc,blueprint,engineering-whiteprint,corporate-clean,minimal-white,nord">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khóa Học AI Workspace - Buổi 04: Hoàn Thiện Slide, Connectors, Routine & Subagent Chuẩn Anthropic | CES Global</title>
+
+<!-- html-ppt Studio Core Assets -->
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/tokyo-night.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+
+<style>
+  /* ==========================================================================
+     CES GLOBAL PREMIUM DARK-TECH PRESENTATION DESIGN SYSTEM
+     Built on html-ppt Studio Engine + 100% Times New Roman Mandate
+     ========================================================================== */
+  :root {
+    --bg: #090d16;
+    --bg-soft: #0e1322;
+    --surface: rgba(18, 24, 38, 0.85);
+    --surface-hover: rgba(28, 36, 56, 0.95);
+    --surface-2: rgba(28, 35, 54, 0.95);
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --border-cyan: rgba(56, 189, 248, 0.4);
+    --border-violet: rgba(168, 85, 247, 0.4);
+    --border-emerald: rgba(52, 211, 153, 0.4);
+    --border-amber: rgba(251, 191, 36, 0.4);
+    --text-1: #ffffff;
+    --text-2: #cbd5e1;
+    --text-3: #94a3b8;
+    --text-dim: #64748b;
+    --accent: #38bdf8;
+    --accent-2: #818cf8;
+    --accent-3: #c084fc;
+    --cyan: #06b6d4;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --rose: #f43f5e;
+    --violet: #8b5cf6;
+    --grad: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+    --grad-cyan-purple: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+    --grad-emerald-cyan: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --grad-amber-rose: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    --font-sans: 'Times New Roman', Times, serif;
+    --font-display: 'Times New Roman', Times, serif;
+    --font-mono: 'Consolas', 'Courier New', monospace;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-lg: 24px;
+    --shadow: 0 12px 40px rgba(0,0,0,0.5);
+    --shadow-lg: 0 24px 70px rgba(0,0,0,0.7);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    overflow: hidden;
+  }
+
+  /* Slide Base Layout */
+  .slide {
+    padding: 40px 72px;
+    justify-content: space-between;
+    background: var(--bg);
+    color: var(--text-1);
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+  }
+
+  /* Ambient Glow & Grid Layer */
+  .ambient-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: 
+      radial-gradient(ellipse at 15% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 75%, rgba(168, 85, 247, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 10%, rgba(52, 211, 153, 0.08) 0%, transparent 45%);
+  }
+
+  .cyber-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
+  }
+
+  .slide-content-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  /* Deck Header & Footer */
+  .deck-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .badge-brand {
+    background: linear-gradient(135deg, #0284c7, #6366f1);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  }
+
+  .deck-title-meta {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .deck-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Typography & Titles */
+  .title-primary {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 4px 0 6px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  .title-primary .gradient-text {
+    background: var(--grad-cyan-purple);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-hero {
+    font-size: 50px;
+    font-weight: 900;
+    line-height: 1.08;
+    margin: 8px 0 14px;
+    color: #ffffff;
+  }
+
+  .title-hero .gradient-text {
+    background: var(--grad-cyan-purple);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle-hero {
+    font-size: 18px;
+    color: var(--text-2);
+    max-width: 860px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+  }
+
+  .kicker-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 4px 14px;
+    border-radius: 999px;
+  }
+
+  .kicker-tag.violet {
+    color: #c084fc;
+    background: rgba(168, 85, 247, 0.12);
+    border-color: rgba(168, 85, 247, 0.3);
+  }
+
+  .kicker-tag.emerald {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+
+  .kicker-tag.amber {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+
+  /* Bento Grid & Cards */
+  .bento-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+  }
+
+  .bento-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .bento-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    width: 100%;
+  }
+
+  .bento-card {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-cyan);
+    box-shadow: 0 16px 44px rgba(56, 189, 248, 0.18);
+  }
+
+  .bento-card.glow-cyan { border-color: var(--border-cyan); }
+  .bento-card.glow-violet { border-color: var(--border-violet); }
+  .bento-card.glow-emerald { border-color: var(--border-emerald); }
+  .bento-card.glow-amber { border-color: var(--border-amber); }
+
+  .card-header-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .card-icon-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.25;
+  }
+
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--text-2);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Code Window Component */
+  .code-window {
+    background: #060911;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+  }
+
+  .code-header {
+    background: #0f1422;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ef4444; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-green { background: #10b981; }
+
+  .code-file-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+  }
+
+  .code-body {
+    padding: 12px 16px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  /* Callout Alerts */
+  .callout-alert {
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    line-height: 1.5;
+    border: 1px solid;
+    margin: 8px 0;
+  }
+
+  .alert-cyan {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #e0f2fe;
+  }
+
+  .alert-emerald {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #d1fae5;
+  }
+
+  .alert-amber {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fef3c7;
+  }
+
+  .alert-rose {
+    background: rgba(244, 63, 94, 0.1);
+    border-color: rgba(244, 63, 94, 0.4);
+    color: #ffe4e6;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+
+  .data-table th {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border-cyan);
+  }
+
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+  }
+
+  .data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .badge-metric {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 11.5px;
+  }
+  .metric-cyan { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+  .metric-emerald { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+  .metric-amber { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+  .metric-rose { background: rgba(244, 63, 94, 0.2); color: #f43f5e; }
+
+  /* Utility Spacing */
+  .mt-s { margin-top: 8px; }
+  .mt-m { margin-top: 14px; }
+  .mb-s { margin-bottom: 8px; }
+  .mb-m { margin-bottom: 14px; }
+  .flex-row-center { display: flex; align-items: center; gap: 12px; }
+</style>
+</head>
+
+<body>
+<div class="deck">
+
+  <!-- ========================================================================
+       SLIDE 01: BÌA BÀI GIẢNG BUỔI 04
+       ======================================================================== -->
+  <section class="slide" data-title="01 / Khai Mạc Buổi 04">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+    <div class="fx-host" style="position:absolute;inset:0;pointer-events:none;z-index:0;" data-fx="starfield"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">CES GLOBAL ACADEMY</span>
+        <div class="deck-title-meta">CHƯƠNG TRÌNH ĐÀO TẠO AI WORKSPACE 6 AGENT</div>
+      </div>
+
+      <div style="margin: auto 0;">
+        <span class="kicker-tag violet mb-s">🔥 BUỔI 04 / 06 · BƯỚC ĐỆM BÙNG NỔ</span>
+        <h1 class="title-hero">
+          Hoàn Thiện Slide, Connectors, Routine &<br>
+          <span class="gradient-text">Bản Chất Subagent Chuẩn Anthropic</span>
+        </h1>
+        <p class="subtitle-hero">
+          Làm chủ kỹ thuật vẽ Infographic tiếng Việt chuẩn sắc nét, kết nối Google Drive & Gmail an toàn, hẹn giờ Routine 24/7, và giải mã ranh giới Context cô lập của Subagent để xuất Báo cáo điều hành chuyên nghiệp!
+        </p>
+
+        <div class="flex-row-center mt-m">
+          <div class="bento-card glow-cyan" style="padding: 10px 18px; flex-direction: row; align-items: center; gap: 12px;">
+            <span style="font-size: 20px;">👨‍🏫</span>
+            <div>
+              <div style="font-size: 11px; color: var(--text-dim);">GIẢNG VIÊN ĐỨNG LỚP</div>
+              <div style="font-size: 14px; font-weight: 700; color: #fff;">Lưu Tuấn Anh · CES Lead Trainer</div>
+            </div>
+          </div>
+          <div class="bento-card glow-violet" style="padding: 10px 18px; flex-direction: row; align-items: center; gap: 12px;">
+            <span style="font-size: 20px;">⏱️</span>
+            <div>
+              <div style="font-size: 11px; color: var(--text-dim);">THỜI LƯỢNG HUẤN LUYỆN</div>
+              <div style="font-size: 14px; font-weight: 700; color: #fff;">150 Phút (20:00 – 22:30)</div>
+            </div>
+          </div>
+          <div class="bento-card glow-emerald" style="padding: 10px 18px; flex-direction: row; align-items: center; gap: 12px;">
+            <span style="font-size: 20px;">🎯</span>
+            <div>
+              <div style="font-size: 11px; color: var(--text-dim);">TRỌNG TÂM CÔNG CỤ</div>
+              <div style="font-size: 14px; font-weight: 700; color: #fff;">Claude Code · MCP Image · Subagent</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa Học AI Workspace Thực Chiến · Hệ Thống Đào Tạo Độc Quyền CES Global</span>
+        <span class="slide-number" data-current="1" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 01]:</b></p>
+      <p>Chào mừng toàn thể anh chị học viên đến với Buổi 04 của Khóa học AI Workspace 6 Agent!</p>
+      <p>Buổi trước anh chị đã tạo được bộ khung Slide thuyết trình. Tối nay, chúng ta hoàn thiện nốt 3 vũ khí tự động hóa đỉnh cao: Sinh ảnh đồ họa tiếng Việt bằng MCP Image, kết nối ngoài máy an toàn, đặt Routine tự động, và đặc biệt là giải mã cơ chế Subagent chuẩn Anthropic!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 02: MỤC TIÊU & BẢN ĐỒ NĂNG LỰC BUỔI 04
+       ======================================================================== -->
+  <section class="slide" data-title="02 / Bản Đồ Năng Lực Buổi 04">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">LỘ TRÌNH THỰC CHIẾN</span>
+        <div class="deck-title-meta">5 MẢNH GHÉP TỰ ĐỘNG HÓA BUỔI 04</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag emerald mb-s">📍 ĐỊNH VỊ NĂNG LỰC</span>
+        <h2 class="title-primary">Năm Mảnh Ghép Chuyển Hóa <span class="gradient-text">Từ Hỏi-Đáp Sang Tự Vận Hành</span></h2>
+        <p class="card-desc mb-s">Xâu chuỗi hoàn chỉnh từ dữ liệu thô, hình ảnh minh họa, kết nối ngoại vi đến kiến trúc Subagent cách ly context.</p>
+      </div>
+
+      <div class="bento-grid-3 mt-s">
+        <!-- Card 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">MẢNH GHÉP 01</span>
+            <span class="card-icon-badge">🎨</span>
+          </div>
+          <h3 class="card-title">MCP ChatGPT Image</h3>
+          <p class="card-desc">Vẽ Infographic quy trình, sơ đồ trực quan tỉ lệ 16:9 có chữ tiếng Việt chuẩn xác, nhúng thẳng vào slide và báo cáo.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">MẢNH GHÉP 02</span>
+            <span class="card-icon-badge">🔌</span>
+          </div>
+          <h3 class="card-title">Connectors & MCP Ngoài Máy</h3>
+          <p class="card-desc">Hiểu rõ khi nào cần MCP (Google Drive, Gmail). Nắm vững 3 luật thép an toàn: Read-only, không tự gửi, chống Injection.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">MẢNH GHÉP 03</span>
+            <span class="card-icon-badge">⏰</span>
+          </div>
+          <h3 class="card-title">Routine Tự Động Hóa</h3>
+          <p class="card-desc">"Hẹn giờ nồi cơm điện" cho Agent: Khung 4 câu hỏi định hình mọi tác vụ tự động thức dậy lúc 8h sáng thứ Hai để tổng hợp số liệu.</p>
+        </div>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Card 4 -->
+        <div class="bento-card glow-amber">
+          <div class="card-header-line">
+            <span class="kicker-tag amber">MẢNH GHÉP 04 (TRỌNG TÂM)</span>
+            <span class="card-icon-badge">🧠</span>
+          </div>
+          <h3 class="card-title">Ranh Giới Context & Subagent Chuẩn Anthropic</h3>
+          <p class="card-desc">Ẩn dụ "Trưởng phòng & Tờ giấy giao việc": Subagent chạy trong context cô lập 100%, bốc vác việc đọc nhiều file mà không làm bẩn bàn làm việc chính.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">MẢNH GHÉP 05</span>
+            <span class="card-icon-badge">📊</span>
+          </div>
+          <h3 class="card-title">Báo Cáo Quản Trị & Bệ Phóng Multi-Agent</h3>
+          <p class="card-desc">Xuất Báo cáo Kết quả Kinh doanh Tháng 3 hoàn chỉnh (không emoji, chống bịa số) và chuẩn bị sẵn sàng cho Đội ngũ Multi-Agent ở Buổi 5.</p>
+        </div>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="2" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 02]:</b></p>
+      <p>Nhìn vào 5 mảnh ghép này: Chúng ta không học những thứ rời rạc. Từng mảnh ghép đều phục vụ cho quy trình thực tế: Số liệu thô -> Vẽ ảnh -> Quét email an toàn -> Hẹn giờ tự động -> Phái Subagent đọc hồ sơ -> Xuất báo cáo điều hành.</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 03: MCP CHATGPT IMAGE — SINH ẢNH MINH HỌA TIẾNG VIỆT
+       ======================================================================== -->
+  <section class="slide" data-title="03 / MCP ChatGPT Image">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">ĐỘT PHÁ THẨM MỸ</span>
+        <div class="deck-title-meta">MCP CHATGPT-IMAGE-MCP · NÂNG CẤP SLIDE</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag mb-s">🎨 VŨ KHÍ HÌNH ẢNH TRỰC QUAN</span>
+        <h2 class="title-primary">Biến Slide Khô Khan Thành <span class="gradient-text">Infographic Sắc Nét Tiếng Việt</span></h2>
+        <p class="card-desc mb-s">Xóa bỏ hoàn toàn quy trình thủ công: gõ web vẽ ảnh -> tải về máy -> kéo thả thủ công vào slide.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Column Left: Pain Point vs Solution -->
+        <div class="bento-card glow-rose">
+          <div class="card-header-line">
+            <span class="kicker-tag" style="background: rgba(244, 63, 94, 0.12); color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">NỖI ĐAU KHI NHỜ AI VẼ ẢNH</span>
+            <span class="card-icon-badge">❌</span>
+          </div>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--text-2);">
+            <li>Hầu hết các công cụ sinh ảnh (Midjourney, DALL-E cũ) đều <b>bị lỗi font tiếng Việt</b>: mất dấu, méo chữ, vô nghĩa.</li>
+            <li>Phải chuyển qua lại giữa nhiều tab trình duyệt, tải ảnh xuống máy rồi chèn thủ công rất mất thời gian.</li>
+            <li>Slide thuyết trình toàn chữ và số thô khiến người xem dễ buồn ngủ, thiếu tính chuyên nghiệp cao cấp.</li>
+          </ul>
+        </div>
+
+        <!-- Column Right: The Solution -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">GIẢI PHÁP MCP CHATGPT IMAGE</span>
+            <span class="card-icon-badge">✅</span>
+          </div>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--text-2);">
+            <li>Kết nối trực tiếp Claude Code với engine đồ họa mới nhất của ChatGPT Image: <b>chữ tiếng Việt có dấu chuẩn 100%</b>.</li>
+            <li>Tự động lưu file ảnh <code>.png</code> vào đúng thư mục theo Super Rule đánh số thứ tự tuần tự (<code>03_...</code>).</li>
+            <li>Agent tự động nhúng ảnh trực tiếp vào Slide PowerPoint hoặc file Markdown/HTML mà người dùng không cần động tay!</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Code Box Demo -->
+      <div class="code-window mt-s">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span class="code-file-name">Prompt K1-2: Sinh Infographic Sơ Đồ Quy Trình B2B Tỉ Lệ 16:9</span>
+        </div>
+        <pre class="code-body">Dùng công cụ chatgpt-image để tạo 1 ảnh đồ họa infographic tỉ lệ 16:9 minh họa "Quy trình 4 bước chăm sóc khách hàng và thu hồi công nợ B2B":
+- Bước 1: Tư vấn giải pháp & Ký kết hợp đồng
+- Bước 2: Bàn giao phần mềm & Nghiệm thu đợt 1
+- Bước 3: Đối soát công nợ & Gửi thông báo thanh toán
+- Bước 4: Chăm sóc sau bán & Mở rộng gói dịch vụ
+Phong cách: Modern Flat Vector, nền trắng sạch sẽ, tông màu xanh công nghệ cao cấp, chữ tiếng Việt hiển thị rõ ràng có dấu.
+Lưu file vào thư mục 05-bao-cao/ theo quy tắc đánh số tự động (ví dụ: 03_so-do-quy-trinh-b2b.png).</pre>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="3" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 03]:</b></p>
+      <p>Slide 3 anh chị tạo ra rất tốt về nội dung, nhưng đối tác hay ban giám đốc nhìn vào vẫn thấy khô. Hãy cho họ thấy sức mạnh của MCP Image: Vừa sinh ảnh có chữ tiếng Việt chuẩn, vừa tự động nhúng vào slide chỉ bằng 1 câu lệnh!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 04: BẢN CHẤT CONNECTORS & MCP NGOÀI MÁY
+       ======================================================================== -->
+  <section class="slide" data-title="04 / Bản Chất Connectors & MCP">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">KIẾN TRÚC MẠNG NGOẠI VI</span>
+        <div class="deck-title-meta">KHI NÀO CẦN MCP & KHI NÀO KHÔNG CẦN?</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag violet mb-s">⚡ GỠ BỎ HIỂU LẦM KINH ĐIỂN</span>
+        <h2 class="title-primary">Bản Chất MCP: <span class="gradient-text">"Chiếc Cầu Nối" Vươn Ra Thế Giới Bên Ngoài</span></h2>
+        <p class="card-desc mb-s">Phân biệt rạch ròi giữa thao tác file nội bộ trên máy tính và tương tác với tài nguyên đám mây.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Box 1: Local Files -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">TRÊN MÁY TÍNH (CỤC BỘ / LOCAL)</span>
+            <span class="card-icon-badge">💻</span>
+          </div>
+          <h3 class="card-title" style="color: #38bdf8;">HOÀN TOÀN KHÔNG CẦN MCP!</h3>
+          <p class="card-desc mb-s">Rất nhiều người lầm tưởng: "Muốn AI đọc file Word/Excel trong máy tính thì phải cài MCP Filesystem". <b>ĐÂY LÀ HIỂU LẦM TAI HẠI!</b></p>
+          <div class="callout-alert alert-cyan">
+            Claude Code sử dụng trực tiếp các công cụ nội tại của hệ điều hành (Read, Write, Grep, Glob, Bash). Tốc độ cực nhanh, ổn định và bảo mật tuyệt đối.
+          </div>
+        </div>
+
+        <!-- Box 2: External Connectors -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">TÀI NGUYÊN NGOÀI MÁY (EXTERNAL)</span>
+            <span class="card-icon-badge">🌐</span>
+          </div>
+          <h3 class="card-title" style="color: #c084fc;">BẮT BUỘC DÙNG MCP / CONNECTORS</h3>
+          <p class="card-desc mb-s">Khi Agent cần "vươn tay" chạm vào các kho tài nguyên nằm bên ngoài ổ cứng máy tính:</p>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2);">
+            <li><b>Google Drive / OneDrive:</b> Đọc kho tài liệu dùng chung của cơ quan.</li>
+            <li><b>Hộp thư Gmail:</b> Quét email đối soát công nợ từ đối tác.</li>
+            <li><b>Cơ sở dữ liệu (SQL, MISA, CRM):</b> Truy vấn dữ liệu khách hàng.</li>
+            <li><b>API Đồ Họa Ngoại Vi:</b> Gọi engine ChatGPT Image sinh ảnh.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-amber mt-s" style="text-align: center;">
+        <strong>💡 ĐÚC KẾT SƯ PHẠM:</strong> MCP giống như <b>"Tấm thẻ ra vào kho"</b> được cấp quyền tạm thời, giúp Agent mở rộng giác quan ra khỏi chiếc máy tính của bạn!
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="4" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 04]:</b></p>
+      <p>Nhiều học viên đi học về cứ loay hoay cài MCP Filesystem để đọc file trong máy rồi bị lỗi. Nhấn mạnh: File trong máy không cần MCP! Chỉ khi nào cắm sang Google Drive của công ty, quét Gmail hay gọi API vẽ ảnh thì mới cần MCP!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 05: 3 LUẬT THÉP BẢO MẬT KHI CẮM MCP
+       ======================================================================== -->
+  <section class="slide" data-title="05 / 3 Luật Thép Bảo Mật MCP">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">AN TOÀN THÔNG TIN</span>
+        <div class="deck-title-meta">3 NGUYÊN TẮC BẢO MẬT DỮ LIỆU DOANH NGHIỆP</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag amber mb-s">🛡️ HÀNG RÀO AN TOÀN SỐNG CÒN</span>
+        <h2 class="title-primary">Ba Luật Thép An Toàn <span class="gradient-text">Khi Cho Agent Ra Bên Ngoài</span></h2>
+        <p class="card-desc mb-s">Khi cấp thẻ ra vào cho Agent, phải tuân thủ nghiêm ngặt để tránh rò rỉ dữ liệu hoặc sai sót tai hại.</p>
+      </div>
+
+      <div class="bento-grid-3 mt-s">
+        <!-- Rule 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">LUẬT THÉP 01</span>
+            <span class="card-icon-badge">👀</span>
+          </div>
+          <h3 class="card-title">Quyền "Chỉ Đọc" (Read-Only)</h3>
+          <p class="card-desc">Khi cấp quyền truy cập Google Drive hoặc Cơ sở dữ liệu công ty, <b>chỉ cấp quyền Xem/Đọc (View/Read)</b>. Tuyệt đối không cấp quyền Sửa, Xóa hay Quản trị toàn quyền để tránh rủi ro AI làm xáo trộn dữ liệu gốc.</p>
+        </div>
+
+        <!-- Rule 2 -->
+        <div class="bento-card glow-rose">
+          <div class="card-header-line">
+            <span class="kicker-tag" style="background: rgba(244, 63, 94, 0.12); color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">LUẬT THÉP 02</span>
+            <span class="card-icon-badge">⛔</span>
+          </div>
+          <h3 class="card-title">Không Cho AI Tự Gửi Mail</h3>
+          <p class="card-desc">Nguyên tắc <b>Human-in-the-loop</b>: Agent chỉ được phép: Đọc $\rightarrow$ Phân tích $\rightarrow$ Soạn bản nháp (Draft). Nút bấm "GỬI EMAIL" hay "DUYỆT TIỀN" 100% phải do con người kiểm tra và bấm nút!</p>
+        </div>
+
+        <!-- Rule 3 -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">LUẬT THÉP 03</span>
+            <span class="card-icon-badge">🛡️</span>
+          </div>
+          <h3 class="card-title">Chống Prompt Injection</h3>
+          <p class="card-desc">Nội dung trong email hoặc file bên ngoài của khách hàng là <b>dữ liệu thụ động để phân tích</b>, KHÔNG PHẢI là mệnh lệnh để Agent thi hành. Cảnh giác các câu lệnh độc hại giấu trong email đối tác.</p>
+        </div>
+      </div>
+
+      <!-- Demo Case -->
+      <div class="callout-alert alert-emerald mt-s">
+        <strong>📌 THỰC HÀNH AN TOÀN (PROMPT K2-1):</strong> Yêu cầu Agent đọc dữ liệu công nợ Công ty An Phát và soạn bản nháp email nhắc thanh toán, kèm lệnh bắt buộc: <em>"CHỈ xuất bản nháp ra màn hình để tôi duyệt, TUYỆT ĐỐI KHÔNG gửi thư!"</em>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="5" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 05]:</b></p>
+      <p>Giảng viên dừng lại nói chậm ở Slide này: Nhấn mạnh rủi ro lớn nhất là để AI tự động gửi email đòi nợ sai cho khách hàng VIP. AI soạn nháp cực tốt, nhưng bấm gửi phải là con người!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 06: ROUTINE — TỰ ĐỘNG HÓA CHẠY THEO LỊCH
+       ======================================================================== -->
+  <section class="slide" data-title="06 / Routine Tự Động Hóa">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">TỰ ĐỘNG HÓA ĐỊNH KỲ</span>
+        <div class="deck-title-meta">ROUTINE · ẨN DỤ NỒI CƠM ĐIỆN</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag emerald mb-s">⏰ GIẢI PHÓNG THỜI GIAN</span>
+        <h2 class="title-primary">Routine: <span class="gradient-text">"Hẹn Giờ Nồi Cơm Điện"</span> Cho Agent</h2>
+        <p class="card-desc mb-s">Không cần mỗi tuần phải ngồi gõ lại lệnh. Đúng giờ định kỳ, cỗ máy tự thức dậy, làm việc và dọn sẵn báo cáo.</p>
+      </div>
+
+      <!-- 4 Questions Grid -->
+      <div class="bento-grid-4 mt-s">
+        <div class="bento-card glow-cyan">
+          <span class="kicker-tag">CÂU HỎI 01</span>
+          <h4 class="card-title mt-s">Chạy lúc nào?</h4>
+          <p class="card-desc">Tần suất & thời điểm kích hoạt chính xác.<br><b>Ví dụ:</b> 08:00 sáng Thứ Hai hàng tuần.</p>
+        </div>
+
+        <div class="bento-card glow-violet">
+          <span class="kicker-tag violet">CÂU HỎI 02</span>
+          <h4 class="card-title mt-s">Đọc ở đâu?</h4>
+          <p class="card-desc">Đường dẫn thư mục hoặc file nguồn cụ thể.<br><b>Ví dụ:</b> <code>demo/so-lieu-ban-hang-thang.md</code></p>
+        </div>
+
+        <div class="bento-card glow-emerald">
+          <span class="kicker-tag emerald">CÂU HỎI 03</span>
+          <h4 class="card-title mt-s">Làm gì?</h4>
+          <p class="card-desc">Hành động logic: lọc đơn nợ, tính tổng doanh thu tăng trưởng so với tháng trước.</p>
+        </div>
+
+        <div class="bento-card glow-amber">
+          <span class="kicker-tag amber">CÂU HỎI 04</span>
+          <h4 class="card-title mt-s">Lưu vào đâu?</h4>
+          <p class="card-desc">Thư mục xuất file có số thứ tự tuần tự.<br><b>Ví dụ:</b> <code>05-bao-cao/01_bao-cao.md</code></p>
+        </div>
+      </div>
+
+      <!-- Code Window Routine -->
+      <div class="code-window mt-s">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-red"></span>
+            <span class="code-dot dot-yellow"></span>
+            <span class="code-dot dot-green"></span>
+          </div>
+          <span class="code-file-name">Prompt K3-1: Thiết Lập Routine Tự Động Tổng Hợp Số Liệu Thứ Hai</span>
+        </div>
+        <pre class="code-body">Hãy thiết lập cho tôi một Routine tự động hóa:
+- Lịch chạy: 08:00 sáng thứ Hai hàng tuần.
+- Nguồn dữ liệu: Đọc file demo/so-lieu-ban-hang-thang.md.
+- Xử lý: Lọc toàn bộ các khách hàng có đơn chờ thanh toán và khách hủy đơn, tính doanh thu và tỷ lệ tăng trưởng.
+- Đầu ra: Lưu thành file markdown trong 05-bao-cao/ theo Super Rule tự động đánh số thứ tự tuần tự.
+- Ràng buộc an toàn: Chỉ đọc và lưu báo cáo nội bộ, không gửi email, không sửa file gốc.</pre>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="6" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 06]:</b></p>
+      <p>Đây là sự khác biệt giữa người dùng AI thủ công và người làm chủ AI Workspace. Người thủ công thứ Hai nào cũng ngồi gõ lệnh; người làm chủ chỉ cần cài Routine một lần, sáng thứ Hai mở máy ra là báo cáo đã nằm sẵn trên bàn!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 07: GIẢI MÃ KHÁI NIỆM CHUẨN ANTHROPIC
+       ======================================================================== -->
+  <section class="slide" data-title="07 / Chuẩn Kiến Trúc Anthropic">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">CHUẨN KỸ THUẬT ANTHROPIC</span>
+        <div class="deck-title-meta">BUILDING EFFECTIVE AGENTS RESEARCH PAPER</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag mb-s">📚 ĐỊNH NGHĨA CHUẨN XÁC</span>
+        <h2 class="title-primary">Phân Biệt Ba Cấp Độ: <span class="gradient-text">Workflow vs Agent vs Subagent</span></h2>
+        <p class="card-desc mb-s">Tài liệu kỹ thuật của Anthropic phân định rõ ràng 3 hình thái vận hành của mô hình ngôn ngữ lớn (LLM).</p>
+      </div>
+
+      <div class="bento-grid-3 mt-s">
+        <!-- Level 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">CẤP ĐỘ 01</span>
+            <span class="card-icon-badge">⚙️</span>
+          </div>
+          <h3 class="card-title">Workflow (Quy trình)</h3>
+          <p class="card-desc mb-s">Hệ thống mà LLM và công cụ được điều phối theo các <b>đường đi cố định viết sẵn bằng code</b>.</p>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-2);">
+            <li>Chuỗi If/Else, Prompt Chaining.</li>
+            <li>Không có tính tự quyết.</li>
+            <li>Phù hợp tác vụ đơn giản, cứng nhắc.</li>
+          </ul>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">CẤP ĐỘ 02</span>
+            <span class="card-icon-badge">🤖</span>
+          </div>
+          <h3 class="card-title">Agent (Đại lý thông minh)</h3>
+          <p class="card-desc mb-s">Hệ thống mà LLM <b>tự điều khiển quy trình và cách dùng công cụ trong một vòng lặp (loop)</b>.</p>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-2);">
+            <li>Tự suy nghĩ (Reasoning).</li>
+            <li>Tự chọn công cụ (Tools).</li>
+            <li>Tự quan sát kết quả & tự sửa sai.</li>
+          </ul>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">CẤP ĐỘ 03</span>
+            <span class="card-icon-badge">👥</span>
+          </div>
+          <h3 class="card-title">Subagent (Agent con)</h3>
+          <p class="card-desc mb-s">Một phiên bản Claude riêng biệt do Agent chính sinh ra để <b>xử lý một việc có phạm vi rõ ràng</b>.</p>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-2);">
+            <li>Chạy trong Context Window riêng.</li>
+            <li>Quyền hạn và tool riêng.</li>
+            <li>Chỉ nộp lại bản tóm tắt kết quả.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-cyan mt-s" style="text-align: center;">
+        <strong>🎯 CÂU CHỐT TỪ ANTHROPIC:</strong> <em>"Agent là LLM tự dùng công cụ trong một vòng lặp; Subagent là agent con chạy ở phòng riêng để bảo vệ context cho agent chính!"</em>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="7" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 07]:</b></p>
+      <p>Giải thích cho lớp thấy: Đừng gọi tất cả mọi thứ là Agent. Quy trình cố định là Workflow. Khi AI tự suy nghĩ chọn công cụ mới là Agent. Và khi Agent đẻ ra một nhánh độc lập thì đó là Subagent!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 08: RANH GIỚI CONTEXT CÔ LẬP CỦA SUBAGENT
+       ======================================================================== -->
+  <section class="slide" data-title="08 / Ranh Giới Context Cô Lập">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">CƠ CHẾ KỸ THUẬT LÕI</span>
+        <div class="deck-title-meta">CONTEXT BOUNDARY · RANH GIỚI CONTEXT CÔ LẬP</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag amber mb-s">🧠 BẢN CHẤT SỐNG CÒN</span>
+        <h2 class="title-primary">Ranh Giới Context: <span class="gradient-text">Điểm Dễ Hiểu Sai Nhất Về Subagent</span></h2>
+        <p class="card-desc mb-s">Subagent không hề chia sẻ bộ nhớ với Agent chính. Nó bắt đầu với một context mới tinh và hoàn toàn cách ly.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Box Left: The Isolation -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">CHIỀU ĐI: CÁCH LY 100%</span>
+            <span class="card-icon-badge">🚪</span>
+          </div>
+          <h3 class="card-title">Kênh Duy Nhất: Prompt Giao Việc</h3>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2);">
+            <li>Subagent <b>KHÔNG THẤY</b> lịch sử hội thoại của bạn với Agent chính từ đầu buổi.</li>
+            <li>Subagent <b>KHÔNG THẤY</b> các file mà Agent chính đã từng mở trước đó.</li>
+            <li><b>Kênh truyền duy nhất:</b> Đoạn Prompt giao việc. Nếu trên câu lệnh bạn không chỉ rõ file, tiêu chí hay đường dẫn $\rightarrow$ Subagent hoàn toàn mù tịt!</li>
+          </ul>
+        </div>
+
+        <!-- Box Right: The Return -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">CHIỀU VỀ: CHỈ NỘP TÓM TẮT</span>
+            <span class="card-icon-badge">📄</span>
+          </div>
+          <h3 class="card-title">Dọn Sạch Rác & Output Trung Gian</h3>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2);">
+            <li><b>Chỉ tin nhắn cuối cùng</b> của Subagent được gửi trả về cho phiên chính.</li>
+            <li>Mọi lệnh gọi công cụ, log rác, nội dung 20 file đọc dở... <b>đều bị khóa lại trong context của Subagent và tự hủy</b>.</li>
+            <li>Phiên làm việc chính của bạn giữ được 95% khoảng trống, không bao giờ bị ô nhiễm context (Context Pollution).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Diagram line -->
+      <div class="callout-alert alert-emerald mt-s" style="text-align: center; font-family: var(--font-mono); font-size: 13px;">
+        [Agent Chính] ── (Chỉ gửi 1 đoạn Prompt giao việc) ──> [Subagent Context Cô Lập: Cày cuốc 20 file] ── (Chỉ nộp 1 bảng tóm tắt) ──> [Agent Chính]
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="8" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 08]:</b></p>
+      <p>Nhấn mạnh điểm đắt giá nhất: Subagent không hề đọc trộm cuộc chat nãy giờ của anh chị. Kênh duy nhất là câu lệnh giao việc. Nếu câu lệnh thiếu đường dẫn file hay tiêu chí, Subagent sẽ không biết đường nào mà làm!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 09: ẨN DỤ SƯ PHẠM: TRƯỞNG PHÒNG & TỜ GIẤY GIAO VIỆC
+       ======================================================================== -->
+  <section class="slide" data-title="09 / Ẩn Dụ Trưởng Phòng & Tờ Giấy">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">ẨN DỤ SƯ PHẠM ĐẮT GIÁ</span>
+        <div class="deck-title-meta">MÔ HÌNH HÓA TRỰC QUAN HOẠT ĐỘNG SUBAGENT</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag violet mb-s">🏢 ẨN DỤ ĐỜI THƯỜNG</span>
+        <h2 class="title-primary">Mô Hình: <span class="gradient-text">"Trưởng Phòng & Tờ Giấy Giao Việc"</span></h2>
+        <p class="card-desc mb-s">Hình ảnh trực quan giúp bất kỳ ai cũng có thể hiểu và làm chủ cơ chế điều phối Subagent.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Role 1: Truong phong -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">AGENT CHÍNH = TRƯỞNG PHÒNG</span>
+            <span class="card-icon-badge">👔</span>
+          </div>
+          <p class="card-desc" style="font-size: 14px; line-height: 1.6;">
+            - Ngồi họp trực tiếp với <b>BẠN (Giám đốc)</b> trong phòng họp chính.<br>
+            - Nắm toàn bộ bối cảnh dự án, lịch sử trao đổi từ đầu buổi đến giờ.<br>
+            - Khi nhận một tập 50 hồ sơ CV dày cộp, Trưởng phòng <b>không tự ôm vào đọc</b> vì mặt bàn sẽ bị chật cứng.<br>
+            - Trưởng phòng viết một <b>TỜ GIẤY GIAO VIỆC</b> đưa cho cấp dưới.
+          </p>
+        </div>
+
+        <!-- Role 2: Subagent -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">SUBAGENT = TRỢ LÝ PHÒNG RIÊNG</span>
+            <span class="card-icon-badge">🧑‍💻</span>
+          </div>
+          <p class="card-desc" style="font-size: 14px; line-height: 1.6;">
+            - Cầm tờ giấy sang <b>phòng làm việc bên cạnh</b> (Context riêng).<br>
+            - Không nghe được cuộc họp nãy giờ, chỉ đọc đúng những gì ghi trên tờ giấy.<br>
+            - Bày 50 hồ sơ lên bàn riêng cày cuốc, lọc ra đúng <b>1 trang A4 tóm tắt</b>.<br>
+            - Mang trang A4 sang nộp cho Trưởng phòng, rồi giải tán! Bàn chính sạch bong!
+          </p>
+        </div>
+      </div>
+
+      <!-- 2 Hard Limits -->
+      <div class="bento-grid-2 mt-s">
+        <div class="callout-alert alert-rose" style="margin: 0;">
+          <strong>🚫 GIỚI HẠN CỨNG 1:</strong> Subagent <b>KHÔNG THỂ sinh subagent khác</b> (Không có ủy quyền lồng nhau - No nested subagents).
+        </div>
+        <div class="callout-alert alert-amber" style="margin: 0;">
+          <strong>⛔ GIỚI HẠN CỨNG 2:</strong> Subagent <b>KHÔNG THỂ hỏi lại người dùng</b>. Nếu chạy nền cần quyền duyệt (permission), nó sẽ tự động từ chối.
+        </div>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="9" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 09]:</b></p>
+      <p>Hãy khắc sâu hình ảnh Trưởng phòng và Tờ giấy giao việc. Nhân viên sang phòng riêng cày cuốc xong nộp lại tờ A4. Hai giới hạn bắt buộc nhớ: Không được đẻ subagent con lồng nhau, và không được dừng lại hỏi người dùng!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 10: KHI NÀO DÙNG SUBAGENT VS GIỮ Ở AGENT CHÍNH?
+       ======================================================================== -->
+  <section class="slide" data-title="10 / Khi Nào Dùng Subagent?">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">CHIẾN LƯỢC ĐIỀU PHỐI</span>
+        <div class="deck-title-meta">QUY TẮC NGÓN TAY CÁI CỦA ANTHROPIC</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag emerald mb-s">⚖️ BẢNG QUYẾT ĐỊNH CHUẨN</span>
+        <h2 class="title-primary">Khi Nào Dùng Subagent vs <span class="gradient-text">Khi Nào Giữ Ở Agent Chính?</span></h2>
+        <p class="card-desc mb-s">Quy tắc ngón tay cái giúp phân định chính xác trong vòng 3 giây trước bất kỳ đầu việc công sở nào.</p>
+      </div>
+
+      <table class="data-table mt-s">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Tình huống công việc</th>
+            <th style="width: 22%;">Nên dùng</th>
+            <th style="width: 50%;">Lý do kỹ thuật cốt lõi (Chuẩn Anthropic)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Đọc quét, điều tra nhiều file thô</b> (20 CV, 10 hợp đồng)</td>
+            <td><span class="badge-metric metric-emerald">DÙNG SUBAGENT</span></td>
+            <td>Output lớn nhưng kết luận nhỏ. Đẩy sang context riêng để tránh ô nhiễm context chính.</td>
+          </tr>
+          <tr>
+            <td><b>Tìm kiếm song song độc lập</b> trong nhiều thư mục</td>
+            <td><span class="badge-metric metric-emerald">DÙNG SUBAGENT</span></td>
+            <td>Các nhánh độc lập không phụ thuộc nhau, chạy song song nhanh hơn.</td>
+          </tr>
+          <tr>
+            <td><b>Sửa file thực tế, chạy code cần cấp quyền</b></td>
+            <td><span class="badge-metric metric-cyan">GIỮ AGENT CHÍNH</span></td>
+            <td>Cần người dùng phê duyệt trực tiếp. Subagent chạy nền sẽ tự từ chối thao tác cần quyền.</td>
+          </tr>
+          <tr>
+            <td><b>Việc cần trao đổi qua lại, lặp lại nhiều vòng</b></td>
+            <td><span class="badge-metric metric-cyan">GIỮ AGENT CHÍNH</span></td>
+            <td>Cần duy trì context liên tục. Subagent khởi động từ đầu sẽ tốn thời gian gom lại context.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Golden Rule Callout -->
+      <div class="callout-alert alert-amber mt-s" style="text-align: center; font-size: 14.5px;">
+        <strong>⭐ QUY TẮC NGÓN TAY CÁI CỦA ANTHROPIC:</strong><br>
+        <em>"Nếu mô tả được việc là: <b>'ĐI TÌM X RỒI BÁO TÔI ĐÁP ÁN'</b> $\rightarrow$ GIAO CHO SUBAGENT.<br>
+        Việc gắn chặt, cần lặp lại, cần bạn ra quyết định giữa chừng $\rightarrow$ GIỮ Ở AGENT CHÍNH!"</em>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="10" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 10]:</b></p>
+      <p>Học viên chỉ cần nhớ quy tắc ngón tay cái: Cứ cái gì là "Đi tìm X rồi báo đáp án" mà không cần sửa file thì tống sang Subagent. Còn cái gì cần bạn bấm duyệt sửa file hay bàn bạc thì giữ ở Agent chính!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 11: THỰC HÀNH SUBAGENT — QUÉT 5 CV ỨNG VIÊN
+       ======================================================================== -->
+  <section class="slide" data-title="11 / Thực Hành Subagent Quét CV">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">THỰC HÀNH THỰC CHIẾN</span>
+        <div class="deck-title-meta">DEMO BỐC VÁC DỮ LIỆU THÔ VỚI SUBAGENT</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag mb-s">🧑‍💻 CASE STUDY DOANH NGHIỆP</span>
+        <h2 class="title-primary">Thực Hành: Điều Phối Subagent <span class="gradient-text">Lọc 5 CV Tuyển Giao Vận Hà Nội</span></h2>
+        <p class="card-desc mb-s">Tình huống thật: Tháng 3 thiếu nhân sự giao hàng Hà Nội (`so-lieu-ban-hang-thang.md`), tháng 4 cần tuyển gấp 1 người từ 5 CV.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Left: The Prompt -->
+        <div>
+          <div class="code-window" style="margin: 0;">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot dot-red"></span>
+                <span class="code-dot dot-yellow"></span>
+                <span class="code-dot dot-green"></span>
+              </div>
+              <span class="code-file-name">Prompt K5-1: Tờ Giấy Giao Việc Chuẩn 3 Thành Phần Cho Subagent</span>
+            </div>
+            <pre class="code-body">Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên (file .pdf hoặc .md) trong thư mục demo/01-ung-vien/.
+Yêu cầu subagent:
+1. Đánh giá từng ứng viên theo tiêu chí: Tuyển nhân viên giao vận Hà Nội (trực tiếp đi xe máy giao hàng nội thành, cẩn thận, có kinh nghiệm thực địa, lương dưới 12 triệu).
+2. Trả về đúng 1 bảng tổng hợp gồm các cột: Tên ứng viên, Năm sinh, Kinh nghiệm chính, Mức lương kỳ vọng, Đánh giá (Phù hợp / Không phù hợp) và Lý do ngắn gọn.
+3. Đề xuất chọn ra 2 ứng viên sáng giá nhất để mời phỏng vấn vòng 1.
+QUY TẮC BẮT BUỘC: Chỉ trả về bảng tổng hợp và đề xuất ngắn gọn. Tuyệt đối không đổ nguyên văn nội dung từng file CV vào cuộc trò chuyện chính.</pre>
+          </div>
+        </div>
+
+        <!-- Right: The Result -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">KẾT QUẢ TRẢ VỀ TRÊN BÀN CHÍNH</span>
+            <span class="card-icon-badge">📊</span>
+          </div>
+          <h4 class="card-title" style="color: #34d399;">ĐÚNG 1 BẢNG TỔNG HỢP 5 DÒNG!</h4>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2);">
+            <li><b>Nguyễn Văn Nam (1998):</b> 3 năm Viettel Post, thông thạo đường HN $\rightarrow$ <b>CHỌN (Ưu tiên 1)</b>.</li>
+            <li><b>Lê Văn Hùng (1995):</b> 4 năm Điện Máy Xanh, giao hàng + kỹ thuật $\rightarrow$ <b>CHỌN (Ưu tiên 2)</b>.</li>
+            <li><b>Trần Thị Hoa (2000):</b> Chỉ làm điều phối kho, không đi xe máy $\rightarrow$ Loại.</li>
+            <li><b>Phạm Thị Lan (2002):</b> Chỉ trực tổng đài chăm sóc khách $\rightarrow$ Loại.</li>
+            <li><b>Đỗ Văn Minh (1999):</b> Giao chứng từ, ít nói $\rightarrow$ Dự bị.</li>
+          </ul>
+          <div class="callout-alert alert-emerald mt-s" style="padding: 8px 12px; margin: 0;">
+            🔥 <b>KẾT QUẢ ĐẮT GIÁ:</b> 5 file CV dài hàng nghìn từ được xử lý ở phòng riêng. Bàn chính chỉ nhận 1 bảng 10 dòng, sạch bóng 100%!
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="11" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 11]:</b></p>
+      <p>Học viên mở máy chạy ngay Prompt này. Chỉ 10 giây sau, một bảng 5 dòng hiện ra chuẩn xác. Chỉ tay vào màn hình: Cả lớp thấy chưa, không có một chữ rác nào từ 5 bản CV tràn vào màn hình chat chính!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 12: AGENT CHÍNH XUẤT BÁO CÁO QUẢN TRỊ ĐIỀU HÀNH
+       ======================================================================== -->
+  <section class="slide" data-title="12 / Xuất Báo Cáo Quản Trị">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">KẾT TINH THÀNH QUẢ</span>
+        <div class="deck-title-meta">XUẤT BÁO CÁO KẾT QUẢ KINH DOANH THÁNG 3</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag violet mb-s">📄 ĐẦU RA HOÀN HẢO</span>
+        <h2 class="title-primary">Agent Chính Xuất Bản <span class="gradient-text">Báo Cáo Quản Trị Chuẩn Công Sở</span></h2>
+        <p class="card-desc mb-s">Ghép dữ liệu bán hàng tháng 3 + kết quả chọn ứng viên của Subagent + ảnh Infographic từ MCP Image.</p>
+      </div>
+
+      <div class="bento-grid-2 mt-s">
+        <!-- Left: Prompt K5-2 -->
+        <div class="code-window" style="margin: 0;">
+          <div class="code-header">
+            <div class="code-dots">
+              <span class="code-dot dot-red"></span>
+              <span class="code-dot dot-yellow"></span>
+              <span class="code-dot dot-green"></span>
+            </div>
+            <span class="code-file-name">Prompt K5-2: Lập Báo Cáo Gửi Trưởng Phòng Kinh Doanh</span>
+          </div>
+          <pre class="code-body">Dựa trên số liệu bán hàng trong demo/so-lieu-ban-hang-thang.md và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
+- Cấu trúc: Tiêu đề trang trọng, Tóm tắt điều hành (3 chỉ số chính), Chi tiết doanh thu theo thị trường & sản phẩm, Cảnh báo công nợ (An Phát, Đại Tín, Hải Nam), và Kế hoạch hành động tháng 4 (đẩy mạnh Gói Cao cấp, phương án phỏng vấn 2 ứng viên Nam và Hùng).
+- Văn phong công sở trang trọng, KHÔNG DÙNG EMOJI, số liệu trích dẫn chính xác 100%.
+- Lưu file vào thư mục 05-bao-cao/ theo đúng Super Rule tự động đánh số thứ tự tuần tự (ví dụ: 04_bao-cao-kinh-doanh-thang-3.md).</pre>
+        </div>
+
+        <!-- Right: Report Quality Standards -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">TIÊU CHUẨN ĐẦU RA DOANH NGHIỆP</span>
+            <span class="card-icon-badge">⭐</span>
+          </div>
+          <h4 class="card-title" style="color: #38bdf8;">FILE BÁO CÁO ĐẠT CHUẨN 10/10</h4>
+          <ul style="padding-left: 18px; margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text-2);">
+            <li><b>Không emoji:</b> 100% văn phong hành chính trang trọng.</li>
+            <li><b>Chống bịa số:</b> Doanh thu 1.085 triệu (tăng 170 triệu so với tháng 2), 2 đơn nợ An Phát & Đại Tín, 1 đơn hủy Hải Nam.</li>
+            <li><b>Giải pháp thực thi:</b> Kế hoạch phỏng vấn ngay 2 ứng viên Nam và Hùng để tháo gỡ điểm nghẽn giao hàng Hà Nội.</li>
+            <li><b>Tự động tuần tự:</b> File lưu tại <code>05-bao-cao/04_bao-cao-kinh-doanh-thang-3.md</code>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-emerald mt-s" style="text-align: center;">
+        <strong>🏆 SỨC MẠNH TỔNG HỢP:</strong> Anh chị đã làm chủ một cỗ máy: Dữ liệu thô $\rightarrow$ Subagent bốc vác $\rightarrow$ MCP vẽ ảnh $\rightarrow$ Agent chính xuất báo cáo điều hành hoàn chỉnh!
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="12" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 12]:</b></p>
+      <p>Nhìn vào file báo cáo vừa sinh ra: Đầy đủ các chỉ số, có phương án nhân sự lấy từ Subagent, và tên file tự động mang số thứ tự tiếp theo. Đây chính là chuẩn mực làm việc của một chuyên gia AI Workspace!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 13: ĐỐI SOÁT 3 CÂU HỎI HIỂU BÀI TẠI LỚP
+       ======================================================================== -->
+  <section class="slide" data-title="13 / Kiểm Tra Hiểu Bài">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">ĐỐI SOÁT KIẾN THỨC</span>
+        <div class="deck-title-meta">3 CÂU HỎI KIỂM ĐỊNH HIỂU BÀI NGAY TẠI LỚP</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag emerald mb-s">❓ TƯ DUY PHẢN BIỆN</span>
+        <h2 class="title-primary">Ba Câu Hỏi Kiểm Định <span class="gradient-text">Độ Thấu Suốt Của Học Viên</span></h2>
+        <p class="card-desc mb-s">Học viên gõ trực tiếp đáp án vào ô Chat Zoom. Giảng viên sửa và giải thích tại chỗ.</p>
+      </div>
+
+      <div class="bento-grid-3 mt-s">
+        <!-- Question 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">CÂU HỎI 01</span>
+            <span class="card-icon-badge">1️⃣</span>
+          </div>
+          <h4 class="card-title">Vì sao kênh sang Subagent giống "Tờ giấy giao việc"?</h4>
+          <div class="callout-alert alert-cyan mt-s" style="margin: 0; font-size: 13px;">
+            <b>Đáp án:</b> Vì Subagent có Context cách ly hoàn toàn, không thấy lịch sử chat trước đó. Mọi thông tin cần thiết bắt buộc phải ghi rõ trong prompt giao việc.
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">CÂU HỎI 02</span>
+            <span class="card-icon-badge">2️⃣</span>
+          </div>
+          <h4 class="card-title">Hai giới hạn cứng của Subagent là gì?</h4>
+          <div class="callout-alert alert-emerald mt-s" style="margin: 0; font-size: 13px;">
+            <b>Đáp án:</b> (1) Không có ủy quyền lồng nhau (không thể sinh subagent khác); (2) Không thể dừng lại hỏi người dùng để làm rõ.
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="bento-card glow-amber">
+          <div class="card-header-line">
+            <span class="kicker-tag amber">CÂU HỎI 03</span>
+            <span class="card-icon-badge">3️⃣</span>
+          </div>
+          <h4 class="card-title">Khi nào dùng Subagent vs Giữ ở Agent chính?</h4>
+          <div class="callout-alert alert-amber mt-s" style="margin: 0; font-size: 13px;">
+            <b>Đáp án:</b> Output lớn nhưng kết luận nhỏ, "đi tìm X rồi báo đáp án" $\rightarrow$ Subagent. Cần trao đổi qua lại, cần duyệt sửa file $\rightarrow$ Agent chính.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-emerald mt-s" style="text-align: center;">
+        <strong>🎉 CHÚC MỪNG CẢ LỚP:</strong> 100% học viên nắm trọn vẹn ranh giới Context và bản chất kiến trúc Subagent chuẩn Anthropic!
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="13" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 13]:</b></p>
+      <p>Dành 3 phút cho học viên gõ vào Chat Zoom. Gọi tên 2-3 học viên trả lời đúng và nhanh nhất để khen ngợi. Củng cố lại 3 câu trả lời chuẩn.</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 14: BẬT MÍ BUỔI 05: ĐỘI NGŨ MULTI-AGENT & CHI PHÍ
+       ======================================================================== -->
+  <section class="slide" data-title="14 / Bệ Phóng Sang Buổi 05">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">BỆ PHÓNG TIẾP THEO</span>
+        <div class="deck-title-meta">TEASER BUỔI 05 · ĐỘI NGŨ MULTI-AGENT</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag violet mb-s">🚀 BƯỚC LÊN TẦM CAO MỚI</span>
+        <h2 class="title-primary">Buổi 05: Đội Ngũ Multi-Agent, <span class="gradient-text">Song Song & Bài Toán Chi Phí 15x</span></h2>
+        <p class="card-desc mb-s">Khi đã hiểu Subagent đơn lẻ, làm sao để điều phối một ĐỘI NGŨ AGENT phối hợp tuần tự và song song?</p>
+      </div>
+
+      <div class="bento-grid-3 mt-s">
+        <!-- Point 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">ĐIỂM NHẤN 01</span>
+            <span class="card-icon-badge">🤝</span>
+          </div>
+          <h3 class="card-title">Hai Mô Hình Phối Hợp</h3>
+          <p class="card-desc"><b>Nối chuỗi (Tuần tự):</b> Agent A xong chuyền kết quả cho Agent B.<br><b>Chạy song song:</b> Nhiều Agent chạy độc lập cùng lúc để tiết kiệm thời gian.</p>
+        </div>
+
+        <!-- Point 2 -->
+        <div class="bento-card glow-rose">
+          <div class="card-header-line">
+            <span class="kicker-tag" style="background: rgba(244, 63, 94, 0.12); color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">ĐIỂM NHẤN 02</span>
+            <span class="card-icon-badge">💰</span>
+          </div>
+          <h3 class="card-title">Bài Toán Chi Phí Token</h3>
+          <p class="card-desc">Chat thường (1x) $\rightarrow$ Agent đơn (~4x) $\rightarrow$ <b>Multi-agent (~15x)</b>. Học cách tính toán bài toán kinh tế khi nào đáng đầu tư hệ Multi-Agent.</p>
+        </div>
+
+        <!-- Point 3 -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">ĐIỂM NHẤN 03</span>
+            <span class="card-icon-badge">🏆</span>
+          </div>
+          <h3 class="card-title">Benchmark Đột Phá 90.2%</h3>
+          <p class="card-desc">Hệ thống Multi-Agent nghiên cứu của Anthropic (Opus 4 + Sonnet 4) đã <b>vượt trội hơn Agent đơn tới 90.2%</b> trong các bài toán nghiên cứu phức tạp!</p>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-cyan mt-s" style="text-align: center;">
+        <strong>🔥 BẬT MÍ:</strong> Tự tay lập trình 2 nhân viên AI biên chế (<code>research-agent.md</code> & <code>report-agent.md</code>) và cho phối hợp làm việc cùng nhau ở Buổi 05!
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="14" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 14]:</b></p>
+      <p>Tạo sự háo hức cho học viên: Tối nay anh chị đã biết dùng một trợ lý Subagent. Buổi tới chúng ta sẽ làm Trưởng phòng chỉ huy cả một ĐỘI NGŨ AGENT phối hợp nhịp nhàng như một cỗ máy!</p>
+    </aside>
+  </section>
+
+
+  <!-- ========================================================================
+       SLIDE 15: BÀI TẬP VỀ NHÀ & CHECKLIST HOÀN THÀNH
+       ======================================================================== -->
+  <section class="slide" data-title="15 / Bài Tập Về Nhà">
+    <div class="ambient-glow"></div>
+    <div class="cyber-grid"></div>
+    <div class="fx-host" style="position:absolute;inset:0;pointer-events:none;z-index:0;" data-fx="starfield"></div>
+
+    <div class="slide-content-wrap">
+      <div class="deck-header">
+        <span class="badge-brand">HÀNH ĐỘNG SAU BUỔI HỌC</span>
+        <div class="deck-title-meta">BÀI TẬP VỀ NHÀ & CHECKLIST HOÀN THÀNH</div>
+      </div>
+
+      <div>
+        <span class="kicker-tag emerald mb-s">🎯 HÀNH ĐỘNG NGAY</span>
+        <h2 class="title-primary">Hành Động Hôm Nay Để <span class="gradient-text">Làm Chủ Toàn Diện</span></h2>
+        <p class="card-desc mb-s">Hoàn thành 4 nhiệm vụ thực chiến để củng cố kỹ năng và sẵn sàng cho Đội ngũ Multi-Agent ở Buổi 05.</p>
+      </div>
+
+      <div class="bento-grid-4 mt-s">
+        <!-- Task 1 -->
+        <div class="bento-card glow-cyan">
+          <div class="card-header-line">
+            <span class="kicker-tag">NHIỆM VỤ 01</span>
+            <span class="card-icon-badge">1️⃣</span>
+          </div>
+          <h4 class="card-title">Hoàn Thiện Slide Có Ảnh</h4>
+          <p class="card-desc">Dùng MCP Image vẽ 1 ảnh Infographic quy trình tiếng Việt và nhúng vào Slide báo cáo đã làm ở Buổi 3.</p>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="bento-card glow-violet">
+          <div class="card-header-line">
+            <span class="kicker-tag violet">NHIỆM VỤ 02</span>
+            <span class="card-icon-badge">2️⃣</span>
+          </div>
+          <h4 class="card-title">Soạn Kịch Bản Routine</h4>
+          <p class="card-desc">Điền đầy đủ khung 4 câu hỏi Routine tự động hóa cho 1 công việc lặp lại hàng tuần tại phòng ban của bạn.</p>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="bento-card glow-emerald">
+          <div class="card-header-line">
+            <span class="kicker-tag emerald">NHIỆM VỤ 03</span>
+            <span class="card-icon-badge">3️⃣</span>
+          </div>
+          <h4 class="card-title">Gọi Subagent Trên File Thật</h4>
+          <p class="card-desc">Gom 3–5 file tài liệu thật tại cơ quan vào một thư mục, dùng Subagent rút ra 1 bảng so sánh tóm tắt sạch sẽ.</p>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="bento-card glow-amber">
+          <div class="card-header-line">
+            <span class="kicker-tag amber">NHIỆM VỤ 04</span>
+            <span class="card-icon-badge">4️⃣</span>
+          </div>
+          <h4 class="card-title">Nộp Bài Tập Zalo</h4>
+          <p class="card-desc">Chụp ảnh màn hình kết quả chạy Subagent và file Báo cáo quản trị nộp vào nhóm Zalo lớp trước 12:00 trưa buổi học kế tiếp.</p>
+        </div>
+      </div>
+
+      <div class="callout-alert alert-emerald mt-s" style="text-align: center;">
+        <strong>🎉 CẢM ƠN QUÝ HỌC VIÊN!</strong> Đội ngũ Giảng viên và Trợ giảng CES Global luôn sẵn sàng hỗ trợ giải đáp 24/7 trên nhóm Zalo lớp!
+      </div>
+
+      <div class="deck-footer">
+        <span>Khóa học AI Workspace Thực Chiến · CES Global Academy</span>
+        <span class="slide-number" data-current="15" data-total="15"></span>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <p><b>[LỜI DẪN GIẢNG VIÊN - SLIDE 15]:</b></p>
+      <p>Cảm ơn sự tập trung tuyệt vời của cả lớp. Nhắc học viên làm bài tập thực hành trên dữ liệu thật của mình và nộp lên nhóm Zalo để trợ giảng chấm điểm và chữa bài. Hẹn gặp lại cả lớp ở Buổi 05!</p>
+    </aside>
+  </section>
+
+</div>
+
+<!-- html-ppt Studio Engine Runtime (Zero Dependencies) -->
+<script src="assets/runtime.js"></script>
+<!-- html-ppt Canvas FX Autoloader -->
+<script src="assets/animations/fx-runtime.js"></script>
+</body>
+</html>

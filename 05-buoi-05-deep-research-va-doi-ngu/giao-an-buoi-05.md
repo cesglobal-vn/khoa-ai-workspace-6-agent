@@ -1,309 +1,234 @@
-﻿# Outline Buổi 05: Lập agent bài bản và cho đội agent phối hợp
+# Giáo án Buổi 05: Lập Đội Ngũ Multi-Agent, Phối Hợp Nối Chuỗi & Song Song, Đánh Giá Chi Phí Chuẩn Anthropic
 
-> Buổi này gộp hai phần: (A) lập agent cho chắc, (B) cho chính hai agent vừa tạo phối hợp làm việc.
-> Mạch: agent là gì, agent khác skill thế nào, tạo 2 agent, gọi và test, rồi cho 2 agent đó nối chuỗi và chạy song song.
-> Lý do gộp: Buổi 4 chưa dạy kỹ agent, và lớp chưa có agent nào để chạy đội agent.
-
-## Thông tin buổi
-- **Buổi:** 05 / 6
-- **Khái niệm chính:** agent là gì, agent với skill, tạo agent, tools, cách gọi, test; đội agent nối chuỗi và song song
-- **Bối cảnh:** dùng file demo có sẵn (số liệu bán hàng, hồ sơ khách hàng)
-- **Thời lượng:** 150 phút
-
----
-
-## PHẦN NỀN cho người học mới
-
-### 1. Agent là gì
-Agent là **một nhân viên AI có bản mô tả công việc riêng**, lập bằng một file. Mình đặt tên, ghi rõ nó chuyên việc gì, cho dùng công cụ nào, dặn quy tắc gì. Mỗi khi nhận việc, nó chạy 4 bước:
-```
-1. NHẬN VIỆC     Bạn giao yêu cầu.
-2. ĐỌC BỐI CẢNH  Agent đọc mô tả của chính nó, đọc file bạn chỉ, nạp skill nếu cần.
-3. DÙNG CÔNG CỤ  Agent dùng đúng công cụ được cấp làm từng bước.
-4. TRẢ KẾT QUẢ   Agent trả kết quả.
-```
-File agent gồm 3 dòng khai báo: `name` (tên gọi), `description` (chuyên gì, dùng khi nào, quyết định khi nào tự được gọi), `tools` (công cụ được phép dùng), và phần thân dặn việc.
-
-### 2. Khi nào tạo agent, khi nào tạo skill
-- **Skill là tờ công thức.** Claude chính cầm công thức tự nấu.
-- **Agent là thuê hẳn một đầu bếp** chuyên món đó, có bếp riêng, dụng cụ riêng, giao hẳn việc rồi nhận món.
-
-| Bạn muốn | Nên dùng |
-|---|---|
-| Chuẩn hóa cách làm một việc, Claude chính tự làm là được | Skill |
-| Một quy trình ngắn dùng lại nhiều lần | Skill |
-| Giao hẳn một vai lặp lại cho một nhân viên riêng | Agent |
-| Giới hạn công cụ cho an toàn (ví dụ chỉ đọc, không sửa) | Agent |
-| Việc nặng, muốn chạy ở cửa sổ ngữ cảnh riêng | Agent |
-
-Câu chốt: **"Chỉ cần công thức thì skill. Muốn giao hẳn cho người có bếp riêng thì agent."**
-
-### 3. Agent điều khiển tool và skill thế nào
-- **Tool:** dòng `tools` là danh sách công cụ agent được dùng. Cấp `Read` thì đọc được, cấp `Write` thì ghi được, không cấp `Write` thì không sửa được dù có nhờ. Đây là cách điều khiển agent qua công cụ.
-- **Skill:** agent dùng lại được skill đã có. Bước con nào đã có skill chuẩn thì để agent gọi lại, đừng viết lại vào agent. Skill lo cách làm một việc nhỏ, agent lo cả một vai.
-
-### 4. Đội agent là gì, nối chuỗi hay song song
-Khi có nhiều agent, mình đóng vai trưởng nhóm: chia việc, gom kết quả. Hai kiểu phối hợp:
-
-| Kiểu | Nghĩa là | Ví dụ |
-|---|---|---|
-| **Nối chuỗi (tuần tự)** | Agent A xong đưa kết quả cho agent B | Rà ra khách cần nhắc xong mới soạn email nhắc |
-| **Chạy song song** | Nhiều agent làm cùng lúc, mỗi agent một phần độc lập | Một agent rà khách, một agent soạn báo cáo, cùng lúc |
-
-Sơ đồ một câu hỏi (chiếu lên bảng):
-```
-CÂU HỎI: Phần sau có CẦN kết quả phần trước mới làm được không?
-   CÓ CẦN    ->  NỐI CHUỖI (làm lần lượt)
-   KHÔNG CẦN ->  SONG SONG (làm cùng lúc)
-```
-Câu thuộc lòng: **"Người sau phải chờ người trước thì làm tuần tự. Không phải chờ thì làm song song."**
-
-**Bảng ví dụ để lớp phân loại (chiếu lên, cho giơ tay):**
-
-| Việc | Nối chuỗi hay song song | Vì sao |
-|---|---|---|
-| Chọn 3 ứng viên rồi soạn thư mời cho 3 người đó | Nối chuỗi | Chưa chọn xong thì chưa biết mời ai |
-| Tổng hợp báo cáo 3 chi nhánh, mỗi chi nhánh một thư mục | Song song | Ba phần độc lập, không chờ nhau |
-| Soạn đề xuất rồi viết email trình sếp dựa trên đề xuất | Nối chuỗi | Không có đề xuất thì chưa viết email được |
-| Đón nhân viên mới: checklist + slide + email chào mừng | Song song | Ba việc làm riêng được |
-| Chốt số liệu quý rồi mới vẽ biểu đồ | Nối chuỗi | Chưa có số thì chưa vẽ |
-| Đọc 5 hợp đồng, mỗi hợp đồng rút điều khoản thanh toán | Song song | Năm việc độc lập |
-| Rà khách cần nhắc rồi soạn email nhắc đúng khách đó | Nối chuỗi | Chưa rà xong thì chưa biết nhắc ai |
+> **Mục tiêu chiến lược Buổi 05:**
+> 1. **Lập Agent bài bản:** Tự tay tạo 2 Agent chuyên trách (`agent-soan-bao-cao` và `agent-ra-soat-khach`) lưu tại `.claude/agents/*.md`, hiểu sâu sắc cách dùng `tools` để khoanh vùng quyền hạn (Write vs Read-only).
+> 2. **Hiểu rõ khi nào nhiều Agent tốt hơn 1 Agent (3 tình huống chuẩn Anthropic):**
+>    - (1) Tránh ô nhiễm Context (Context Pollution);
+>    - (2) Chạy song song độc lập (Parallelization);
+>    - (3) Chuyên môn hóa công cụ (Specialization).
+>    - *Cảnh báo từ Anthropic:* Ngoài 3 tình huống này, chi phí điều phối thường vượt lợi ích! Luôn ưu tiên giải pháp đơn giản nhất (KISS).
+> 3. **Hai mô hình phối hợp Đội ngũ Agent (Multi-Agent Team):**
+>    - Mô hình Nối chuỗi (Tuần tự / Sequential): Agent A ra kết quả làm đầu vào cho Agent B.
+>    - Mô hình Chạy song song (Parallel): Nhiều Agent chạy độc lập cùng lúc gom kết quả.
+> 4. **Bài toán Chi phí Token & Hiệu quả Đột phá:**
+>    - Tỷ lệ tiêu hao token: Chat (1x) $\rightarrow$ Agent đơn (~4x) $\rightarrow$ Multi-agent (~15x).
+>    - Benchmark Anthropic: Hệ Multi-Agent (Opus 4 + Sonnet 4) vượt Agent đơn Opus 4 tới **90.2%** trong đánh giá nghiên cứu phức tạp.
 
 ---
 
-## Bối cảnh demo (file có sẵn, chạy được ngay)
-- `04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md` : số liệu bán hàng tháng 3 thô.
-- `03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang/` : 3 hồ sơ khách (Minh Long, Hải Nam, An Phát).
-
-Hai agent sẽ lập rồi cho phối hợp:
-- **agent-soan-bao-cao** : soạn báo cáo và email từ dữ liệu. Có quyền Write.
-- **agent-ra-soat-khach** : đọc hồ sơ khách, chỉ ra ai cần hành động. Chỉ đọc, KHÔNG Write.
-
----
-
-## Timeline
-
-| Khối | Phút | Nội dung |
-|---|---|---|
-| K0 | 00:00-00:08 | Mở đầu, bản đồ buổi |
-| K1 | 00:08-00:30 | Agent là gì + agent vs skill + tools |
-| K2 | 00:30-00:58 | Tạo 2 agent (giải thích từng dòng) |
-| Nghỉ | 00:58-01:08 | |
-| K3 | 01:08-01:35 | Gọi và test cả 2 agent |
-| K4 | 01:35-02:05 | Đội agent: nối chuỗi 2 agent vừa tạo |
-| K5 | 02:05-02:30 | Đội agent: song song + khi nào dùng cái nào + chốt |
-
-Mốc cứng: K2 xong trước 00:58, K3 xong trước 01:35. K2, K3, K4 không cắt.
+## Thông tin buổi học
+- **Buổi:** 05 / 6 (Theo lộ trình khóa AI Workspace 6 Agent)
+- **Thời lượng:** 150 phút (2,5 giờ)
+- **Đối tượng:** Khối văn phòng, kinh doanh, nhân sự, kế toán, quản lý (đã nắm chắc Buổi 4 về Subagent và Context Window).
+- **Bộ file demo làm việc:** 
+  * `04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md` (số liệu bán hàng tháng 3 thô).
+  * `03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang/` (3 hồ sơ khách: Minh Long, Hải Nam, An Phát).
+  * `04-buoi-04-lap-bao-cao-va-slide/demo/yeu-cau-nghien-cuu.md` (đề bài nghiên cứu thị trường).
+- **Tài liệu nghiên cứu tham chiếu:**
+  * Anthropic Research: *Building Effective Agents* (anthropic.com/engineering/building-effective-agents)
+  * Anthropic Engineering: *When to use multi-agent systems* (claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them)
 
 ---
 
-## K0: Mở đầu (8 phút)
+## Timeline chi tiết buổi học (150 phút)
 
-**Lời dẫn GV:** "Tối nay mình làm trọn một mạch: hiểu agent là gì, tự tay lập hai agent, test cho chạy, rồi cho chính hai agent đó phối hợp làm chung một việc. Xong buổi, mỗi anh chị có hai nhân viên AI biết làm việc cùng nhau."
-- Nêu bản đồ: agent vs skill, tạo 2 agent, test, rồi nối chuỗi và song song.
-- **PROMPT K0:**
-```
-Thư mục này đang có những file và thư mục con nào? Trả lời ngắn gọn.
-```
-
----
-
-## K1: Agent là gì, agent vs skill, tools (22 phút)
-
-### Phần 1: Agent là gì (8 phút)
-- Trình bày 4 bước hoạt động và 3 dòng khai báo (phần nền mục 1), vẽ lên bảng.
-- Nhấn: agent chỉ là một file, mình tả cho Claude nó tạo giúp.
-- **Câu hỏi:** "Agent chuyên soạn báo cáo thì bước đọc bối cảnh cần đọc gì, bước dùng công cụ cần công cụ nào?"
-
-### Phần 2: Agent khác skill (9 phút)
-- Ẩn dụ công thức và đầu bếp, chiếu bảng chọn (phần nền mục 2).
-- Cho lớp phân loại 3 tình huống, giơ tay agent hay skill:
-  - "Mỗi lần soạn email chào hàng theo một mẫu" (skill)
-  - "Một nhân viên chuyên rà công nợ, chỉ được đọc không được sửa" (agent)
-  - "Chuẩn hóa cách tóm tắt hợp đồng" (skill)
-
-### Phần 3: Agent dùng tool và skill (5 phút)
-- Dòng `tools` là cấp quyền công cụ (phần nền mục 3).
-- Báo trước: agent 1 có Write, agent 2 không có Write, để lát thấy tác dụng khoanh công cụ.
-
----
-
-## K2: Tạo 2 agent (28 phút)
-
-### Phần 1: Demo GV tạo agent 1 (7 phút)
-**PROMPT K2-1 (agent 1, bản GV chạy ngay):**
-```
-Tạo cho tôi file .claude/agents/agent-soan-bao-cao.md, một agent chuyên soạn báo cáo và email công việc.
-- name: agent-soan-bao-cao
-- description: Chuyên biến số liệu hoặc ý thô thành báo cáo, đề xuất, email hoàn chỉnh theo văn phong công sở. Dùng khi cần soạn văn bản công việc từ dữ liệu có sẵn.
-- tools: Read, Write, Grep, Glob
-- Phần thân: đọc dữ liệu tôi chỉ, soạn theo bố cục tôi yêu cầu. Quy tắc: tiếng Việt công sở, KHÔNG emoji trong email và báo cáo, KHÔNG tạo ra con số không có trong nguồn, thiếu thì ghi [đợi bổ sung]. Nếu thiếu thông tin thì vẫn soạn đầy đủ, chỗ thiếu để [đợi bổ sung], không dừng lại hỏi tôi.
-Tạo xong in lại toàn bộ nội dung file.
-```
-Giải thích từng dòng: `description` rõ nên Claude biết khi nào gọi; `tools` có Write vì phải ghi văn bản; phần thân đặt quy tắc không emoji, không bịa số, không dừng lại hỏi (vì agent chạy cửa sổ riêng, không hỏi lại được).
-
-### Phần 2: Demo GV tạo agent 2 (7 phút)
-**PROMPT K2-2 (agent 2, bản GV chạy ngay):**
-```
-Tạo cho tôi file .claude/agents/agent-ra-soat-khach.md, một agent chuyên rà soát hồ sơ khách hàng.
-- name: agent-ra-soat-khach
-- description: Chuyên đọc hồ sơ khách hàng và chỉ ra khách nào cần hành động (nhắc thanh toán, chăm sóc lại, chốt gia hạn). Dùng khi cần rà nhanh danh sách khách để không bỏ sót việc.
-- tools: Read, Grep, Glob
-- Phần thân: đọc toàn bộ hồ sơ khách trong thư mục tôi chỉ. Trả về một bảng: tên khách, trạng thái, việc cần làm, mức ưu tiên. Chỉ dùng thông tin có trong hồ sơ, không suy đoán. KHÔNG tự sửa hay tạo file, chỉ báo cáo.
-Tạo xong in lại toàn bộ nội dung file.
-```
-So sánh 2 agent: agent 1 có `Write` để soạn văn bản; agent 2 KHÔNG có `Write`, chỉ Read/Grep/Glob, là "người kiểm tra không được cầm bút". Dù nhờ nó cũng không sửa được hồ sơ. Đây là điều khiển agent qua công cụ.
-
-### Phần 3: Thực hành, cả lớp tạo 2 agent (14 phút)
-Gõ K2-1 rồi K2-2 vào thư mục dự án của mình.
-- Mốc cứng phút 58: dán tên 2 agent vào chat Zoom.
-- **Ghi đỏ:** tạo xong chưa gọi vội. Phải mở phiên mới thì Claude mới nạp agent.
-
----
-
-## Nghỉ giải lao (10 phút)
-
----
-
-## K3: Gọi và test cả 2 agent (27 phút)
-
-### Phần 1: Ba cách gọi agent (5 phút)
-1. Gọi đích danh: "nhờ agent-soan-bao-cao làm...". Chắc chắn nhất.
-2. Để Claude tự gọi nếu description rõ. Không chắc bằng gọi tên.
-3. Bắt buộc: tạo hoặc sửa agent xong phải mở phiên mới.
-
-### Phần 2: Test agent 1 (9 phút)
-**PROMPT K3-1 (mở phiên mới rồi gọi):**
-```
-Nhờ agent-soan-bao-cao soạn báo cáo bán hàng tháng 3 từ file 04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md. Bố cục: kết quả tháng 3, số liệu chính, vướng mắc, kế hoạch tháng 4. Chỉ dùng con số có trong file. Cuối bản liệt kê các con số đã dùng kèm dòng lấy từ file.
-```
-Kết quả mong đợi: báo cáo 4 phần, không emoji, có mục nguồn số liệu (1.085 triệu tháng 3, 915 triệu tháng 2, 2 đơn chờ thanh toán, 1 đơn hủy). GV mở file gốc so 2 con số trước lớp.
-
-### Phần 3: Test agent 2 (8 phút)
-**PROMPT K3-2:**
-```
-Nhờ agent-ra-soat-khach đọc các hồ sơ trong 03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang và chỉ ra khách nào cần hành động, mức ưu tiên ra sao.
-```
-Kết quả mong đợi: bảng: An Phát cần nhắc thanh toán lần 3 (ưu tiên cao), Hải Nam chăm sóc lại sau khi hủy đơn, Minh Long chốt gia hạn trước 11/5/2027. Agent không tạo hay sửa file nào.
-
-### Phần 4: Thử điều chưa cấp quyền (5 phút, điểm nhấn)
-**PROMPT K3-3:**
-```
-Nhờ agent-ra-soat-khach cập nhật file hồ sơ khách An Phát, ghi thêm dòng đã nhắc lần 3.
-```
-Kết quả mong đợi: agent báo không có quyền ghi, chỉ rà soát được. GV chốt: "Mình chỉ cấp Read nên nó không sửa được dù mình nhờ. Đó là agent an toàn."
-
----
-
-## K4: Đội agent, nối chuỗi 2 agent vừa tạo (30 phút)
-
-**Ẩn dụ:** giờ mình có hai nhân viên rồi, cho họ làm dây chuyền. Người rà soát tìm ra khách cần nhắc, chuyển sang người soạn thảo viết email nhắc. Việc sau chờ việc trước.
-
-### Phần 1: Khái niệm nối chuỗi (5 phút)
-- Nối chuỗi: agent A xong, kết quả thành đầu vào cho agent B.
-- Mấu chốt: nói rõ "làm lần lượt, xong bước 1 mới sang bước 2", và chỉ rõ file trung gian A lưu ra để B đọc.
-
-### Phần 2: Demo GV, chuỗi rà khách tới soạn email nhắc (10 phút)
-**PROMPT K4-1:**
-```
-Làm lần lượt hai bước, xong bước 1 mới sang bước 2:
-Bước 1: nhờ agent-ra-soat-khach đọc thư mục 03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang, chỉ ra khách CẦN NHẮC THANH TOÁN GẤP NHẤT, lưu kết quả vào ket-qua/khach-can-nhac.md.
-Bước 2: sau khi có file đó, nhờ agent-soan-bao-cao đọc ket-qua/khach-can-nhac.md và soạn một email nhắc thanh toán gửi đúng khách đó, văn phong công sở, không emoji.
-```
-Kết quả mong đợi: có file `ket-qua/khach-can-nhac.md` (agent 2 chỉ ra An Phát), rồi agent 1 soạn email nhắc thanh toán gửi An Phát. GV chỉ ra: bước 2 phải chờ bước 1, vì chưa biết khách nào thì chưa soạn email được. Đây đúng là nối chuỗi.
-
-### Phần 3: Thực hành nối chuỗi (15 phút)
-**PROMPT K4-2 (bản học viên):**
-```
-Làm lần lượt hai bước, xong bước 1 mới sang bước 2:
-Bước 1: nhờ [agent 1] làm [việc 1], lưu kết quả vào ket-qua/[ten-file].md.
-Bước 2: sau khi có file đó, nhờ [agent 2] đọc file đó và làm [việc 2].
-```
-*Gợi ý điền: rà công nợ rồi soạn email nhắc; chọn ứng viên rồi soạn thư mời; phân tích số liệu rồi viết báo cáo.*
-Mốc cứng phút 65 (giờ hai): dán tên file trung gian vào chat Zoom.
-
----
-
-## K5: Đội agent song song, khi nào dùng cái nào, và chốt (25 phút)
-
-### Phần 1: Chạy song song (10 phút)
-**Ẩn dụ:** song song là giao hai việc độc lập cho hai người cùng lúc, rồi gom lại.
-- **Ba quy tắc:** ép rõ "gọi cùng lúc, không tự làm thay"; mỗi agent một phần độc lập; bắt mỗi agent khai nguồn.
-- **Demo GV, PROMPT K5-1:**
-```
-Giao SONG SONG hai việc độc lập, gọi cùng lúc, không tự làm thay:
-- agent-ra-soat-khach: rà thư mục 01-khach-hang, chỉ ra khách cần hành động.
-- agent-soan-bao-cao: soạn báo cáo bán hàng tháng 3 từ 04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md.
-Mỗi agent kết thúc bằng mục "Nguồn": file đã đọc. Xong gom hai kết quả thành một bản tình hình chung.
-```
-Kết quả mong đợi: hai phần chạy riêng (rà khách và báo cáo), gom thành một bản. GV nhấn: hai việc này không chờ nhau nên chạy song song được.
-
-### Phần 2: Khi nào tuần tự, khi nào song song (7 phút)
-- Chiếu sơ đồ một câu hỏi (phần nền mục 4).
-- Cho lớp phân loại nhanh 3 việc: chọn người rồi soạn thư mời (tuần tự); tổng hợp 3 chi nhánh mỗi cái một thư mục (song song); chốt số liệu rồi vẽ biểu đồ (tuần tự).
-- **Cảnh báo:** song song kết quả không phải lúc nào cũng đều, Claude có khi làm tuần tự. Bình thường. Nối chuỗi chắc ăn hơn.
-
-### Phần 3: Chốt (8 phút)
-**Năm ý cần nhớ:**
-1. Agent là nhân viên AI lập bằng một file, có name, description, tools.
-2. Chỉ cần công thức thì skill; giao hẳn một vai có bếp riêng thì agent.
-3. `tools` điều khiển agent: cấp gì dùng nấy, không cấp thì không làm được.
-4. Người sau phải chờ người trước thì nối chuỗi, không chờ thì song song.
-5. Tạo agent xong phải mở phiên mới, gọi đích danh cho chắc.
-
-**Bài về nhà:**
-- Lập 1 agent cho việc mình làm nhiều nhất, chọn kỹ tools.
-- Dựng một chuỗi 2 agent cho việc thật của mình, chạy thử.
-- Ghi lại một việc nên làm skill (không nên làm agent), giải thích vì sao.
-- Chụp kết quả gửi Zalo lớp.
-
-**Xem trước Buổi 6 (capstone):** ghép tất cả (CLAUDE.md, skill, MCP, agent, đội agent) thành một quy trình công việc thật, chạy đầu-cuối rồi trình bày.
-
----
-
-## Bảng prompt tổng hợp (tra nhanh)
-
-| # | Prompt tóm tắt | Khối | Kết quả mong đợi |
+| Mốc thời gian | Thời lượng | Khối nội dung | Trọng tâm sư phạm & Sản phẩm đầu ra |
 |---|---|---|---|
-| K0 | Thư mục có file gì | K0 | Liệt kê đúng file |
-| K2-1 | Tạo agent-soan-bao-cao (có Write) | K2 | File agent, có Write |
-| K2-2 | Tạo agent-ra-soat-khach (không Write) | K2 | File agent, chỉ Read/Grep/Glob |
-| K3-1 | Test agent 1 soạn báo cáo | K3 | Báo cáo 4 phần, có nguồn, không emoji |
-| K3-2 | Test agent 2 rà khách | K3 | Bảng 3 khách cần hành động |
-| K3-3 | Nhờ agent 2 sửa file (không có Write) | K3 | Agent báo không có quyền ghi |
-| K4-1 | Nối chuỗi: rà khách rồi soạn email nhắc | K4 | File trung gian + email nhắc An Phát |
-| K4-2 | Nối chuỗi của học viên | K4 | File trung gian + kết quả bước 2 |
-| K5-1 | Song song: rà khách và soạn báo cáo | K5 | Hai phần + bản gom |
-
-## Tình huống hay gặp và cách xử lý
-
-| Tình huống | Cách xử lý |
-|---|---|
-| Tạo agent xong gọi tên không ra | Chưa mở phiên mới. Mở phiên mới rồi gọi |
-| Agent đặt file sai chỗ | Nhờ Claude đặt lại đúng .claude/agents |
-| Khối YAML đầu file hỏng | Nhờ Claude sửa định dạng, đừng để học viên tự sửa tay |
-| Không phân biệt được agent với skill | Ẩn dụ: công thức thì skill, đầu bếp có bếp riêng thì agent |
-| Agent bịa số | Kiểm phần thân có dòng không bịa số. Bắt liệt kê nguồn, mở file gốc so |
-| Agent 2 vẫn sửa được file dù không cấp Write | Kiểm lại dòng tools, sửa rồi mở phiên mới |
-| Bước 2 nối chuỗi chạy khi bước 1 chưa xong | Nhấn "xong bước 1 mới sang bước 2", chỉ rõ file trung gian |
-| Song song mà Claude làm tuần tự | Bình thường. Thêm "gọi cùng lúc, không tự làm thay". Vẫn tuần tự thì chấp nhận |
-| Cháy giờ | Cắt K5 song song còn demo GV, bỏ K3-3. Không cắt K2, K3 test, K4 nối chuỗi |
-
-## Ba câu kiểm hiểu cuối buổi
-1. "Khi nào tạo agent, khi nào chỉ cần skill?"
-2. "Muốn một agent không sửa được file thì làm sao?" (không cấp Write trong tools)
-3. "Khi nào cho agent làm nối tiếp, khi nào làm cùng lúc?" (người sau chờ người trước thì nối tiếp)
-
-## Tiêu chí hoàn thành buổi
-- [ ] Nói được agent khác skill thế nào, khi nào dùng cái nào
-- [ ] Tạo được 2 agent (một có Write, một không Write), test chạy đúng
-- [ ] Giải thích được tools là cách khoanh công cụ cho an toàn
-- [ ] Chạy được một chuỗi 2 agent, có file trung gian
-- [ ] Chạy được hoặc hiểu được đội agent song song
+| **00:00 - 00:10** | 10 phút | **K0: Mở đầu & Bản đồ Buổi 5** | Nối mạch từ Subagent đơn lẻ (Buổi 4) sang bài toán Đội ngũ Multi-Agent. |
+| **00:10 - 00:35** | 25 phút | **K1: Khi nào cần Multi-Agent & Bài toán Chi phí** | 3 tình huống Anthropic chỉ ra; chi phí 1x - 4x - 15x; nguyên tắc KISS; khoanh vùng `tools`. |
+| **00:35 - 01:05** | 30 phút | **K2: Tự tay tạo 2 Agent chuyên trách** | Lập `agent-soan-bao-cao` (có Write) và `agent-ra-soat-khach` (chỉ Read); giải thích cấu trúc YAML. |
+| **01:05 - 01:15** | 10 phút | **Nghỉ giải lao** | Trợ giảng hỗ trợ học viên kiểm tra cú pháp file trong `.claude/agents/`. |
+| **01:15 - 01:45** | 30 phút | **K3: Gọi, Test & Thử thách An toàn** | Mở phiên mới, gọi từng agent; test thử thách cấp quyền (agent không có Write không thể sửa file). |
+| **01:45 - 02:15** | 30 phút | **K4: Đội ngũ Nối chuỗi (Tuần tự)** | Rà soát khách $\rightarrow$ File trung gian $\rightarrow$ Soạn email nhắc nợ tự động; điều phối dạng dây chuyền. |
+| **02:15 - 02:30** | 15 phút | **K5: Đội ngũ Song song & Tổng kết** | Chạy song song 2 việc độc lập; quy tắc ngón tay cái; giao bài tập chuẩn bị Capstone Buổi 6. |
 
 ---
 
-## Câu chưa rõ, cần anh chốt trước khi giãn thành bản chi tiết
-1. Giữ 2 agent này (soạn báo cáo, rà soát khách) hay đổi sang bối cảnh nhân sự?
-2. Phần song song cho lớp thực hành thật hay chỉ GV demo cho an toàn?
+## Kịch bản chi tiết từng phần
+
+```
+================================================================================
+K0: MỞ ĐẦU & BẢN ĐỒ BUỔI 5 (10 PHÚT)
+================================================================================
+```
+
+### Lời dẫn Giảng viên (Đọc nguyên văn):
+> "Chào cả lớp. Ở Buổi 4, chúng ta đã hiểu sâu sắc về ranh giới Context của Subagent đơn lẻ: Subagent giống như một nhân viên thời vụ được giao việc qua một tờ giấy, làm ở phòng riêng để không làm bẩn bàn làm việc chính.
+> 
+> Nhưng trong thực tế doanh nghiệp, một công việc không chỉ do một người làm. Chúng ta cần cả một **ĐỘI NGŨ AGENT (Multi-Agent Team)** cùng phối hợp: một nhân viên chuyên rà soát số liệu, một nhân viên chuyên viết báo cáo, một nhân viên chuyên nghiên cứu thị trường.
+> 
+> Tuy nhiên, tài liệu nghiên cứu chính thức của Anthropic cảnh báo rất rõ: **Hệ thống nhiều Agent tốn token gấp 15 lần so với chat thông thường!** Rất nhiều đội kỹ thuật mất hàng tháng trời xây dựng hệ thống multi-agent phức tạp rồi phát hiện chỉ cần 1 prompt tốt cho 1 agent đơn lẻ là xong việc.
+> 
+> Tối nay, chúng ta sẽ học cách làm của các chuyên gia hàng đầu thế giới:
+> 1. Nắm chắc **3 tình huống duy nhất** mà nhiều Agent thực sự vượt trội hơn 1 Agent.
+> 2. Tự tay lập trình 2 nhân viên AI biên chế chính thức.
+> 3. Điều phối 2 nhân viên này làm việc theo mô hình **Nối chuỗi (dây chuyền)** và **Chạy song song**, tạo ra năng suất vượt trội mà vẫn tối ưu chi phí. Bắt đầu thôi!"
+
+---
+
+```
+================================================================================
+K1: KHI NÀO CẦN MULTI-AGENT & BÀI TOÁN CHI PHÍ (25 PHÚT)
+================================================================================
+```
+
+### 1. Ba tình huống duy nhất nhiều Agent tốt hơn một Agent (Theo Anthropic)
+
+Anthropic chỉ ra rằng, hệ thống Multi-Agent chỉ thực sự phát huy tác dụng khi:
+1. **Context bị "ô nhiễm" (Context Pollution):** Khi dữ liệu của bước trước quá nhiều rác hoặc chi tiết thừa thãi làm giảm khả năng suy luận chính xác của các bước tiếp theo. Tách sang Agent/Subagent khác giúp context luôn trong sạch.
+2. **Công việc có thể chạy song song (Parallelization):** Khi các phần việc hoàn toàn độc lập (ví dụ: nghiên cứu đồng thời 3 đối thủ khác nhau, hoặc rà soát 3 chi nhánh cùng lúc). Chạy song song giúp tiết kiệm thời gian đáng kể.
+3. **Chuyên môn hóa (Specialization):** Khi cần giới hạn công cụ hoặc tập trung sâu (ví dụ: Agent kiểm tra chỉ được cấp quyền Đọc - Read-only để đảm bảo an toàn dữ liệu; còn Agent viết báo cáo mới được cấp quyền Ghi - Write).
+
+> ⚠️ **Cảnh báo từ Anthropic:** Ngoài 3 tình huống trên, chi phí điều phối thường vượt quá lợi ích! Luôn tuân thủ nguyên tắc **KISS (Keep It Simple, Stupid)** — chỉ tăng độ phức tạp khi thực sự cần thiết.
+
+### 2. Bài toán Chi phí Token & Hiệu quả Đột phá
+- **Mức tiêu hao Token:**
+  * Chat thông thường: **1x** token.
+  * Agent đơn lẻ (tự chạy vòng lặp tools): **~4x** token.
+  * Hệ thống Đội ngũ Multi-Agent: **~15x** token!
+- **Khi nào đáng đầu tư chi phí gấp 15 lần?**
+  * Khi giá trị nhiệm vụ đủ cao (bài toán nghiên cứu thị trường chiến lược, đối soát tài chính quan trọng, kiểm thử an ninh).
+  * **Benchmark Anthropic:** Hệ thống nghiên cứu kết hợp giữa mô hình điều phối Opus 4 và các subagent Sonnet 4 đã **vượt trội hơn Agent đơn Opus 4 tới 90.2%** trong các đánh giá nghiên cứu thông tin phức tạp!
+
+---
+
+```
+================================================================================
+K2: TỰ TAY TẠO 2 AGENT BIÊN CHẾ CHUYÊN TRÁCH (30 PHÚT)
+================================================================================
+```
+
+### 1. Cấu trúc file định nghĩa Agent chuẩn trong `.claude/agents/*.md`
+File Agent gồm 2 phần:
+- **Khối YAML Frontmatter:** Khai báo `name` (tên gọi), `description` (giúp hệ thống nhận diện khi nào kích hoạt), `tools` (khoanh vùng công cụ được phép dùng).
+- **Phần thân:** Bản mô tả công việc (JD) chi tiết và các nguyên tắc bất khả xâm phạm.
+
+### 2. Demo GV tạo Agent 1: `agent-soan-bao-cao` (Có quyền `Write`)
+- **PROMPT K2-1 (Bản GV dán chạy ngay):**
+  ```text
+  Tạo cho tôi file .claude/agents/agent-soan-bao-cao.md, một agent chuyên soạn báo cáo và email công việc:
+  - name: agent-soan-bao-cao
+  - description: Chuyên biến số liệu hoặc ý thô thành báo cáo, đề xuất, email hoàn chỉnh theo văn phong công sở. Dùng khi cần soạn văn bản công việc từ dữ liệu có sẵn.
+  - tools: Read, Write, Grep, Glob
+  - Phần thân: Bạn là chuyên viên soạn thảo văn bản tại Công ty Cổ phần Công nghệ CES. Nhiệm vụ: Đọc dữ liệu được chỉ định, soạn thảo văn bản theo đúng yêu cầu. Quy tắc: Tiếng Việt chuẩn công sở, TUYỆT ĐỐI KHÔNG DÙNG EMOJI, CHỐNG BỊA SỐ (số liệu phải trích dẫn nguồn, thiếu ghi [Chờ bổ sung]). Nếu thiếu thông tin, vẫn soạn đầy đủ khung và để trống chỗ thiếu, không dừng lại hỏi giữa chừng.
+  Tạo xong in lại toàn bộ nội dung file.
+  ```
+
+### 3. Demo GV tạo Agent 2: `agent-ra-soat-khach` (Chỉ có quyền `Read`, KHÔNG CÓ `Write`)
+- **PROMPT K2-2 (Bản GV dán chạy ngay):**
+  ```text
+  Tạo cho tôi file .claude/agents/agent-ra-soat-khach.md, một agent chuyên rà soát hồ sơ khách hàng:
+  - name: agent-ra-soat-khach
+  - description: Chuyên đọc hồ sơ khách hàng và chỉ ra khách nào cần hành động (nhắc thanh toán, chăm sóc lại, chốt gia hạn). Dùng khi cần rà nhanh danh sách khách để không bỏ sót việc.
+  - tools: Read, Grep, Glob
+  - Phần thân: Bạn là chuyên viên kiểm tra và đối soát khách hàng. Nhiệm vụ: Đọc toàn bộ hồ sơ khách trong thư mục được chỉ định, trả về một bảng tổng hợp: Tên khách, Trạng thái, Việc cần làm, Mức ưu tiên. Quy tắc: Chỉ dùng thông tin có thật trong hồ sơ, không suy đoán. TUYỆT ĐỐI KHÔNG TỰ Ý SỬA HAY TẠO FILE, CHỈ BÁO CÁO KẾT QUẢ.
+  Tạo xong in lại toàn bộ nội dung file.
+  ```
+
+- **Thao tác quan trọng:** Sau khi tạo xong 2 file, **BẮT BUỘC ĐÓNG PHIÊN VÀ MỞ PHIÊN MỚI** để Claude Code nạp 2 Agent vào hệ thống.
+
+---
+
+```
+================================================================================
+NGHỈ GIẢI LAO (10 PHÚT) — 01:05 ĐẾN 01:15
+================================================================================
+```
+
+---
+
+```
+================================================================================
+K3: GỌI, TEST & THỬ THÁCH AN TOÀN KHOANH VÙNG CÔNG CỤ (30 PHÚT)
+================================================================================
+```
+
+### 1. Test Agent 1: Soạn Báo cáo bán hàng tháng 3
+- **PROMPT K3-1 (Mở phiên mới rồi gọi):**
+  ```text
+  Nhờ agent-soan-bao-cao soạn báo cáo bán hàng tháng 3 từ file 04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md. 
+  Bố cục gồm: Kết quả tổng quan tháng 3, Số liệu chi tiết theo khu vực, Vướng mắc tồn đọng, Kế hoạch tháng 4. 
+  Quy tắc: Không emoji, cuối báo cáo liệt kê rõ các con số đã dùng kèm dòng trích dẫn từ file nguồn.
+  ```
+- **Kết quả mong đợi:** Báo cáo xuất sắc, không emoji, trích dẫn chuẩn: 1.085 triệu tháng 3, 915 triệu tháng 2, 2 đơn chờ thanh toán, 1 đơn hủy.
+
+### 2. Test Agent 2: Rà soát danh sách khách hàng
+- **PROMPT K3-2:**
+  ```text
+  Nhờ agent-ra-soat-khach đọc toàn bộ các hồ sơ trong 03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang/ và chỉ ra những khách hàng nào cần hành động gấp, xếp theo mức ưu tiên.
+  ```
+- **Kết quả mong đợi:** Bảng đối soát: An Phát cần nhắc nợ gấp (ưu tiên 1), Hải Nam cần chăm sóc lại sau khi hủy (ưu tiên 2), Minh Long cần chốt gia hạn (ưu tiên 3).
+
+### 3. Thử thách an toàn: Thử bắt Agent làm việc ngoài quyền hạn (Khoảnh khắc đắt giá)
+- **PROMPT K3-3:**
+  ```text
+  Nhờ agent-ra-soat-khach cập nhật file hồ sơ khách An Phát, ghi thêm dòng: "Đã liên hệ nhắc nợ lần 3 ngày hôm nay".
+  ```
+- **KẾT QUẢ MONG ĐỢI & BÀI HỌC SƯ PHẠM:**
+  * Agent báo lỗi hoặc từ chối: *"Tôi không có quyền Write (ghi file), tôi chỉ có quyền Read để rà soát"*.
+  * GV chỉ tay lên màn hình: *"Cả lớp thấy sức mạnh của việc khoanh vùng `tools` chưa? Dù anh chị có ra lệnh hay nài nỉ, Agent cũng không thể phá hoại hay sửa file vì hệ thống đã chặn quyền ngay từ file cấu hình. Đây chính là chuẩn mực an toàn thông tin doanh nghiệp!"*
+
+---
+
+```
+================================================================================
+K4: ĐỘI NGŨ AGENT NỐI CHUỖI (TUẦN TỰ / SEQUENTIAL) (30 PHÚT)
+================================================================================
+```
+
+### 1. Bản chất mô hình Nối chuỗi (Dây chuyền sản xuất)
+- **Quy tắc:** Việc sau **phải chờ** kết quả của việc trước thì làm Nối chuỗi.
+- **Kỹ thuật điều phối:** 
+  1. Chỉ định rõ thứ tự: *"Làm lần lượt 2 bước, xong bước 1 mới sang bước 2"*.
+  2. Bắt buộc có **File trung gian** để Agent A lưu kết quả ra, và Agent B đọc vào.
+
+### 2. Demo GV: Dây chuyền rà soát nợ $\rightarrow$ Soạn email nhắc nợ tự động
+- **PROMPT K4-1 (Bản GV dán chạy ngay):**
+  ```text
+  Làm lần lượt hai bước theo quy trình nối chuỗi, xong bước 1 mới sang bước 2:
+  - Bước 1: Nhờ agent-ra-soat-khach đọc thư mục 03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang/, tìm ra khách hàng CẦN NHẮC THANH TOÁN GẤP NHẤT, lưu kết quả vào file ket-qua/khach-can-nhac.md.
+  - Bước 2: Sau khi có file đó, nhờ agent-soan-bao-cao đọc file ket-qua/khach-can-nhac.md và soạn một email nhắc thanh toán gửi đúng khách hàng đó, văn phong công sở lịch sự, tôn trọng đối tác, không dùng emoji.
+  ```
+- **Kết quả mong đợi:** File `ket-qua/khach-can-nhac.md` được tạo ra (chỉ đích danh An Phát), sau đó email gửi An Phát được soạn thảo hoàn chỉnh. Hai Agent phối hợp như 2 nhân viên trong một phòng ban thực thụ!
+
+---
+
+```
+================================================================================
+K5: ĐỘI NGŨ AGENT CHẠY SONG SONG (PARALLELIZATION) & TỔNG KẾT (15 PHÚT)
+================================================================================
+```
+
+### 1. Bản chất mô hình Chạy song song
+- **Quy tắc:** Các việc **hoàn toàn độc lập**, không phụ thuộc dữ liệu của nhau thì cho chạy song song để tiết kiệm thời gian.
+- **PROMPT K5-1 (Demo GV chạy song song):**
+  ```text
+  Giao SONG SONG hai việc độc lập cùng lúc, không tự làm thay:
+  1. agent-ra-soat-khach: Rà soát thư mục 01-khach-hang, chỉ ra khách hàng cần hành động.
+  2. agent-soan-bao-cao: Soạn tóm tắt kết quả bán hàng từ demo/so-lieu-ban-hang-thang.md.
+  Sau khi cả hai hoàn thành, gom kết quả thành một bản Báo cáo Tổng hợp Tình hình chung.
+  ```
+
+### 2. Tổng kết & Câu chốt cốt lõi:
+1. **Ba tình huống dùng Multi-Agent:** Tránh ô nhiễm context, cần chạy song song, chuyên môn hóa công cụ an toàn.
+2. **Chi phí token:** Đội ngũ Multi-Agent ngốn token gấp 15 lần chat thường; chỉ dùng cho việc có giá trị cao.
+3. **Quy tắc phối hợp:** Chờ nhau $\rightarrow$ Nối chuỗi; Độc lập $\rightarrow$ Song song.
+
+### 3. Bài tập về nhà:
+- Tự cấu hình 2 Agent riêng theo phòng ban thực tế của bạn (1 Agent chỉ Read, 1 Agent có Write).
+- Thiết lập một kịch bản Nối chuỗi giữa 2 Agent đó trên dữ liệu công việc thật của bạn.
+- Chuẩn bị dữ liệu cho **Buổi 06 (Capstone Project)**: Đưa toàn bộ Workspace vào vận hành thực tế cuối khóa.
+
+---
+
+## Bảng tra cứu nhanh các Prompt của Buổi 5
+
+| Mã Prompt | Mục đích sử dụng | Vị trí trong bài | Kết quả kiểm định mong đợi |
+|---|---|---|---|
+| **K2-1** | Tạo `agent-soan-bao-cao` (có quyền `Write`) | [K2: 00:35 - 01:05] | File agent hoàn chỉnh trong `.claude/agents/` |
+| **K2-2** | Tạo `agent-ra-soat-khach` (chỉ quyền `Read`) | [K2: 00:35 - 01:05] | File agent chỉ có Read/Grep/Glob, không có Write |
+| **K3-1** | Gọi test `agent-soan-bao-cao` | [K3: 01:15 - 01:45] | Xuất báo cáo 4 phần, chuẩn số liệu, không emoji |
+| **K3-2** | Gọi test `agent-ra-soat-khach` | [K3: 01:15 - 01:45] | Bảng đối soát 3 khách hàng theo mức ưu tiên |
+| **K3-3** | Thử thách an toàn (bắt agent sửa file) | [K3: 01:15 - 01:45] | Agent từ chối sửa file vì không có quyền Write |
+| **K4-1** | Nối chuỗi: Rà soát khách $\rightarrow$ Soạn email nhắc | [K4: 01:45 - 02:15] | Tự động sinh file trung gian và email đúng khách |
+| **K5-1** | Chạy song song 2 Agent gom kết quả chung | [K5: 02:15 - 02:30] | Hai phần việc chạy độc lập gom vào 1 báo cáo |
