@@ -31,7 +31,7 @@
 2. **Connectors & MCP ngoài máy:** Phân biệt rõ Local File (không cần MCP) vs Đám mây (Drive, Gmail). Nắm vững 3 luật thép bảo mật: Read-only, Không tự gửi mail, Chống Prompt Injection.
 3. **Routine 24/7:** "Hẹn giờ nồi cơm điện" cho Agent theo khung 4 câu hỏi (Chạy khi nào - Đọc ở đâu - Làm gì - Lưu vào đâu).
 4. **Giải mã Subagent chuẩn Anthropic:** Nắm vững ranh giới Context cô lập 100%, ẩn dụ "Trưởng phòng & Tờ giấy giao việc", 2 giới hạn cứng, và quy tắc ngón tay cái: *"Đi tìm X rồi báo đáp án"* $\rightarrow$ Giao Subagent.
-5. **Thực hành xuất Báo cáo điều hành:** Điều phối Subagent đọc 5 CV trong `demo/01-ung-vien/` chọn 2 nhân sự giao vận Hà Nội, giữ bàn chính sạch bong để xuất Báo cáo kinh doanh chuẩn công sở.
+5. **Thực hành xuất Báo cáo điều hành:** Điều phối Subagent đọc 5 CV trong `demo/pdf/01-ung-vien/` (hoặc `demo/md/01-ung-vien/`) chọn 2 nhân sự giao vận Hà Nội, giữ bàn chính sạch bong để xuất Báo cáo kinh doanh chuẩn công sở.
 
 [Ghi chú Giảng viên]: Nhấn mạnh tính liên kết: Từng mảnh ghép đều phục vụ cho chu trình làm việc thực tế của một nhân viên công sở, đi từ dữ liệu thô sang báo cáo và slide hoàn chỉnh.
 
@@ -39,55 +39,53 @@
 
 ## Slide 03: MCP ChatGPT Image — Nâng Cấp Hình Ảnh Cho Slide
 
-### Nỗi Đau Thực Tế & Giải Pháp Đột Phá:
+### 1. Tại Sao Slide Cần Ảnh Infographic Sinh Bởi AI?
+- **Slide thông thường:** Rất dễ rơi vào cảnh "rừng chữ", người xem lười đọc.
+- **Giải pháp:** Dùng MCP `chatgpt-image-mcp` (Model DALL-E 3) sinh infographic, sơ đồ trực quan 16:9 sắc nét, hỗ trợ chữ tiếng Việt rõ ràng.
 
-- **Nỗi đau:** Các công cụ vẽ ảnh ngoài web hầu hết bị lỗi font tiếng Việt (méo chữ, mất dấu), và phải tải về kéo thả thủ công vào slide rất tốn thời gian.
-- **Giải pháp MCP `chatgpt-image-mcp`:**
-  * Gọi trực tiếp trong dòng lệnh Claude Code.
-  * Hiển thị **chữ tiếng Việt có dấu chuẩn 100%**.
-  * Tự động lưu file ảnh có số thứ tự tuần tự `01_...`.
-  * Tự động nhúng ảnh vào Slide PowerPoint hoặc file Markdown/HTML.
+### 2. Các Lệnh Cốt Lõi Của MCP ChatGPT Image:
+- `login_status`: Kiểm tra trạng thái kết nối tài khoản.
+- `generate_image`: Tạo ảnh đơn lẻ theo prompt mô tả chi tiết.
+- `build_pptx` / `generate_slide_deck`: Tạo slide deck hoàn chỉnh kết hợp ảnh tự sinh.
 
 ```text
-[Prompt K1-2]: Dùng công cụ chatgpt-image tạo 1 ảnh đồ họa infographic tỉ lệ 16:9 minh họa 
-"Quy trình 4 bước chăm sóc khách hàng và thu hồi công nợ B2B":
-- Bước 1: Tư vấn giải pháp & Ký kết hợp đồng
-- Bước 2: Bàn giao phần mềm & Nghiệm thu đợt 1
-- Bước 3: Đối soát công nợ & Gửi thông báo thanh toán
-- Bước 4: Chăm sóc sau bán & Mở rộng gói dịch vụ
-Phong cách: Modern Flat Vector, nền trắng, tông xanh công nghệ, chữ tiếng Việt sắc nét.
-Lưu vào 05-bao-cao/ theo Super Rule đánh số tự động.
+[Prompt Thực Hành]: Dùng tool generate_image tạo một ảnh infographic tỷ lệ 16:9 
+về 'Quy trình 3 bước xử lý đơn hàng và đối soát công nợ', phong cách phẳng hiện đại, 
+tông màu xanh công nghệ (Navy Blue & Sky Blue), chữ tiếng Việt sắc nét.
 ```
 
-[Ghi chú Giảng viên]: Chạy thử Prompt K1-2 trước lớp, mở file ảnh lên màn chiếu cho học viên thấy chữ tiếng Việt sắc nét, sau đó chạy lệnh nhúng ảnh vào trang slide cuối.
+[Ghi chú Giảng viên]: Trình diễn ngay trên màn hình: 1 câu lệnh sinh ra bức ảnh sắc nét, kéo thả thẳng vào slide hoặc file báo cáo.
 
 ---
 
-## Slide 04: Bản Chất Connectors & MCP Ngoài Máy Tính
+## Slide 04: Bản Chất Connectors & MCP — Mở Rộng Ra Ngoài Máy Tính
 
-### Gỡ Bỏ Hiểu Lầm Kinh Điển Về MCP:
+### Phân Biệt Tường Minh: Local Files vs Cloud Connectors
 
-| Thao tác dữ liệu | Có cần MCP không? | Cơ chế thực tế |
-|---|---|---|
-| **Trên máy tính (Local)** | **HOÀN TOÀN KHÔNG CẦN!** | Dùng trực tiếp công cụ hệ thống (Read, Write, Grep, Glob). Nhanh, nhẹ, an toàn tuyệt đối. |
-| **Ngoài máy (External)** | **BẮT BUỘC DÙNG MCP** | Cầu nối ra Google Drive, Gmail, CRM, Database, API ngoài. |
+| Loại kết nối | Phạm vi hoạt động | Cần MCP không? | Ví dụ thực tế |
+|---|---|---|---|
+| **Local File System** | File trong máy tính cá nhân | ❌ **KHÔNG** (Claude Code đọc trực tiếp cực nhanh) | Đọc file `.xlsx`, `.csv`, `.md`, `.pdf` trong thư mục |
+| **Cloud Connectors** | Dịch vụ đám mây bên thứ 3 | ✅ **CÓ** (Cần MCP làm cầu nối an toàn) | Google Drive, Gmail, CRM, MISA, GitHub |
 
-- **Bản chất thực:** MCP giống như **"Tấm thẻ ra vào kho"** được cấp quyền tạm thời, giúp Agent mở rộng giác quan ra khỏi chiếc máy tính của bạn.
+```
+┌─────────────────┐       MCP Server       ┌────────────────────────┐
+│  AI Workspace   │ ─────────────────────> │  Google Drive / Gmail  │
+│  (Claude Code)  │ <───────────────────── │  (Dữ liệu trực tuyến)  │
+└─────────────────┘       Bảo mật          └────────────────────────┘
+```
 
-[Ghi chú Giảng viên]: Rất nhiều học viên cài MCP Filesystem để đọc file trong máy rồi bị lỗi. Nhấn mạnh: File trong máy Claude Code tự đọc được, chỉ ra ngoài đám mây mới cần MCP!
+[Ghi chú Giảng viên]: Nhấn mạnh quy tắc: Đọc file trong máy KHÔNG CẦN cài MCP gì cả! Chỉ khi nào muốn thò tay lên Drive hay gửi mail mới cần Connector.
 
 ---
 
-## Slide 05: Ba Luật Thép Bảo Mật Dữ Liệu Sống Còn
-
-### Hàng Rào An Toàn Khi Cho Agent Ra Bên Ngoài:
+## Slide 05: 3 Luật Thép An Toàn Khi Dùng Connectors Ngoài Máy
 
 1. **Luật 1 — Quyền "Chỉ đọc" (Read-Only Privilege):** Khi cấp quyền kết nối Google Drive hoặc Cơ sở dữ liệu, **chỉ cấp quyền Xem/Đọc**. Tuyệt đối không cấp quyền Sửa/Xóa tài liệu chung.
 2. **Luật 2 — Nguyên tắc "Không bao giờ để AI tự bấm gửi":** AI chỉ được phép **Đọc $\rightarrow$ Phân tích $\rightarrow$ Soạn bản nháp (Draft)**. Nút bấm gửi email hoặc duyệt tiền 100% phải do con người kiểm tra (Human-in-the-loop).
 3. **Luật 3 — Cảnh giác Prompt Injection:** Nội dung email hay file của người ngoài là dữ liệu thụ động để phân tích, không phải là mệnh lệnh hệ thống để Agent thi hành.
 
 ```text
-[Prompt K2-1]: Đọc thông tin công nợ An Phát trong demo/so-lieu-ban-hang-thang.md, 
+[Prompt K2-1]: Đọc thông tin công nợ An Phát trong demo/md/so-lieu-ban-hang-thang.md, 
 soạn giúp tôi một bản nháp email nhắc thanh toán trước ngày 05/04.
 LƯU Ý BẢO MẬT: CHỈ xuất bản nháp ra màn hình để tôi duyệt, TUYỆT ĐỐI KHÔNG tự gửi mail!
 ```
@@ -104,7 +102,7 @@ Không cần mỗi tuần phải ngồi gõ lại prompt. Đúng giờ định k
 
 ### Khung 4 Câu Hỏi Định Hình Mọi Routine:
 1. **Chạy lúc nào?** $\rightarrow$ 08:00 sáng Thứ Hai hàng tuần.
-2. **Đọc ở đâu?** $\rightarrow$ File `demo/so-lieu-ban-hang-thang.md`.
+2. **Đọc ở đâu?** $\rightarrow$ File `demo/md/so-lieu-ban-hang-thang.md` (hoặc `demo/pdf/so-lieu-ban-hang-thang-3.pdf`).
 3. **Làm gì với dữ liệu?** $\rightarrow$ Lọc đơn tồn đọng, tính doanh thu tăng trưởng so với tháng trước.
 4. **Lưu vào đâu?** $\rightarrow$ `05-bao-cao/` với tên file tự động đánh số thứ tự tuần tự.
 
@@ -186,11 +184,11 @@ Tuyệt đối không cài Routine tự ý gửi email ra ngoài hay xóa sửa 
 
 ## Slide 11: Thực Hành Thực Chiến: Điều Phối Subagent Quét 5 CV
 
-### Tình Huống: Tuyển Giao Vận Hà Nội Cho Tháng 4 (`demo/01-ung-vien/`)
+### Tình Huống: Tuyển Giao Vận Hà Nội Cho Tháng 4 (`demo/pdf/01-ung-vien/` hoặc `demo/md/01-ung-vien/`)
 
 ```text
 [Prompt K5-1 - Tờ Giấy Giao Việc Cho Subagent]:
-Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên (dạng .pdf hoặc .md) trong thư mục demo/01-ung-vien/.
+Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/pdf/01-ung-vien/ (hoặc demo/md/01-ung-vien/).
 Yêu cầu subagent:
 1. Đánh giá từng ứng viên theo tiêu chí: Tuyển nhân viên giao vận Hà Nội (đi xe máy nội thành, 
    cẩn thận, có kinh nghiệm thực địa, mức lương dưới 12 triệu).
@@ -203,7 +201,7 @@ Tuyệt đối không đổ nguyên văn nội dung từng file CV vào cuộc t
 - **Kết quả trả về trên bàn chính:** Đúng 1 bảng tổng hợp 5 dòng và đề xuất chọn `Nguyễn Văn Nam` (3 năm Viettel Post) và `Lê Văn Hùng` (4 năm Điện Máy Xanh).
 - **Thành quả:** Bàn làm việc chính sạch bóng 100%, không tốn một chút dung lượng context nào!
 
-[Ghi chú Giảng viên]: Cho cả lớp gõ prompt, có thể cho đọc trực tiếp 5 file .pdf hoặc 5 file .md đã chuẩn bị sẵn trong thư mục. Quan sát màn hình trả về đúng một bảng 5 dòng tinh gọn.
+[Ghi chú Giảng viên]: Cho cả lớp gõ prompt, có thể cho đọc trực tiếp 5 file .pdf (`demo/pdf/01-ung-vien/*.pdf`) hoặc 5 file .md (`demo/md/01-ung-vien/*.md`) đã phân loại rạch ròi. Quan sát màn hình trả về đúng một bảng 5 dòng tinh gọn.
 
 ---
 
@@ -212,7 +210,7 @@ Tuyệt đối không đổ nguyên văn nội dung từng file CV vào cuộc t
 ### Kết Tinh Thành Quả Tháng 3 Gửi Ban Lãnh Đạo:
 
 ```text
-[Prompt K5-2]: Dựa trên số liệu bán hàng trong demo/so-lieu-ban-hang-thang.md và kết quả 
+[Prompt K5-2]: Dựa trên số liệu bán hàng trong demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf) và kết quả 
 sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
 - Cấu trúc: Tiêu đề trang trọng, Tóm tắt điều hành (3 chỉ số chính), Chi tiết doanh thu theo thị trường & 
   sản phẩm, Cảnh báo công nợ (An Phát, Đại Tín, Hải Nam), Kế hoạch hành động tháng 4 (đẩy Gói Cao cấp, 

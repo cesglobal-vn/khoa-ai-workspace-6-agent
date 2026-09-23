@@ -11,7 +11,7 @@
 >    - Ẩn dụ kinh điển: *"Trưởng phòng & Tờ giấy giao việc"*.
 >    - 2 giới hạn cứng: Không có ủy quyền lồng nhau (No nested subagents) & Không thể hỏi lại người dùng giữa chừng.
 >    - Nắm vững **khi nào dùng Subagent** (Output lớn nhưng kết luận nhỏ, "đi tìm X rồi báo đáp án", tránh ô nhiễm context) và **khi nào giữ ở Agent chính** (cần trao đổi qua lại, sửa file, cần người duyệt).
-> 3. **Thực hành bốc vác dữ liệu thô:** Cho Subagent quét 5 hồ sơ CV trong `demo/01-ung-vien/` tuyển nhân sự giao vận Hà Nội cho tháng 4, giữ cửa sổ chính sạch bong để xuất Báo cáo kết quả kinh doanh.
+> 3. **Thực hành bốc vác dữ liệu thô:** Cho Subagent quét 5 hồ sơ CV trong `demo/pdf/01-ung-vien/` (hoặc `demo/md/01-ung-vien/`) tuyển nhân sự giao vận Hà Nội cho tháng 4, giữ cửa sổ chính sạch bong để xuất Báo cáo kết quả kinh doanh.
 
 ---
 
@@ -44,20 +44,28 @@
 Thư mục: `04-buoi-04-lap-bao-cao-va-slide/demo/`
 ```
 demo/
-├── so-lieu-ban-hang-thang.md            (Số liệu bán hàng tháng 3 thô của Minh)
-├── so-lieu-ban-hang-thang-3.pdf         (Bản PDF chuẩn báo cáo in ấn có bảng biểu số liệu)
-├── yeu-cau-nghien-cuu.md                (Đề bài nghiên cứu thị trường cho Buổi 5)
-├── yeu-cau-nghien-cuu-thi-truong.pdf   (Bản PDF phiếu yêu cầu nghiên cứu thị trường)
-└── 01-ung-vien/                         (5 hồ sơ ứng viên nhân sự giao vận Hà Nội)
-    ├── cv-nguyen-van-nam.md / .pdf     (28 tuổi, 3 năm Viettel Post, lương 9-11 tr)
-    ├── cv-tran-thi-hoa.md / .pdf       (26 tuổi, 2 năm điều phối GHTK, chỉ làm điều phối)
-    ├── cv-le-van-hung.md / .pdf        (31 tuổi, 4 năm Điện Máy Xanh, kỹ thuật + giao hàng)
-    ├── cv-pham-thi-lan.md / .pdf       (24 tuổi, 1 năm Shopee Xpress, chỉ trực hotline)
-    └── cv-do-van-minh.md / .pdf        (27 tuổi, 2 năm giao chứng từ chuỗi An Khang)
+├── md/                                  (Dữ liệu thực hành định dạng Markdown)
+│   ├── so-lieu-ban-hang-thang.md        (Số liệu bán hàng tháng 3 thô của Minh)
+│   ├── yeu-cau-nghien-cuu.md            (Đề bài nghiên cứu thị trường cho Buổi 5)
+│   └── 01-ung-vien/                     (5 hồ sơ ứng viên dạng Markdown)
+│       ├── cv-nguyen-van-nam.md         (28 tuổi, 3 năm Viettel Post, lương 9-11 tr)
+│       ├── cv-tran-thi-hoa.md           (26 tuổi, 2 năm điều phối GHTK, chỉ làm điều phối)
+│       ├── cv-le-van-hung.md            (31 tuổi, 4 năm Điện Máy Xanh, kỹ thuật + giao hàng)
+│       ├── cv-pham-thi-lan.md           (24 tuổi, 1 năm Shopee Xpress, chỉ trực hotline)
+│       └── cv-do-van-minh.md            (27 tuổi, 2 năm giao chứng từ chuỗi An Khang)
+└── pdf/                                 (Dữ liệu thực hành định dạng PDF chuẩn in ấn)
+    ├── so-lieu-ban-hang-thang-3.pdf     (Bản PDF chuẩn báo cáo in ấn có bảng biểu số liệu)
+    ├── yeu-cau-nghien-cuu-thi-truong.pdf (Bản PDF phiếu yêu cầu nghiên cứu thị trường)
+    └── 01-ung-vien/                     (5 hồ sơ ứng viên dạng PDF chuẩn in ấn A4)
+        ├── cv-nguyen-van-nam.pdf
+        ├── cv-tran-thi-hoa.pdf
+        ├── cv-le-van-hung.pdf
+        ├── cv-pham-thi-lan.pdf
+        └── cv-do-van-minh.pdf
 ```
 
 ### Bộ số liệu kiểm định GV bắt buộc thuộc để soi bài học viên:
-1. **File `so-lieu-ban-hang-thang.md`**:
+1. **File `demo/md/so-lieu-ban-hang-thang.md` (hoặc `demo/pdf/so-lieu-ban-hang-thang-3.pdf`)**:
    - Tổng doanh thu tháng 3: **1.085 triệu đồng** (Tháng 2 là **915 triệu**, tăng trưởng: **170 triệu ~ 18.6%**).
    - Thị trường: **TP HCM bán tốt hơn Hà Nội**, nhất là Gói Cao cấp.
    - Công nợ tồn đọng: **2 đơn chờ thanh toán** (`An Phát`, `Đại Tín`).
@@ -161,7 +169,7 @@ K2: BẢN CHẤT CONNECTORS & MCP NGOÀI MÁY — 3 LUẬT THÉP BẢO MẬT (25
 
 - **PROMPT K2-1 (Soạn nháp email đối soát công nợ an toàn):**
   ```text
-  Dựa trên thông tin công nợ trong demo/so-lieu-ban-hang-thang.md:
+  Dựa trên thông tin công nợ trong demo/md/so-lieu-ban-hang-thang.md:
   Khách hàng Công ty An Phát đang có đơn hàng chờ thanh toán kéo dài cần nhắc nhở.
   Hãy soạn giúp tôi một bản nháp email chuyên nghiệp gửi chị Kế toán trưởng bên An Phát:
   - Mục đích: Nhắc nhở lịch đối soát và đề nghị hoàn tất thanh toán trước ngày 05/04.
@@ -182,7 +190,7 @@ K3: THIẾT KẾ ROUTINE TỰ ĐỘNG HÓA CHẠY THEO LỊCH (25 PHÚT)
 ### 1. Routine là gì? "Hẹn giờ nồi cơm điện" cho Agent
 - **Khung 4 câu hỏi định hình mọi Routine:**
   1. *Chạy lúc nào?* (Ví dụ: 08:00 sáng Thứ Hai hàng tuần).
-  2. *Đọc dữ liệu ở đâu?* (Ví dụ: `demo/so-lieu-ban-hang-thang.md`).
+  2. *Đọc dữ liệu ở đâu?* (Ví dụ: `demo/md/so-lieu-ban-hang-thang.md` hoặc `demo/pdf/so-lieu-ban-hang-thang-3.pdf`).
   3. *Làm gì với dữ liệu?* (Lọc đơn tồn đọng, tính doanh thu tăng trưởng).
   4. *Lưu kết quả vào đâu?* (Lưu file `.md` vào thư mục báo cáo có số thứ tự tự động).
 - **Quy tắc an toàn:** Routine chỉ được **ĐỌC, TÍNH TOÁN và LƯU BÁO CÁO**. Tuyệt đối không tự ý gửi thư hay xóa dữ liệu.
@@ -191,7 +199,7 @@ K3: THIẾT KẾ ROUTINE TỰ ĐỘNG HÓA CHẠY THEO LỊCH (25 PHÚT)
   ```text
   Hãy thiết lập cho tôi một Routine tự động hóa theo đúng khung 4 câu hỏi:
   1. Lịch chạy: Vào lúc 08:00 sáng thứ Hai hàng tuần.
-  2. Nguồn dữ liệu: Đọc file demo/so-lieu-ban-hang-thang.md.
+  2. Nguồn dữ liệu: Đọc file demo/md/so-lieu-ban-hang-thang.md.
   3. Xử lý: Lọc toàn bộ các khách hàng có đơn chờ thanh toán và khách hủy đơn, tính tổng doanh thu và tỷ lệ tăng trưởng so với tháng trước.
   4. Đầu ra: Lưu thành file markdown trong thư mục 05-bao-cao/ theo đúng quy tắc đánh số tự động của Global CLAUDE.md.
   Ràng buộc an toàn: Chỉ đọc và lưu báo cáo nội bộ, không gửi email, không chỉnh sửa file nguồn.
@@ -279,12 +287,12 @@ K5: THỰC HÀNH SUBAGENT & XUẤT BÁO CÁO KINH DOANH (15 PHÚT)
 ```
 
 ### 1. Thực hành điều phối Subagent: "Tờ giấy giao việc chuẩn 3 thành phần"
-- **Tình huống thực tế:** Trong file `demo/so-lieu-ban-hang-thang.md`, Trần Văn Minh ghi chú: *"Thiếu nhân sự giao hàng ở Hà Nội... Kế hoạch tháng 4: Tuyển thêm 1 nhân sự giao hàng Hà Nội"*. Thư mục `demo/01-ung-vien/` có 5 file CV.
+- **Tình huống thực tế:** Trong file `demo/md/so-lieu-ban-hang-thang.md`, Trần Văn Minh ghi chú: *"Thiếu nhân sự giao hàng ở Hà Nội... Kế hoạch tháng 4: Tuyển thêm 1 nhân sự giao hàng Hà Nội"*. Thư mục `demo/pdf/01-ung-vien/` (và bản `demo/md/01-ung-vien/`) có 5 file CV.
 - Đây là bài toán kinh điển: **Output lớn (5 CV dài hàng nghìn từ) nhưng kết luận nhỏ (chọn 2 người). Giao cho Subagent!**
 
 - **PROMPT K5-1 (Bản GV dán chạy ngay):**
   ```text
-  Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/01-ung-vien/.
+  Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/pdf/01-ung-vien/ (hoặc demo/md/01-ung-vien/).
   Yêu cầu subagent:
   1. Đánh giá từng ứng viên dựa trên tiêu chí: Tuyển nhân viên giao vận Hà Nội (cần người trực tiếp đi xe máy giao hàng nội thành, chăm chỉ, có kinh nghiệm thực địa, mức lương dưới 12 triệu).
   2. Trả về đúng 1 bảng tổng hợp gồm các cột: Tên ứng viên, Năm sinh, Kinh nghiệm chính, Mức lương kỳ vọng, Đánh giá (Phù hợp / Không phù hợp) và Lý do ngắn gọn.
@@ -293,7 +301,7 @@ K5: THỰC HÀNH SUBAGENT & XUẤT BÁO CÁO KINH DOANH (15 PHÚT)
   QUY TẮC BẮT BUỘC: Chỉ trả về bảng tổng hợp và đề xuất ngắn gọn. Tuyệt đối không đổ nguyên văn nội dung từng file CV vào cuộc trò chuyện chính.
   ```
 
-> 💡 **Ghi chú Giảng viên:** Học viên có thể chỉ định đọc trực tiếp 5 file `.pdf` (`demo/01-ung-vien/*.pdf`) hoặc 5 file `.md`. Thư mục đã có sẵn song song cả 2 định dạng để học viên cọ xát với tình huống thực tế tại doanh nghiệp (ứng viên gửi CV dạng PDF).
+> 💡 **Ghi chú Giảng viên:** Học viên có thể chỉ định đọc trực tiếp 5 file `.pdf` (`demo/pdf/01-ung-vien/*.pdf`) hoặc 5 file `.md` (`demo/md/01-ung-vien/*.md`). Thư mục đã phân loại rạch ròi 2 định dạng để học viên cọ xát với tình huống thực tế tại doanh nghiệp (ứng viên gửi CV dạng PDF).
 
 - **KẾT QUẢ MONG ĐỢI & ĐỐI SOÁT:**
   * Subagent đọc 5 file (dù là PDF hay MD) ở context riêng.
@@ -305,7 +313,7 @@ Sau khi Subagent đã mang kết quả sạch về, Agent chính kết hợp s�
 
 - **PROMPT K5-2 (Xuất Báo cáo quản trị):**
   ```text
-  Dựa trên số liệu bán hàng trong demo/so-lieu-ban-hang-thang.md và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
+  Dựa trên số liệu bán hàng trong demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf) và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
   - Cấu trúc: Tiêu đề trang trọng, Tóm tắt điều hành (3 chỉ số chính), Chi tiết doanh thu theo thị trường & sản phẩm, Cảnh báo công nợ (An Phát, Đại Tín, Hải Nam), và Kế hoạch hành động tháng 4 (đẩy mạnh Gói Cao cấp, phương án phỏng vấn 2 ứng viên Nam và Hùng).
   - Văn phong công sở trang trọng, KHÔNG DÙNG EMOJI, số liệu trích dẫn chính xác 100%.
   - Lưu file vào thư mục 05-bao-cao/ theo đúng Super Rule tự động đánh số thứ tự tuần tự (ví dụ: 04_bao-cao-kinh-doanh-thang-3.md).

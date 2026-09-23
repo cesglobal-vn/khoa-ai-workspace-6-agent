@@ -69,7 +69,7 @@ Hãy chèn hình ảnh vừa tạo vào slide cuối cùng của file bài thuy�
 
 ### Bước 4: Soạn nháp email an toàn theo Luật "Chỉ Đọc & Không Tự Gửi"
 ```text
-Dựa trên thông tin công nợ trong demo/so-lieu-ban-hang-thang.md:
+Dựa trên thông tin công nợ trong demo/md/so-lieu-ban-hang-thang.md:
 Khách hàng Công ty An Phát đang có đơn hàng chờ thanh toán kéo dài.
 Hãy soạn giúp tôi một bản nháp email chuyên nghiệp gửi chị Kế toán trưởng bên An Phát:
 - Mục đích: Nhắc nhở lịch đối soát và đề nghị hoàn tất thanh toán trước ngày 05/04.
@@ -83,7 +83,7 @@ LƯU Ý BẢO MẬT: CHỈ xuất bản nháp ra màn hình để tôi duyệt. 
 ```text
 Hãy thiết lập cho tôi một Routine tự động hóa theo đúng khung 4 câu hỏi:
 1. Lịch chạy: Vào lúc 08:00 sáng thứ Hai hàng tuần.
-2. Nguồn dữ liệu: Đọc file demo/so-lieu-ban-hang-thang.md.
+2. Nguồn dữ liệu: Đọc file demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf).
 3. Xử lý: Lọc các đơn hàng chờ thanh toán và khách hủy đơn, tính tổng doanh thu và tỷ lệ tăng trưởng so với tháng trước.
 4. Đầu ra: Lưu thành file markdown trong thư mục 05-bao-cao/ theo đúng quy tắc đánh số tự động của Global CLAUDE.md.
 Ràng buộc an toàn: Chỉ đọc và lưu báo cáo nội bộ, không gửi email, không chỉnh sửa file nguồn.
@@ -91,7 +91,7 @@ Ràng buộc an toàn: Chỉ đọc và lưu báo cáo nội bộ, không gửi 
 
 ### Bước 6: Gọi Subagent quét 5 hồ sơ CV (Áp dụng "Tờ giấy giao việc")
 ```text
-Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/01-ung-vien/.
+Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/pdf/01-ung-vien/ (hoặc demo/md/01-ung-vien/).
 Yêu cầu subagent:
 1. Đánh giá từng ứng viên dựa trên tiêu chí tuyển dụng: Vị trí Nhân viên giao vận Hà Nội (cần người trực tiếp đi xe máy giao hàng nội thành, cẩn thận, có kinh nghiệm thực địa, mức lương dưới 12 triệu).
 2. Trả về đúng 1 bảng tổng hợp gồm các cột: Tên ứng viên, Năm sinh, Kinh nghiệm chính, Mức lương kỳ vọng, Đánh giá (Phù hợp / Không phù hợp) và Lý do ngắn gọn.
@@ -99,11 +99,11 @@ Yêu cầu subagent:
 
 QUY TẮC BẮT BUỘC: Chỉ trả về bảng tổng hợp và đề xuất ngắn gọn. Tuyệt đối không đổ nguyên văn nội dung từng file CV vào cuộc trò chuyện chính.
 ```
-> 💡 *Mẹo thực hành:* Bạn có thể chỉ định đọc 5 file `.pdf` (`demo/01-ung-vien/*.pdf`) hoặc 5 file `.md`. Thư mục đã có sẵn song song cả 2 định dạng để bạn trải nghiệm xử lý hồ sơ PDF thực tế!
+> 💡 *Mẹo thực hành:* Bạn có thể chỉ định đọc 5 file `.pdf` (`demo/pdf/01-ung-vien/*.pdf`) hoặc 5 file `.md` (`demo/md/01-ung-vien/*.md`). Thư mục đã phân tách rạch ròi 2 định dạng `demo/pdf/` và `demo/md/` để bạn dễ dàng thực hành cả 2 kịch bản!
 
 ### Bước 7: Agent chính xuất Báo cáo kinh doanh chuẩn công sở
 ```text
-Dựa trên số liệu bán hàng trong demo/so-lieu-ban-hang-thang.md và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
+Dựa trên số liệu bán hàng trong demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf) và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
 - Cấu trúc: Tiêu đề trang trọng, Tóm tắt điều hành (3 chỉ số chính), Chi tiết doanh thu theo thị trường & sản phẩm, Cảnh báo công nợ (An Phát, Đại Tín, Hải Nam), và Kế hoạch hành động tháng 4 (đẩy mạnh Gói Cao cấp, phương án phỏng vấn 2 ứng viên Nam và Hùng).
 - Văn phong công sở trang trọng, KHÔNG DÙNG EMOJI, số liệu trích dẫn chính xác 100%.
 - Lưu file vào thư mục 05-bao-cao/ theo đúng Super Rule tự động đánh số thứ tự tuần tự (ví dụ: 04_bao-cao-kinh-doanh-thang-3.md).

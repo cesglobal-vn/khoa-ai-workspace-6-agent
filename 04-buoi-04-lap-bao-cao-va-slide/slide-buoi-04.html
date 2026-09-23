@@ -844,7 +844,7 @@ Lưu file vào thư mục 05-bao-cao/ theo quy tắc đánh số tự động (v
         <div class="bento-card glow-violet">
           <span class="kicker-tag violet">CÂU HỎI 02</span>
           <h4 class="card-title mt-s">Đọc ở đâu?</h4>
-          <p class="card-desc">Đường dẫn thư mục hoặc file nguồn cụ thể.<br><b>Ví dụ:</b> <code>demo/so-lieu-ban-hang-thang.md</code></p>
+          <p class="card-desc">Đường dẫn thư mục hoặc file nguồn cụ thể.<br><b>Ví dụ:</b> <code>demo/md/so-lieu-ban-hang-thang.md</code></p>
         </div>
 
         <div class="bento-card glow-emerald">
@@ -872,7 +872,7 @@ Lưu file vào thư mục 05-bao-cao/ theo quy tắc đánh số tự động (v
         </div>
         <pre class="code-body">Hãy thiết lập cho tôi một Routine tự động hóa:
 - Lịch chạy: 08:00 sáng thứ Hai hàng tuần.
-- Nguồn dữ liệu: Đọc file demo/so-lieu-ban-hang-thang.md.
+- Nguồn dữ liệu: Đọc file demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf).
 - Xử lý: Lọc toàn bộ các khách hàng có đơn chờ thanh toán và khách hủy đơn, tính doanh thu và tỷ lệ tăng trưởng.
 - Đầu ra: Lưu thành file markdown trong 05-bao-cao/ theo Super Rule tự động đánh số thứ tự tuần tự.
 - Ràng buộc an toàn: Chỉ đọc và lưu báo cáo nội bộ, không gửi email, không sửa file gốc.</pre>
@@ -1215,7 +1215,7 @@ Lưu file vào thư mục 05-bao-cao/ theo quy tắc đánh số tự động (v
               </div>
               <span class="code-file-name">Prompt K5-1: Tờ Giấy Giao Việc Chuẩn 3 Thành Phần Cho Subagent</span>
             </div>
-            <pre class="code-body">Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên (file .pdf hoặc .md) trong thư mục demo/01-ung-vien/.
+            <pre class="code-body">Dùng một subagent đọc toàn bộ 5 file hồ sơ ứng viên trong thư mục demo/pdf/01-ung-vien/ (hoặc demo/md/01-ung-vien/).
 Yêu cầu subagent:
 1. Đánh giá từng ứng viên theo tiêu chí: Tuyển nhân viên giao vận Hà Nội (trực tiếp đi xe máy giao hàng nội thành, cẩn thận, có kinh nghiệm thực địa, lương dưới 12 triệu).
 2. Trả về đúng 1 bảng tổng hợp gồm các cột: Tên ứng viên, Năm sinh, Kinh nghiệm chính, Mức lương kỳ vọng, Đánh giá (Phù hợp / Không phù hợp) và Lý do ngắn gọn.
@@ -1287,7 +1287,7 @@ QUY TẮC BẮT BUỘC: Chỉ trả về bảng tổng hợp và đề xuất ng
             </div>
             <span class="code-file-name">Prompt K5-2: Lập Báo Cáo Gửi Trưởng Phòng Kinh Doanh</span>
           </div>
-          <pre class="code-body">Dựa trên số liệu bán hàng trong demo/so-lieu-ban-hang-thang.md và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
+          <pre class="code-body">Dựa trên số liệu bán hàng trong demo/md/so-lieu-ban-hang-thang.md (hoặc demo/pdf/so-lieu-ban-hang-thang-3.pdf) và kết quả sàng lọc ứng viên giao vận vừa rồi, hãy soạn Báo cáo Kết quả Kinh doanh Tháng 3 gửi chị Lan Trưởng phòng:
 - Cấu trúc: Tiêu đề trang trọng, Tóm tắt điều hành (3 chỉ số chính), Chi tiết doanh thu theo thị trường & sản phẩm, Cảnh báo công nợ (An Phát, Đại Tín, Hải Nam), và Kế hoạch hành động tháng 4 (đẩy mạnh Gói Cao cấp, phương án phỏng vấn 2 ứng viên Nam và Hùng).
 - Văn phong công sở trang trọng, KHÔNG DÙNG EMOJI, số liệu trích dẫn chính xác 100%.
 - Lưu file vào thư mục 05-bao-cao/ theo đúng Super Rule tự động đánh số thứ tự tuần tự (ví dụ: 04_bao-cao-kinh-doanh-thang-3.md).</pre>
