@@ -1,4 +1,4 @@
-# Buổi 05: Thuê trợ lý phụ và lập trợ lý Deep Research cho mình
+# Buổi 05: Thuê trợ lý phụ và lập cặp đôi trợ lý Deep Research & Đề xuất
 
 > **Cách dùng file này:** Mỗi phần có hai khúc. Khúc **Lý thuyết** đọc để hiểu mình sắp làm gì và vì sao, có ví von cho dễ nhớ. Khúc **Thao tác** là các bước có sẵn prompt bằng tiếng Việt tự nhiên, cứ copy dán vào Claude Code.
 >
@@ -8,9 +8,9 @@
 >
 > Bốn phần đi từ dễ tới khó:
 > - **Phần A:** Agent và subagent là gì
-> - **Phần B:** Lập sẵn một trợ lý riêng (Agent Deep Research bằng tiếng Việt tự nhiên)
+> - **Phần B:** Tuyển 2 nhân viên biên chế bằng tiếng Việt tự nhiên (`nghien-cuu-doi-thu` & `chuyen-vien-de-xuat`)
 > - **Phần C:** Skill và agent khác nhau chỗ nào
-> - **Phần D:** Đội ngũ phối hợp: Nối chuỗi (Tuần tự) và Chạy song song
+> - **Phần D:** Cho 2 nhân viên phối hợp: Nối chuỗi (Tuần tự) và Chạy song song
 
 ---
 
@@ -18,11 +18,11 @@
 
 | Phần | Nội dung | Thời lượng | Dạng bài | Trọng tâm sư phạm & Thao tác |
 |---|---|---|---|---|
-| **A** | Agent và subagent là gì | 20 phút | LT 20' | Hình ảnh "Một công ty thu nhỏ", giải ảo hiểu lầm |
-| **B** | Lập sẵn một trợ lý riêng (Deep Research) | 35 phút | LT 10' + HV 25' | **Bước 1:** Giao việc bằng tiếng Việt tự nhiên tạo file agent |
+| **A** | Agent và subagent là gì | 15 phút | LT 15' | Hình ảnh "Một công ty thu nhỏ", giải ảo hiểu lầm |
+| **B** | Tuyển 2 nhân viên biên chế chính thức | 35 phút | LT 10' + HV 25' | **Bước 1:** Tạo `nghien-cuu-doi-thu`<br>**Bước 2:** Tạo `chuyen-vien-de-xuat`<br>Soi 2 chùm chìa khóa công cụ khác nhau |
 | | **Nghỉ giải lao** | 10 phút | | Trợ giảng hỗ trợ kiểm tra file trong `.claude/agents/` |
-| **C** | Skill và agent khác nhau chỗ nào | 30 phút | LT 15' + HV 15' | Cuốn công thức vs Bản hợp đồng; ổ khóa công cụ thật |
-| **D** | Đội ngũ phối hợp: Nối chuỗi & Song song | 45 phút | LT 15' + HV 30' | **Bước 2:** Nối chuỗi (Tuần tự)<br>**Bước 3:** Chạy song song<br>**Bước 4:** Thước đo chọn việc chuẩn bị Capstone |
+| **C** | Skill và agent khác nhau chỗ nào | 25 phút | LT 15' + HV 10' | Cuốn công thức vs Bản hợp đồng; ổ khóa công cụ an toàn |
+| **D** | Cho đội ngũ phối hợp: Nối chuỗi & Song song | 55 phút | LT 15' + HV 40' | **Bước 3:** Nối chuỗi (Agent 1 bàn giao cho Agent 2)<br>**Bước 4:** Chạy song song 2 thị trường<br>**Bước 5:** Thước đo chọn việc chuẩn bị Capstone |
 | | **Tổng kết & Giải đáp** | 10 phút | Q&A | Kiểm lại sản phẩm cầm về |
 
 *Ghi chú: LT = Giảng viên nói, phân tích ví von. HV = Học viên tự tay thao tác trên máy.*
@@ -54,33 +54,33 @@ Cách thứ nhất (nhờ bằng lời) nói ra là dùng được ngay, không 
 
 ---
 
-## PHẦN B. Lập sẵn một trợ lý riêng (Agent Deep Research)
+## PHẦN B. Tuyển 2 nhân viên biên chế bằng tiếng Việt tự nhiên
 
 ### Lý thuyết
 
 Cách nhờ bằng lời ở Phần A có một nhược điểm lớn: nói xong là hết, lần sau muốn nhờ việc tương tự lại phải mô tả lại từ đầu. Giống như thuê thợ thời vụ, mỗi lần thuê lại phải dặn lại từ đầu từng ly từng tí.
 
-Vẫn trong hình ảnh công ty thu nhỏ đó, giờ ta **tuyển hẳn một nhân viên có chức danh**: viết sẵn một bản mô tả công việc (JD), ghi rõ người này chuyên trách mảng gì, và quan trọng nhất là **được đụng vào những công cụ gì**. Bản mô tả đó là một file Markdown đặt trong thư mục `.claude/agents/`, chính là căn phòng bạn đã chuẩn bị sẵn.
+Vẫn trong hình ảnh công ty thu nhỏ đó, giờ ta **tuyển hẳn 2 nhân viên có chức danh rõ ràng**:
+1. **Nhân viên 1 (`nghien-cuu-doi-thu`):** Chuyên đi ra ngoài dọ thám đối thủ, thu thập thông tin thị trường. Người này cần công cụ tra cứu web, nhưng tuyệt đối không được phép chỉnh sửa hay xóa file trong máy.
+2. **Nhân viên 2 (`chuyen-vien-de-xuat`):** Chuyên ngồi tại văn phòng, nhận kết quả nghiên cứu để biến thành các phương án hành động cụ thể cho công ty. Người này cần công cụ đọc và tạo file đề xuất, nhưng không cần quyền ra mạng internet.
 
 Nói cho thật gọn:
-- **Lập agent:** Là tạo một file văn bản định nghĩa một loại trợ lý.
+- **Lập agent:** Là tạo một file văn bản định nghĩa một loại trợ lý (đặt trong thư mục `.claude/agents/*.md`).
 - **Subagent:** Là lúc trợ lý đó thực sự xắn tay áo vào làm việc.
 - Cùng một bản chất: một cái là **bản mô tả công việc trên giấy**, một cái là **lúc nhân viên đang chạy thật**.
 
-> **Không cần nhớ lệnh kỹ thuật:**  
-> Bạn không cần phải nhớ các từ khóa công cụ tiếng Anh như `Read`, `Grep`, `Glob`, `WebSearch`. Bạn chỉ cần dặn bằng **tiếng Việt tự nhiên**: *"chỉ cho đọc và tìm kiếm trên web, không cho sửa file"*. Claude Code đủ thông minh để tự điền đúng các thông số kỹ thuật vào file cho bạn.
+> **Giao việc bằng tiếng Việt tự nhiên, không cần nhớ lệnh code:**  
+> Bạn không cần phải nhớ các từ khóa tiếng Anh như `Read`, `Write`, `Grep`, `Glob`, `WebSearch`. Bạn chỉ cần dặn bằng **tiếng Việt thông thường**: *"chỉ cho đọc file và tra cứu web, không cho sửa file"* — Claude Code đủ thông minh để tự điền đúng các thông số kỹ thuật vào file cho bạn.
 
-> **Một hiểu lầm hay gặp:**  
-> Lập agent xong, nhiều người tưởng bắt buộc phải gọi đúng từng chữ tên của nó thì nó mới chạy.  
-> Thực ra Claude tự đọc dòng mô tả (`description`) trong file để đoán khi nào cần gọi, y như sếp nhìn chức danh mà giao việc. Nhưng nếu mô tả viết mờ mịt thì nó đoán trượt, khi đó bạn mới phải gọi thẳng tên.
+---
 
 ### Thao tác
 
-#### Bước 1. Lập sẵn trợ lý nghiên cứu đối thủ bằng tiếng Việt tự nhiên
+#### Bước 1. Tuyển nhân viên 1: Trợ lý Nghiên cứu đối thủ (`nghien-cuu-doi-thu`)
 
-**Để làm gì:** Tuyển một trợ lý chuyên làm **Deep Research** (nghiên cứu thị trường và đối thủ) để dùng đi dùng lại nhiều lần.
+**Để làm gì:** Tuyển một nhân viên chuyên làm **Deep Research** (nghiên cứu thị trường và đối thủ) để dùng đi dùng lại nhiều lần.
 
-Gõ câu lệnh sau vào Claude Code (dùng tiếng Việt thông thường, không cần mã lệnh):
+Gõ câu lệnh sau vào Claude Code:
 
 ```text
 Tạo cho tôi một agent mới, đặt tại đường dẫn: ".claude/agents/nghien-cuu-doi-thu.md" ngay trong thư mục làm việc này.
@@ -91,9 +91,29 @@ Trong file ghi hướng dẫn cho trợ lý này: nhiệm vụ là nghiên cứu
 ```
 
 **Bạn sẽ thấy:**  
-Claude tự động hiểu và tạo ra file `.claude/agents/nghien-cuu-doi-thu.md`.  
-Mở file ra xem, phần đầu có dòng công cụ chỉ gồm các quyền đọc và tra cứu web (`Read`, `WebSearch`, `WebFetch`...), hoàn toàn không có công cụ ghi đè (`Write`).  
-Từ giờ trở đi, bạn đã có một nhân viên nghiên cứu chuyên sâu luôn túc trực trong máy.
+Claude tạo ra file `.claude/agents/nghien-cuu-doi-thu.md`. Mở file ra xem, phần công cụ chỉ có quyền đọc và tìm kiếm web (`Read`, `WebSearch`...), hoàn toàn không có quyền ghi sửa (`Write`).
+
+---
+
+#### Bước 2. Tuyển nhân viên 2: Chuyên viên Đề xuất chiến lược (`chuyen-vien-de-xuat`)
+
+**Để làm gì:** Tuyển tiếp một nhân viên chuyên đọc dữ liệu nghiên cứu nội bộ để lên phương án tác chiến cho ban giám đốc.
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+Tạo tiếp cho tôi một agent thứ hai, đặt tại đường dẫn: ".claude/agents/chuyen-vien-de-xuat.md" ngay trong thư mục làm việc này.
+
+Chỉ cấp cho trợ lý này các công cụ để đọc file và tạo/ghi file mới. Không cần cấp công cụ tra cứu web vì chỉ làm việc trên dữ liệu nội bộ.
+
+Trong file ghi hướng dẫn cho trợ lý này: nhiệm vụ là đọc các báo cáo hoặc dữ liệu phân tích được chỉ định, sau đó đề xuất các giải pháp, kế hoạch hành động cụ thể cho ban giám đốc. Văn phong công sở rõ ràng, sắc sảo, tuyệt đối không dùng emoji.
+```
+
+**Bạn sẽ thấy:**  
+Claude tạo tiếp file `.claude/agents/chuyen-vien-de-xuat.md`.  
+Hãy so sánh 2 file vừa tạo:
+- `nghien-cuu-doi-thu`: Có chìa khóa ra mạng, **không có chìa khóa sửa file** (an toàn dữ liệu).
+- `chuyen-vien-de-xuat`: Có chìa khóa tạo file đề xuất, **không cần ra mạng** (tập trung chuyên môn nội bộ).
 
 ---
 
@@ -151,55 +171,55 @@ File agent cho phép bạn quy định người này dùng model thông minh cao
 
 ---
 
-## PHẦN D. Đội ngũ phối hợp: Nối chuỗi (Tuần tự) và Chạy song song
+## PHẦN D. Cho đội ngũ phối hợp: Nối chuỗi (Tuần tự) và Chạy song song
 
 ### Lý thuyết
 
-Khi có một trợ lý nghiên cứu và một trợ lý soạn thảo/phân tích, bạn đóng vai trò là **Trưởng nhóm điều phối**.
+Giờ đây bạn đã có trong tay **2 nhân viên chuyên trách** (`nghien-cuu-doi-thu` và `chuyen-vien-de-xuat`). Bạn sẽ đóng vai trò là **Trưởng phòng / Sếp điều phối**.
 
-Có hai cách để đội ngũ phối hợp làm việc:
+Sếp không tự tay gõ máy từ đầu tới cuối, mà sếp điều phối 2 nhân viên phối hợp với nhau theo 2 mô hình:
 
 ```
-1. NỐI CHUỖI (Tuần tự):
-   Agent A làm xong  ──►  Lưu file kết quả trung gian  ──►  Agent B đọc vào làm tiếp
+1. NỐI CHUỖI (Tuần tự - Dây chuyền sản xuất):
+   Agent 1 (Nghiên cứu) làm xong  ──►  Lưu file kết quả  ──►  Agent 2 (Đề xuất) đọc vào làm tiếp
 
 2. CHẠY SONG SONG:
-   Agent 1 làm việc X (ở phòng riêng) ──┐
-                                        ├──► Gom lại thành 1 báo cáo chung
-   Agent 2 làm việc Y (ở phòng riêng) ──┘
+   Agent 1 làm việc X (phòng riêng) ──┐
+                                      ├──► Sếp gom lại thành 1 báo cáo chung
+   Agent 2 làm việc Y (phòng riêng) ──┘
 ```
 
 **Nguyên tắc chọn kiểu phối hợp:**
 - **Người sau phải CHỜ người trước mới làm được** $\rightarrow$ Chọn **NỐI CHUỖI (Tuần tự)**.  
-  *(Ví dụ: Chưa nghiên cứu xong đối thủ thì chưa thể viết bản đề xuất đối phó).*
+  *(Ví dụ: Chưa nghiên cứu xong đối thủ thì Chuyên viên đề xuất chưa có cơ sở dữ liệu để viết kế hoạch).*
 - **Các việc HOÀN TOÀN ĐỘC LẬP với nhau** $\rightarrow$ Chọn **CHẠY SONG SONG**.  
-  *(Ví dụ: Nghiên cứu thị trường Việt Nam và thị trường Quốc tế là 2 việc riêng biệt, không cần chờ nhau).*
+  *(Ví dụ: Nghiên cứu thị trường Việt Nam và thị trường Quốc tế là 2 việc riêng biệt, làm đồng thời để tiết kiệm thời gian).*
 
 ---
 
 ### Thao tác
 
-#### Bước 2. Phối hợp Nối chuỗi (Tuần tự): Nghiên cứu đối thủ $\rightarrow$ Soạn đề xuất hành động
+#### Bước 3. Phối hợp Nối chuỗi: Cặp bài trùng Nghiên cứu $\rightarrow$ Đề xuất hành động
 
-**Để làm gì:** Trải nghiệm quy trình làm việc dạng dây chuyền sản xuất: Người trước nghiên cứu ra số liệu $\rightarrow$ Người sau đọc số liệu đó để viết kế hoạch.
+**Để làm gì:** Nhìn thấy trực quan sự phối hợp dây chuyền giữa 2 Agent: Agent 1 xong việc bàn giao file cho Agent 2 tiếp quản!
 
 Gõ vào Claude Code:
 
 ```text
-Làm lần lượt hai bước theo quy trình nối chuỗi, xong bước 1 mới sang bước 2:
+Làm lần lượt hai bước theo quy trình nối chuỗi giữa 2 agent, xong bước 1 mới sang bước 2:
 
-- Bước 1: Dùng agent nghien-cuu-doi-thu tìm giúp tôi 3 đối thủ lớn trong ngành của tôi và điểm mạnh nhất của họ, lưu bản tóm tắt vào file "ket-qua/nghien-cuu-doi-thu.md".
-- Bước 2: Sau khi có file đó, đọc file "ket-qua/nghien-cuu-doi-thu.md" và soạn cho tôi một bản đề xuất 3 hành động cụ thể để công ty tôi cạnh tranh lại với họ, văn phong công sở rõ ràng, không dùng emoji.
+- Bước 1: Nhờ agent nghien-cuu-doi-thu tìm giúp tôi 3 đối thủ lớn trong ngành của tôi và điểm mạnh nhất của họ, lưu bản tóm tắt vào file "ket-qua/nghien-cuu-doi-thu.md".
+- Bước 2: Sau khi có file đó, nhờ agent chuyen-vien-de-xuat đọc file "ket-qua/nghien-cuu-doi-thu.md" và soạn cho tôi một bản đề xuất 3 hành động cụ thể để công ty tôi cạnh tranh lại với họ, văn phong công sở chuẩn mực, không dùng emoji.
 ```
 
 **Bạn sẽ thấy:**  
-1. Trợ lý `nghien-cuu-doi-thu` chạy trước trong phòng riêng, tra cứu web rồi tạo ra file `ket-qua/nghien-cuu-doi-thu.md`.
-2. Sau khi file này xuất hiện, bước 2 mới bắt đầu đọc file trung gian đó để viết ra bản đề xuất chiến lược hoàn chỉnh.  
-Hai bước tiếp nối nhịp nhàng như 2 nhân viên bàn giao công việc cho nhau!
+1. Claude đóng vai Sếp, gọi `nghien-cuu-doi-thu` ra phòng riêng tra cứu web rồi tạo ra file `ket-qua/nghien-cuu-doi-thu.md`.
+2. Ngay sau khi file này xuất hiện, Claude lập tức gọi `chuyen-vien-de-xuat` vào đọc file đó và hoàn thiện bản đề xuất chiến lược.  
+Hai nhân sự bàn giao việc cho nhau nhịp nhàng, phiên chính của bạn không bị lẫn lộn dữ liệu rác!
 
 ---
 
-#### Bước 3. Phối hợp Chạy song song: Nghiên cứu 2 thị trường cùng lúc
+#### Bước 4. Phối hợp Chạy song song: Nghiên cứu 2 thị trường cùng lúc
 
 **Để làm gì:** Tiết kiệm thời gian bằng cách giao 2 việc độc lập cho 2 trợ lý phụ chạy đồng thời ở 2 phòng riêng.
 
@@ -222,26 +242,26 @@ Claude đồng thời mở 2 phòng làm việc riêng biệt. Hai trợ lý tra
 
 ---
 
-#### Bước 4. Thước đo chọn đúng người cho đúng việc (Chuẩn bị cho Capstone)
+#### Bước 5. Thước đo chọn đúng người cho đúng việc (Chuẩn bị cho Capstone)
 
 **Để làm gì:** Cầm về một thước đo chuẩn mực, không bao giờ phải phân vân mỗi khi giao việc cho AI.
 
 Mỗi khi chuẩn bị giao việc, hãy tự đối chiếu nhanh với 3 mức sau:
 
-1. **Mức 1 — Việc thông thường** *(Soạn một email, tóm tắt một file, sửa một đoạn văn):*  
-   $\rightarrow$ Một nhân viên Claude bình thường là quá đủ. Nói thẳng yêu cầu, không cần thuê trợ lý phụ hay tạo agent rườm rà.
-2. **Mức 2 — Việc phụ nặng & Độc lập** *(Đọc hàng chục trang tài liệu, nghiên cứu đối thủ ngoài mạng, lọc dữ liệu thô):*  
-   $\rightarrow$ Thuê một trợ lý phụ (`subagent`) hoặc dùng file Agent đã lập (như `nghien-cuu-doi-thu`) để làm trong phòng riêng.
-3. **Mức 3 — Bài toán lớn chuỗi giá trị** *(Dự án đầu-cuối: Đọc tài liệu $\rightarrow$ Xử lý số $\rightarrow$ Báo cáo $\rightarrow$ Slide):*  
-   $\rightarrow$ Điều phối một chuỗi các Agent phối hợp nhịp nhàng. Đây chính là nội dung đỉnh cao của **Buổi 06 (Capstone)**.
+1. **Mức 1 — Việc thông thường** *(Viết email, tóm tắt 1 file):*  
+   $\rightarrow$ Claude chính là đủ. Nói thẳng, không cần gọi ai.
+2. **Mức 2 — Việc phụ nặng & Độc lập** *(Khảo sát mạng, đọc hàng chục bài viết):*  
+   $\rightarrow$ Giao cho Trợ lý phụ (`subagent`) như `nghien-cuu-doi-thu` làm trong phòng riêng.
+3. **Mức 3 — Bài toán lớn chuỗi giá trị** *(Nghiên cứu $\rightarrow$ Phân tích số liệu $\rightarrow$ Báo cáo $\rightarrow$ Slide):*  
+   $\rightarrow$ Điều phối chuỗi Agent $\rightarrow$ **Nội dung đỉnh cao của Buổi 06 (Capstone)**.
 
 ---
 
 ## Xong Buổi 05, kiểm lại những gì bạn đã có trong tay:
 
 ### Tự tay làm được trên máy tính:
-- [ ] Đã tạo thành công file `.claude/agents/nghien-cuu-doi-thu.md` bằng tiếng Việt tự nhiên, có ổ khóa công cụ an toàn chỉ đọc và tra cứu web.
-- [ ] Đã chạy thành công quy trình **Nối chuỗi (Tuần tự)**: Nghiên cứu đối thủ $\rightarrow$ File trung gian $\rightarrow$ Soạn đề xuất hành động.
+- [ ] Đã có **2 Agent biên chế** trong thư mục `.claude/agents/`: `nghien-cuu-doi-thu.md` (chỉ đọc & tra web) và `chuyen-vien-de-xuat.md` (chỉ đọc & ghi file).
+- [ ] Đã chạy thành công quy trình **Nối chuỗi (Tuần tự)**: Agent 1 nghiên cứu $\rightarrow$ bàn giao file $\rightarrow$ Agent 2 viết đề xuất hành động.
 - [ ] Đã điều phối gọi **2 agent chạy song song** ở 2 thị trường (Việt Nam và Quốc tế) và gom kết quả về.
 
 ### Hiểu bản chất để ứng dụng lâu dài:
@@ -252,4 +272,4 @@ Mỗi khi chuẩn bị giao việc, hãy tự đối chiếu nhanh với 3 mức
 
 ---
 > 🚀 **Hướng tới Buổi 06 (Buổi cuối - Multi-Agent Capstone):**  
-> Hôm nay bạn đã thành thạo cả 2 mô hình phối hợp: Nối chuỗi và Song song. Ở buổi tiếp theo, chúng ta sẽ xâu chuỗi toàn bộ hệ thống: **`CLAUDE.md` + Toàn bộ các Agent + Skill + MCP** vào một quy trình tự động hóa khép kín giải quyết trọn vẹn bài toán thực tế của chính bạn!
+> Hôm nay bạn đã sở hữu một cặp bài trùng (Nghiên cứu & Đề xuất) và thành thạo cả 2 mô hình phối hợp. Ở buổi tiếp theo, chúng ta sẽ xâu chuỗi toàn bộ hệ thống: **`CLAUDE.md` + Toàn bộ các Agent + Skill + MCP** vào một quy trình tự động hóa khép kín giải quyết trọn vẹn bài toán thực tế của chính bạn!
