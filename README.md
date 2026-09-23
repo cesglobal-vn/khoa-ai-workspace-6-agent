@@ -62,6 +62,7 @@ khoa-ai-workspace-6-agent/
 │
 ├── 05-buoi-05-deep-research-va-doi-ngu/          # TRỌN GÓI BUỔI 05
 │   ├── giao-an-buoi-05.md                        # Giáo án đứng lớp
+│   ├── workbook-buoi-05.md                       # Sổ tay thực hành học viên
 │   ├── slide-buoi-05.md                          # Slide bài giảng
 │   ├── bo-4-agent-va-monitor/                    # Bộ 4 agent chuyên môn & monitor
 │   └── demo/                                     # File demo Buổi 5 (dự án ra mắt, Excel, Word, PDF)
