@@ -26,3 +26,4 @@ _backup/
 # Cấu hình Antigravity Skill nội bộ
 .agents/
 .agent/
+.frontend-slides/
