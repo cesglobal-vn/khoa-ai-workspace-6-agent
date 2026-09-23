@@ -1,4 +1,24 @@
+# Hệ điều hành & file rác hệ thống
 .DS_Store
 Thumbs.db
+desktop.ini
 ~$*
 *.tmp
+*.bak
+*.swp
+
+# Thư mục backup phiên bản cũ (Git đã tự quản lý lịch sử)
+**/_backup/
+_backup/
+*_cu.*
+*backup*
+
+# File trùng lặp / tải đúp tự động của Windows
+*_1.*
+* (1).*
+* - Copy.*
+* - Copy (*).*
+
+# Log & file môi trường cá nhân
+.claude/memory/
+*.log

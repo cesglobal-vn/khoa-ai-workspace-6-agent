@@ -44,51 +44,43 @@ khoa-ai-workspace-6-agent/
 │   ├── workbook-buoi-01.md                       # Sổ tay thực hành học viên
 │   ├── slide-buoi-01.md                          # Slide bài giảng
 │   ├── slide-pptx/                               # Hình ảnh slide bài giảng (s01 - s12)
-│   ├── demo/                                     # File demo thực hành Buổi 1 (biên bản họp, dự án mẫu)
-│   └── _backup/                                  # Bản thảo cũ lưu trữ an toàn
+│   └── demo/                                     # File demo thực hành Buổi 1 (biên bản họp, dự án mẫu)
 │
 ├── 02-buoi-02-quan-ly-tai-lieu-chong-bia-so/     # TRỌN GÓI BUỔI 02
 │   ├── giao-an-buoi-02.md                        # Giáo án đứng lớp
 │   ├── workbook-buoi-02.md                       # Sổ tay thực hành (.md)
 │   ├── workbook-buoi-02.docx                     # Sổ tay thực hành (.docx)
-│   ├── demo/                                     # File demo Buổi 2 (báo cáo mẫu, hợp đồng, logo, brand)
-│   └── _backup/
+│   └── demo/                                     # File demo Buổi 2 (báo cáo mẫu, hợp đồng, logo, brand)
 │
 ├── 03-buoi-03-phan-tich-du-lieu-mcp-routine/     # TRỌN GÓI BUỔI 03
 │   ├── giao-an-buoi-03.md                        # Giáo án đứng lớp
-│   ├── demo/                                     # File demo Buổi 3 (CSV doanh thu, đơn hàng, phòng KD mẫu)
-│   └── _backup/
+│   └── demo/                                     # File demo Buổi 3 (CSV doanh thu, đơn hàng, phòng KD mẫu)
 │
 ├── 04-buoi-04-lap-bao-cao-va-slide/              # TRỌN GÓI BUỔI 04
 │   ├── giao-an-buoi-04.md                        # Giáo án đứng lớp
-│   ├── demo/                                     # File demo Buổi 4 (số liệu bán hàng, yêu cầu nghiên cứu)
-│   └── _backup/
+│   └── demo/                                     # File demo Buổi 4 (số liệu bán hàng, yêu cầu nghiên cứu)
 │
 ├── 05-buoi-05-deep-research-va-doi-ngu/          # TRỌN GÓI BUỔI 05
 │   ├── giao-an-buoi-05.md                        # Giáo án đứng lớp
 │   ├── slide-buoi-05.md                          # Slide bài giảng
 │   ├── bo-4-agent-va-monitor/                    # Bộ 4 agent chuyên môn & monitor
-│   ├── demo/                                     # File demo Buổi 5 (dự án ra mắt, Excel, Word, PDF)
-│   └── _backup/
+│   └── demo/                                     # File demo Buổi 5 (dự án ra mắt, Excel, Word, PDF)
 │
 ├── 06-buoi-06-multi-agent-capstone/              # TRỌN GÓI BUỔI 06
 │   ├── giao-an-buoi-06.md                        # Giáo án đứng lớp
-│   ├── demo/                                     # File đề bài Capstone thực tế
-│   └── _backup/
+│   └── demo/                                     # File đề bài Capstone thực tế
 │
-├── 07-mau-cau-hinh-linh-kien/                    # KHO MẪU LINH KIỆN TÁI SỬ DỤNG
-│   ├── CLAUDE-md-chuan-doanh-nghiep.md           # Mẫu CLAUDE.md chuẩn doanh nghiệp kế thừa chuẩn GEMINI
-│   ├── claude-md-mau.md                          # Mẫu CLAUDE.md cơ bản
-│   ├── claude-md-profile-va-cau-truc-phong-ban.md
-│   ├── skill-tom-tat-tai-lieu.md                 # Mẫu Skill chuẩn
-│   ├── mcp-cau-hinh-mau.md                       # Mẫu cấu hình MCP & cấp quyền
-│   ├── agent-report-mau.md                       # Mẫu Agent Report
-│   ├── agent-research-mau.md                     # Mẫu Agent Research
-│   ├── agent-team-mau.md                         # Mẫu Agent Team phối hợp
-│   ├── github-mcp-va-token.md                    # Mẫu tích hợp GitHub MCP
-│   └── template-bao-cao-agent.md                 # Mẫu báo cáo đầu ra của Agent
-│
-└── _backup/                                      # Kho lưu trữ các phiên bản tiền nhiệm
+└── 07-mau-cau-hinh-linh-kien/                    # KHO MẪU LINH KIỆN TÁI SỬ DỤNG
+    ├── CLAUDE-md-chuan-doanh-nghiep.md           # Mẫu CLAUDE.md chuẩn doanh nghiệp kế thừa chuẩn GEMINI
+    ├── claude-md-mau.md                          # Mẫu CLAUDE.md cơ bản
+    ├── claude-md-profile-va-cau-truc-phong-ban.md
+    ├── skill-tom-tat-tai-lieu.md                 # Mẫu Skill chuẩn
+    ├── mcp-cau-hinh-mau.md                       # Mẫu cấu hình MCP & cấp quyền
+    ├── agent-report-mau.md                       # Mẫu Agent Report
+    ├── agent-research-mau.md                     # Mẫu Agent Research
+    ├── agent-team-mau.md                         # Mẫu Agent Team phối hợp
+    ├── github-mcp-va-token.md                    # Mẫu tích hợp GitHub MCP
+    └── template-bao-cao-agent.md                 # Mẫu báo cáo đầu ra của Agent
 ```
 
 ## Cách dùng bộ tài liệu này (Mô hình Trọn gói theo Buổi)
