@@ -22,3 +22,7 @@ _backup/
 # Log & file môi trường cá nhân
 .claude/memory/
 *.log
+
+# Cấu hình Antigravity Skill nội bộ
+.agents/
+.agent/
