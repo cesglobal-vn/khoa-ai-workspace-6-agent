@@ -1,7 +1,7 @@
-# Nội dung slide Buổi 06: Thuê Ê-kíp Media — Một Câu Lệnh Ra Video Trailer Quảng Cáo
+# Nội dung slide Buổi 06: Toàn Cảnh Hệ Sinh Thái Claude, Vòng Lặp Tự Phản Biện & Thuê Ê-kíp Media
 
 > Dùng cho GV trình chiếu và giảng dạy. Phong cách CES: Nền tối công nghệ cao hoặc nền sáng doanh nghiệp, chữ to rõ, bám sát từng bước thao tác và prompt thực tế.
-> Mỗi `---` tương ứng với 1 slide. Tổng cộng: 22 slide chuẩn nhịp 150 phút.
+> Mỗi `---` tương ứng với 1 slide. Tổng cộng: 26 slide chuẩn nhịp 150 phút.
 
 ---
 
@@ -9,75 +9,184 @@
 
 **KHÓA AI WORKSPACE: LÀM CHỦ AGENT VỚI CLAUDE CODE**
 
-### Buổi 06: Thuê Ê-kíp Media — Một Câu Lệnh Ra Video Trailer Quảng Cáo
+### Buổi 06: Toàn Cảnh Hệ Sinh Thái Claude, Vòng Lặp Tự Phản Biện & Thuê Ê-kíp Media
 
 CES Global | Trung tâm Đào tạo & Ứng dụng Công nghệ  
 *Website: nhanvienai.cesglobal.com.vn*
 
-[Ghi chú GV: Buổi đúc kết bùng nổ cuối khóa. Nối tiếp hình tượng "Công ty thu nhỏ" từ Buổi 5: Công ty thuê hẳn một ê-kíp sản xuất video trailer quảng cáo chuyên nghiệp.]
+[Ghi chú GV: Buổi đúc kết đỉnh cao. Giúp học viên định vị rõ bức tranh AI Workspace và trang bị 2 vũ khí tối tân: Vòng lặp tự phản biện và Ê-kíp media tự động.]
 
 ---
 
-## Slide 2: Xương sống buổi học hôm nay (150 phút)
+## Slide 2: Khung chương trình Buổi 06 (150 phút)
 
-| Phần | Nội dung | Học viên cầm được |
+| Phần | Nội dung | Trọng tâm học viên cầm được |
 |---|---|---|
-| **A** | Thuê ê-kíp về công ty | 5 sản phẩm mẫu + Bản kế hoạch trước khi có skill + Đã cài skill |
-| **B** | Một câu lệnh ra một video | Video đầu tiên + Bảng so sánh trước & sau |
-| **C** | Đạo diễn bằng lời | Video đổi tông (deadpan) + Video bản dọc TikTok |
-| **D** | Sửa một cảnh | Video đã sửa cảnh mở đầu + 3 caption tiếng Việt |
-| **E** | Sản phẩm thật & Giới hạn | Video trailer cho website của chính mình |
+| **A** | Toàn cảnh Hệ sinh thái Claude (25') | 4 cấp độ dùng Claude + Rà soát bộ não 4 tầng |
+| **B** | Vũ khí 1: Vòng lặp Maker – Checker (40') | Trưởng phòng thẩm định + Tự sửa sai từ 7/10 lên 9.5/10 |
+| | *Giải lao (10')* | *Hỗ trợ kỹ thuật* |
+| **C** | Vũ khí 2: Thuê ê-kíp Media làm trailer (50') | Skill `/brag` + Video `.mp4` + Bản dọc TikTok + Caption |
+| **D** | Lộ trình Doanh nghiệp & Tổng kết (25') | 3 nguyên tắc vàng đóng gói + Bảng prompt tra nhanh |
 
 ---
 
-## Slide 3: Phần A — Thuê ê-kíp về công ty
+## Slide 3: Phần A — Toàn cảnh 4 cấp độ dùng Claude
+
+Nhiều người dùng AI cả năm vẫn chỉ "hỏi một câu - đáp một câu". Đâu là sự khác biệt?
+
+1. **Cấp độ 1: Claude Web / App** — Nhắn tin với cộng tác viên online.
+2. **Cấp độ 2: Claude Projects (Web)** — Tủ tài liệu dùng chung tĩnh.
+3. **Cấp độ 3: Claude Desktop + MCP** — Trợ lý máy tính có công cụ nối dài.
+4. **Cấp độ 4: Claude Code / AI Workspace** — Giám đốc điều hành văn phòng AI tự động.
+
+---
+
+## Slide 4: So sánh Cấp độ 1, 2, 3 vs Cấp độ 4 (AI Workspace)
+
+| Tiêu chí | Cấp 1, 2 (Web/Projects) | Cấp 3 (Desktop + MCP) | Cấp 4: Claude Code (AI Workspace) |
+|---|---|---|---|
+| **Quyền can thiệp file** | Không | Giới hạn | **Toàn quyền đọc, tạo, sửa file** |
+| **Lưu trữ ngữ cảnh** | Tạm thời / Tĩnh | Từng phiên chat | **Lưu vĩnh viễn trong CLAUDE.md** |
+| **Phân quyền nhân sự** | Không | Không | **Chia phòng riêng, chìa khóa riêng** |
+| **Vận hành quy trình** | Thủ công từng câu | Bán tự động | **Khép kín từ đầu đến cuối** |
+
+---
+
+## Slide 5: Xâu chuỗi "Bộ não 4 tầng" của AI Workspace
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ 1. NỘI QUY & VĂN HÓA (CLAUDE.md)                            │
+│    -> Giữ AI luôn đúng vai, chuẩn xưng hô, cấm bịa số       │
+├─────────────────────────────────────────────────────────────┤
+│ 2. QUY TRÌNH THAO TÁC CHUẨN - SOP (Skills)                  │
+│    -> Các công thức lặp lại: Tóm tắt văn bản, làm slide     │
+├─────────────────────────────────────────────────────────────┤
+│ 3. CÁNH TAY NỐI DÀI NGOẠI VI (MCP)                          │
+│    -> Chạm ra ngoài máy tính: Google Drive, Gmail...        │
+├─────────────────────────────────────────────────────────────┤
+│ 4. BIÊN CHẾ NHÂN SỰ CHUYÊN BIỆT (Agents & Subagents)        │
+│    -> Nhân viên có phòng riêng, chìa khóa riêng             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Slide 6: Thao tác — Kiểm tra "Túi đồ nghề"
+
+Học viên mở Claude Code và gõ lệnh rà soát toàn bộ tài sản:
+
+```text
+Liệt kê ngắn gọn giúp tôi:
+1. File CLAUDE.md đang có những quy tắc chính nào?
+2. Thư mục .claude/skills/ đang có những skill gì?
+3. Thư mục .claude/agents/ đang có những agent nào?
+```
+
+*Kết quả: Thấy trọn vẹn gia tài AI đã tích lũy sau 5 buổi học.*
+
+---
+
+## Slide 7: Phần B — Vũ khí 1: Vòng lặp Maker – Checker
+
+- Ở **Buổi 5**, chúng ta đã cho 2 nhân viên phối hợp **Nối chuỗi tuần tự**:
+  - `nghien-cuu-doi-thu` bàn giao số liệu $\rightarrow$ `chuyen-vien-de-xuat` viết phương án.
+- **Nỗi đau thực tế công sở:**
+  - Bản thảo đầu tiên thường chỉ đạt mức **7/10 điểm**.
+  - Văn phong còn lan man, số liệu chưa đủ chứng minh, thiếu phương án rủi ro.
+- **Giải pháp:** Cặp đôi **Maker – Checker** (Chuyên viên soạn – Trưởng phòng soi).
+
+---
+
+## Slide 8: Bước B1 — Tuyển Trưởng phòng thẩm định
+
+Gõ lệnh tuyển nhân sự biên chế (chỉ có quyền đọc file, không sửa):
+
+```text
+Tạo cho tôi một agent mới tại đường dẫn: ".claude/agents/truong-phong-tham-dinh.md" ngay trong thư mục này.
+
+Chỉ cấp cho trợ lý này công cụ đọc và tìm kiếm file trong máy. Tuyệt đối KHÔNG cấp công cụ chỉnh sửa hay tạo file mới.
+
+Nhiệm vụ của Trưởng phòng thẩm định:
+1. Đóng vai một Trưởng phòng chiến lược dày dạn kinh nghiệm, cực kỳ khó tính và khắt khe.
+2. Khi nhận được một bản kế hoạch hoặc báo cáo từ chuyên viên, hãy soi lỗi dựa trên 3 tiêu chí:
+   - Tính xác thực của số liệu: Mọi con số đều phải trích dẫn rõ nguồn, không được nhận định chung chung.
+   - Tính thực tế và rủi ro: Kế hoạch có tính đến ngân sách, đối thủ và điểm nghẽn thực thi chưa?
+   - Văn phong công sở: Gọn gàng, khúc chiết, không dùng từ sáo rỗng, không biểu cảm thừa.
+3. Luôn đưa ra nhận xét theo format:
+   - Điểm đạt yêu cầu.
+   - Điểm chưa đạt (nêu rõ tối đa 3 điểm yếu cần sửa gấp).
+   - Yêu cầu sửa đổi cụ thể cho chuyên viên.
+```
+
+---
+
+## Slide 9: Bước B2 — Kích hoạt Vòng lặp phản biện
+
+Gõ lệnh điều phối dây chuyền tự động:
+
+```text
+Hãy thực hiện quy trình tự phản biện 2 vòng giữa chuyen-vien-de-xuat và truong-phong-tham-dinh:
+
+Vòng 1:
+- Nhờ chuyen-vien-de-xuat đọc dữ liệu nghiên cứu sẵn có và soạn một bản Đề xuất chiến lược ra mắt sản phẩm mới, lưu bản nháp vào file "ket-qua/ban-nhap-de-xuat.md".
+
+Vòng 2:
+- Nhờ truong-phong-tham-dinh đọc file "ket-qua/ban-nhap-de-xuat.md", đưa ra bản thẩm định khắt khe và chỉ ra các điểm cần sửa, lưu vào file "ket-qua/bien-ban-tham-dinh.md".
+
+Vòng 3 (Chốt bản cuối):
+- Nhờ chuyen-vien-de-xuat đọc kỹ "ket-qua/bien-ban-tham-dinh.md", tiếp thu toàn bộ góp ý của Trưởng phòng để chỉnh sửa và xuất bản hoàn chỉnh vào file "ket-qua/de-xuat-hoan-thien.md".
+```
+
+---
+
+## Slide 10: Bước B3 — Đối chiếu chất lượng
+
+Gõ câu lệnh so sánh kết quả:
+
+```text
+Hãy tóm tắt và chỉ ra 3 điểm khác biệt lớn nhất giữa bản nháp đầu tiên ("ket-qua/ban-nhap-de-xuat.md") và bản đã hoàn thiện sau phản biện ("ket-qua/de-xuat-hoan-thien.md").
+```
+
+*Bạn sẽ thấy: Bản hoàn thiện có số liệu minh chứng rõ ràng, không còn câu từ mơ hồ, đạt điểm 9.5/10.*
+
+---
+
+## Slide 11: Phần C — Vũ khí 2: Thuê Ê-kíp Media Ngoại Viện
+
+> **Ví von xuyên suốt:** Sau khi chiến lược xong, công ty thuê ê-kíp làm trailer quảng cáo ra mắt sản phẩm!
 
 ### Skill làm video là gì, vì sao cần?
-
-- **Skill là quyển công thức** (đã học từ Buổi 2).
-- `/brag` là quyển công thức của cả một **ê-kíp làm trailer**:
-  - Biên kịch kịch bản phân cảnh.
-  - Họa sĩ dựng hình chuyển động.
-  - Nhạc sĩ hòa âm phối khí.
-  - Chuyên viên viết caption mạng xã hội.
+- **Skill là quyển công thức** (buổi 2).
+- `/brag` là quyển công thức của cả một **ê-kíp làm trailer**: biên kịch, dựng hình, làm nhạc, viết caption.
 - Không có skill, Claude vẫn viết được kịch bản, nhưng chung chung, sản phẩm nào cũng như nhau!
 
 ---
 
-## Slide 4: Hai nguyên tắc bảo vệ công ty
+## Slide 12: Hai nguyên tắc bảo vệ công ty khi thuê ê-kíp
 
 1. **Cài cấp thư mục dự án:**  
-   - Ê-kíp chỉ làm việc trong văn phòng này, không tự ý chạy sang máy khác hay thư mục khác.
+   - Ê-kíp chỉ làm việc trong văn phòng này, không theo sang máy khác.
 2. **Kiểm tra lý lịch trước khi cho vào cửa:**  
-   - Trước khi cài skill lạ từ bên ngoài, luôn bắt Claude đọc và báo cáo trước (chống bẫy câu lệnh ẩn *Prompt Injection* từ Buổi 5).
+   - Bắt Claude đọc và báo cáo skill trước khi cài đặt (chống bẫy câu lệnh ẩn từ Buổi 5).
 
 ---
 
-## Slide 5: Bước 1 — Lấy 5 sản phẩm mẫu
+## Slide 13: Bước C1 & C2 — Lấy mẫu & Thử làm khi chưa có skill
 
-Gõ câu lệnh vào Claude Code để tải kho tư liệu:
-
+**Bước 1: Lấy 5 sản phẩm mẫu:**
 ```text
 Tải giúp tôi thư mục "examples" từ repo https://github.com/latent-spaces/brag về máy, đặt vào thư mục "san-pham-mau" ngay trong thư mục làm việc này. Chỉ lấy đúng thư mục examples, không lấy phần còn lại của repo. Xong thì liệt kê 5 sản phẩm mẫu có trong đó, mỗi cái một câu mô tả bằng tiếng Việt.
 ```
 
-*Bạn sẽ thấy: 5 sản phẩm mẫu độc lạ (xe đạp cho rắn, app hẹn hò cho ngựa horse-tinder, trường dạy bay cho cá...).*
-
----
-
-## Slide 6: Bước 2 — Thử làm khi chưa có ê-kíp
-
-Thử thách nhờ Claude viết kịch bản chay:
-
+**Bước 2: Thử làm khi chưa có ê-kíp:**
 ```text
 Đọc trang sản phẩm trong thư mục "san-pham-mau/horse-tinder" rồi viết cho tôi kế hoạch một video giới thiệu dài 20 giây: chia cảnh, chữ hiện trên màn hình, thời lượng từng cảnh. Chỉ viết kế hoạch, lưu vào file "ke-hoach-truoc-khi-co-skill.md", chưa dựng video.
 ```
 
-*Bạn sẽ thấy: Một kế hoạch đọc được nhưng an toàn, thiếu năng lượng và ít dùng từ ngữ của chính sản phẩm.*
-
 ---
 
-## Slide 7: Bước 3 — Cài skill ê-kíp làm trailer
+## Slide 14: Bước C3 — Cài skill ê-kíp làm trailer
 
 Cài đặt 2 skill `brag` và `brag-slim`:
 
@@ -85,167 +194,131 @@ Cài đặt 2 skill `brag` và `brag-slim`:
 Cài cho tôi skill từ repo https://github.com/latent-spaces/brag vào thư mục ".claude/skills" ngay trong thư mục làm việc này, cài cấp thư mục, không cài toàn máy. Lấy cả hai skill "brag" và "brag-slim". Chép file thật, không dùng symlink. Trước khi cài, đọc file SKILL.md của cả hai và báo cho tôi skill này sẽ làm những gì trên máy tôi.
 ```
 
-*Bạn sẽ thấy: Thư mục `.claude/skills/brag` và `.claude/skills/brag-slim` xuất hiện an toàn.*
+*Bạn sẽ thấy: Claude tóm tắt skill rồi tạo `.claude/skills/brag` và `.claude/skills/brag-slim`.*
 
 ---
 
-## Slide 8: Phần B — Một câu lệnh ra một video
+## Slide 15: "Luật sáng tạo" của Skill & 4 thứ nhận về
 
-### Ê-kíp vận hành thế nào sau 1 câu lệnh?
-
-1. **Khảo sát:** Đọc sâu toàn bộ trang sản phẩm hoặc website.
-2. **Biên kịch:** Viết kịch bản phân cảnh chi tiết từng giây (`brag-plan.md`).
-3. **Dựng hình & Render:** Tạo chuyển động, nhịp điệu và xuất video (`brag.mp4`).
-4. **Viết caption:** Soạn sẵn thông điệp truyền thông (`share-copy.txt`).
-
----
-
-## Slide 9: "Luật sáng tạo" của Skill
-
-- **Thời lượng vàng:** Video ngắn từ 15 đến 25 giây.
-- **2 giây đầu quyết định tất cả:** Phải có "visual hook" đập ngay vào mắt người xem.
-- **Hiện thực sống động:** Phải cho thấy sản phẩm thật đang chạy, cấm tuyệt đối các câu khẩu hiệu chung chung!
-- *Lưu ý: Quá trình dựng mất vài phút và tốn token.*
+- **Bốn thứ nhận về trong `brag-output/`:**
+  1. `brag-plan.md`: kịch bản phân cảnh.
+  2. `brag.mp4`: video trailer hoàn chỉnh.
+  3. `brag.jpg`: ảnh bìa đại diện.
+  4. `share-copy.txt`: caption mạng xã hội.
+- **Luật sáng tạo:** Video ngắn 15–25 giây, 2 giây đầu quyết định tất cả, phải thấy sản phẩm thật, cấm câu chung chung.
 
 ---
 
-## Slide 10: Bước 4 — Xuất video đầu tiên
+## Slide 16: Bước C4 — Xuất video đầu tiên với 1 câu lệnh
 
-Gõ 1 câu lệnh duy nhất:
+Gõ câu lệnh vào Claude Code:
 
 ```text
 /brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder"
 ```
 
-*Bạn sẽ thấy: Claude chuyển sang dùng bản gọn `/brag-slim`, tự động viết kịch bản, dựng hình và thông báo đường dẫn file `brag.mp4` trong thư mục `brag-output/`.*
+*Bạn sẽ thấy: Claude dùng bản gọn `/brag-slim`, viết kịch bản, dựng hình và thông báo đường dẫn file `brag.mp4`.*
 
 ---
 
-## Slide 11: Bước 5 — So sánh Trước và Sau
+## Slide 17: Bước C5 — So sánh trước và sau khi có skill
 
-Đối chiếu sự khác biệt giữa "làm chay" và "có Skill ê-kíp":
+So sánh chất lượng kịch bản:
 
 ```text
 So sánh hai file "ke-hoach-truoc-khi-co-skill.md" và file "brag-plan.md" trong thư mục kết quả vừa tạo. Chỉ ra 3 điểm khác nhau lớn nhất: cách mở đầu, cách dùng chữ của chính sản phẩm, độ dài từng cảnh. Trả lời ngắn, dạng bảng.
 ```
 
-*Bạn sẽ thấy: Bảng đối chiếu 3 dòng rõ rệt. Mở thêm video `brag.mp4` của tác giả để chiêm ngưỡng.*
+*Bạn sẽ thấy: Bảng đối chiếu 3 dòng rõ rệt. Mở thêm video `brag.mp4` của tác giả để đối chiếu.*
 
 ---
 
-## Slide 12: Phần C — Đạo diễn bằng lời
+## Slide 18: Đạo diễn bằng lời: Tông & Khổ hình
 
-### Cùng một sản phẩm, đổi đạo diễn là ra phim khác!
-
-- **7 phong cách tông có sẵn:**
-  - `default` (tiêu chuẩn), `polished` (mượt mà, chỉn chu)
-  - `yc-parody` (phong cách startup Thung lũng Silicon)
-  - `chaotic` (hỗn loạn, dồn dập, giật gân)
-  - `deadpan` (mặt lạnh, nghiêm túc hài hước)
-  - `cinematic` (điện ảnh, kịch tính)
-  - `app-store` (tươi sáng phong cách kho ứng dụng)
-- **Đa dạng khổ hình:** Ngang (màn hình máy tính), Dọc (TikTok/Reels), Vuông (Instagram).
+- **7 phong cách tông có sẵn:** `default`, `polished`, `yc-parody`, `chaotic`, `deadpan`, `cinematic`, `app-store`.
+- **Khổ hình:** Ngang (mặc định), Dọc (TikTok/Reels), Vuông.
+- Chạy lần hai không ghi đè: Tự động lưu thư mục mới có ngày giờ.
 
 ---
 
-## Slide 13: Bước 6 — Đổi tông (Deadpan / Mặt lạnh)
+## Slide 19: Bước C6 & C7 — Đổi tông & Làm bản dọc TikTok
 
-Yêu cầu ê-kíp đổi phong cách diễn xuất:
-
+**Bước 6: Đổi tông mặt lạnh (deadpan):**
 ```text
 /brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder", lần này dùng tông deadpan: mặt lạnh, khô khan, coi như không có gì buồn cười.
 ```
 
-*Bạn sẽ thấy: Thư mục kết quả mới có ngày giờ. Video nhịp chậm hơn, ít cảnh hơn, tạo cảm giác hài hước ngầm.*
-
----
-
-## Slide 14: Bước 7 — Dựng bản dọc cho TikTok & Reels
-
-Ra lệnh làm định dạng video dọc 1080x1920:
-
+**Bước 7: Làm bản dọc TikTok & Reels (1080x1920):**
 ```text
 /brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder", làm bản dọc để đăng TikTok và Reels, dài khoảng 18 giây.
 ```
 
-*Bạn sẽ thấy: Video xuất ra định dạng dọc 1080x1920, giao diện và hiệu ứng bố cục lại hoàn toàn phù hợp màn hình điện thoại.*
-
 ---
 
-## Slide 15: Phần D — Sửa một cảnh, không quay lại từ đầu
+## Slide 20: Bước C8 — Sửa một cảnh, không quay lại từ đầu
 
-### Tư duy chỉ đạo đạo diễn chuyên nghiệp
-
-- Không ưng một chi tiết? **Chỉ yêu cầu quay lại cảnh đó**, không bắt làm lại từ đầu cả bộ phim.
-- **Nguyên tắc góp ý:** Nêu rõ cảnh nào $\rightarrow$ chưa được ở đâu $\rightarrow$ muốn sửa thế nào.
-- **Caption đa kênh:** Dịch và bản địa hóa tiếng Việt theo đúng ngữ cảnh từng nền tảng, không tự bịa đặt tính năng.
-
----
-
-## Slide 16: Bước 8 — Sửa cảnh mở đầu
-
-Chỉ đạo sửa riêng đoạn mở đầu:
+Không ưng một chi tiết? Chỉ bảo ê-kíp quay lại đúng cảnh đó:
 
 ```text
 Trong video vừa làm, cảnh mở đầu chưa đủ gây chú ý. Làm lại riêng cảnh mở đầu cho mạnh hơn, các cảnh còn lại giữ nguyên. Xong thì xuất lại video và nói cho tôi biết bạn đã đổi gì.
 ```
 
-*Bạn sẽ thấy: Video mới xuất xưởng chỉ thay đổi phân cảnh đầu tiên, kèm lời báo cáo chi tiết.*
+*Bạn sẽ thấy: Video mới chỉ khác phần đầu, kèm vài dòng giải thích.*
 
 ---
 
-## Slide 17: Bước 9 — Viết 3 caption tiếng Việt đa kênh
+## Slide 21: Bước C9 — Việt hóa 3 caption đa kênh
 
-Yêu cầu ê-kíp viết bài đăng mạng xã hội:
+Viết bài đăng theo văn phong từng nền tảng:
 
 ```text
 Đọc file "share-copy.txt" trong thư mục kết quả rồi viết lại thành 3 phiên bản tiếng Việt: một cho Facebook, một cho LinkedIn, một cho nhóm Zalo khách hàng. Giữ đúng tinh thần bản gốc, không thêm số liệu hay lời khen nào không có trên trang sản phẩm.
 ```
 
-*Bạn sẽ thấy: 3 bài đăng chuẩn văn phong: Facebook trẻ trung, LinkedIn chuyên nghiệp, Zalo ngắn gọn súc tích.*
+*Bạn sẽ thấy: 3 caption chuẩn giọng: Facebook sôi nổi, LinkedIn phân tích, Zalo súc tích.*
 
 ---
 
-## Slide 18: Phần E — Áp vào sản phẩm thật & Giới hạn
+## Slide 22: Bước C10 — Video cho website của bạn
 
-### Giới hạn cần nói thẳng (Minh bạch)
-
-1. **Chất lượng đầu vào quyết định đầu ra:** Video lấy chữ và hình từ trang web của bạn; trang sơ sài thì video sơ sài.
-2. **An toàn dữ liệu:** Mọi thứ trong thư mục đều có thể lên hình, vì vậy **tuyệt đối không chạy trên thư mục chứa dữ liệu mật hoặc danh sách khách hàng**.
-3. **Bản đầy đủ (`/brag --full`):** Có thêm lồng tiếng AI và nhạc đồng bộ nhịp nhưng cần công cụ chuyên biệt (Hyperframes).
-
----
-
-## Slide 19: Bước 10 — Video cho website của bạn
-
-Thực hành trên chính doanh nghiệp của học viên:
+Thực hành trên chính website thực tế của học viên:
 
 ```text
 /brag https://[dán địa chỉ website của bạn vào đây], tập trung vào [dán tên sản phẩm hoặc dịch vụ bạn muốn khoe nhất vào đây]. Chỉ dùng chữ và số liệu có thật trên trang, không bịa thêm lời chứng thực hay con số.
 ```
 
-*Bạn sẽ thấy: Video trailer dùng đúng màu sắc nhận diện thương hiệu, phông chữ và thông điệp thực tế của website bạn!*
+*Lưu ý: Video lấy chữ từ trang của bạn, trang sơ sài thì video sơ sài. Tuyệt đối không chạy trên thư mục chứa dữ liệu mật.*
 
 ---
 
-## Slide 20: Bảng tổng kết 10 Bước Tác Chiến
+## Slide 23: Phần D — 3 Nguyên tắc vàng tại Doanh nghiệp
 
-| # | Thao tác chính | Lệnh tóm tắt |
+1. **"5 lần làm tay rồi mới đóng gói":**  
+   Đừng vội tạo agent/skill cho việc mới làm lần đầu. Thấy rõ khuôn mẫu rồi mới đóng gói.
+2. **"Chia phòng riêng cho việc nặng":**  
+   Đọc tài liệu dài, tra cứu web, dựng video $\rightarrow$ giao Subagent phụ ở phòng riêng. Bàn làm việc chính luôn sạch sẽ.
+3. **"Bắt buộc có khâu kiểm duyệt":**  
+   Tài liệu quan trọng luôn áp dụng mô hình **Maker – Checker** trước khi người thật duyệt.
+
+---
+
+## Slide 24: Bảng Prompt tra nhanh Buổi 06
+
+| Phần | Mục đích | Lệnh tóm tắt |
 |---|---|---|
-| 1 | Lấy mẫu | Tải thư mục examples về `san-pham-mau` |
-| 2 | Làm chay | Viết kế hoạch khi chưa có skill |
-| 3 | Cài skill | Cài `brag` & `brag-slim` vào `.claude/skills` |
-| 4 | Dựng video 1 | `/brag cho sản phẩm trong san-pham-mau/horse-tinder` |
-| 5 | So sánh | So `ke-hoach-truoc-khi-co-skill.md` vs `brag-plan.md` |
-| 6 | Đổi tông | Thêm tham số tông `deadpan` |
-| 7 | Bản dọc | Thêm tham số `bản dọc TikTok 18 giây` |
-| 8 | Sửa cảnh | Yêu cầu sửa riêng cảnh mở đầu |
-| 9 | Viết caption | Việt hóa 3 caption Facebook, LinkedIn, Zalo |
-| 10 | Làm việc thật | `/brag https://[website-cua-ban]` |
+| **A** | Kiểm tra đồ nghề | `Liệt kê ngắn gọn CLAUDE.md, .claude/skills/, .claude/agents/` |
+| **B** | Tuyển Trưởng phòng | `Tạo agent truong-phong-tham-dinh.md chỉ đọc, soi lỗi số liệu...` |
+| **B** | Chạy phản biện | `chuyen-vien-de-xuat soạn -> truong-phong soi -> chuyên viên sửa` |
+| **C** | Cài skill video | `Cài skill brag và brag-slim từ repo...` |
+| **C** | Dựng video | `/brag cho sản phẩm trong san-pham-mau/horse-tinder` |
+| **C** | Đổi tông / Bản dọc | Thêm tham số `tông deadpan` hoặc `bản dọc TikTok 18s` |
+| **C** | Sửa 1 cảnh | `Làm lại riêng cảnh mở đầu cho mạnh hơn...` |
+| **C** | Caption tiếng Việt | `Đọc share-copy.txt viết 3 bản Facebook, LinkedIn, Zalo` |
+| **C** | Video website thật | `/brag https://[website-cua-ban]` |
 
 ---
 
-## Slide 21: Bức tranh toàn cảnh 6 Buổi học
+## Slide 25: Bức tranh toàn cảnh 6 Buổi học
 
 ```text
 Buổi 1: Khởi động AI Workspace & Cài đặt Skill đầu tiên
@@ -253,12 +326,12 @@ Buổi 2: Đóng gói Skill nghiệp vụ & Kỷ luật Chống bịa số
 Buổi 3: Phân tích Dữ liệu, Kết nối MCP & Đặt lịch Routine
 Buổi 4: Soạn thảo Đa phương tiện & Điều phối Subagent
 Buổi 5: Agent Deep Research & Đội ngũ Nối chuỗi / Song song
-Buổi 6: Thuê Ê-kíp Media tự động sản xuất Video Trailer
+Buổi 6: Toàn Cảnh AI Workspace, Vòng Lặp Tự Phản Biện & Thuê Ê-kíp Media
 ```
 
 ---
 
-## Slide 22: Lời kết khóa học — Trở thành Chỉ huy Trưởng AI
+## Slide 26: Lời kết khóa học — Trở thành Chỉ huy Trưởng AI
 
 > **"Bạn không còn là người gõ từng dòng lệnh đơn lẻ.**  
 > **Bạn đã trở thành Giám đốc điều hành của một Văn phòng AI thu nhỏ: từ Nghiên cứu, Chiến lược, Soạn thảo, Thẩm định cho tới Sản xuất Truyền thông!"**
