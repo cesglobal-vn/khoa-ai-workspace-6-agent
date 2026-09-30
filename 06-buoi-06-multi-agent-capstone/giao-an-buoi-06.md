@@ -1,235 +1,211 @@
-﻿# Outline Buổi 06 (buổi cuối): Capstone, ghép tất cả thành một quy trình công việc thật
+# Buổi 06: Thuê Ê-kíp Media — Một Câu Lệnh Ra Video Trailer Quảng Cáo
 
-> Buổi cuối. Không dạy khái niệm mới. Học viên ghép mọi thứ đã học thành một quy trình đầu-cuối, chạy, rồi trình bày.
-> Bản cũ buoi-06-capstone.md có vài chỗ lệch với thực tế đã dạy, bản này thay thế.
-
-## Thông tin buổi
-- **Buổi:** 06 / 6 (buổi cuối)
-- **Loại:** Capstone
-- **Mục tiêu:** mỗi học viên có một quy trình công việc thật chạy được đầu-cuối, ghép nhiều thứ đã học
-- **Thời lượng:** 150 phút
-
----
-
-## PHẦN NỀN: cả khóa đã cho học viên những gì
-
-Chiếu bảng này đầu buổi để lớp thấy trong tay mình đang có cả một bộ đồ nghề:
-
-| Buổi | Học viên có được gì |
-|---|---|
-| 1 | Skill đầu tiên, kho skill trên GitHub |
-| 2 | Biết skill sinh ra từ đâu, biết bắt agent không bịa số |
-| 3 | Hồ sơ cá nhân (CLAUDE.md), thư mục theo phòng ban, file index, MCP nối Drive và Gmail, routine chạy theo lịch |
-| 4 | MCP tạo slide, hiểu cửa sổ ngữ cảnh, biết dùng subagent cho việc nặng |
-| 5 | Lập được agent chuyên trách, cho đội agent phối hợp nối chuỗi và song song |
-
-Capstone hôm nay là **xâu tất cả những thứ trên vào một quy trình thật**.
-
-### Bộ đồ nghề, dùng cái nào cho việc gì (nhắc nhanh)
-
-| Công cụ | Dùng để |
-|---|---|
-| CLAUDE.md | Đặt quy tắc chung, để agent nhớ bạn là ai |
-| Skill | Chuẩn hóa cách làm một việc lặp lại |
-| MCP | Chạm ra ngoài máy: Drive, Gmail, tạo slide |
-| Agent | Giao hẳn một vai cho một nhân viên AI |
-| Đội agent | Nhiều agent làm chung: nối chuỗi hoặc song song |
-| Routine | Đặt lịch cho một việc tự chạy |
+> **Cách dùng file này:** Mỗi phần có hai khúc. Khúc **Giảng** đọc để hiểu mình sắp làm gì và vì sao, có ví von cho dễ nhớ. Khúc **Thao tác** là các bước có sẵn prompt bằng tiếng Việt tự nhiên, cứ copy dán vào Claude Code.
+>
+> Làm lần lượt, không nhảy cóc. Bước sau dùng kết quả bước trước.
+>
+> **Ví von xuyên suốt, nối tiếp "công ty thu nhỏ" của buổi 05:** Công ty thuê một ê-kíp làm trailer quảng cáo.
+>
+> Năm phần đi từ dễ tới khó:
+> - **Phần A:** Skill làm video là gì, vì sao cần (Bước 1–3)
+> - **Phần B:** Một câu lệnh ra một video (Bước 4–5)
+> - **Phần C:** Đạo diễn bằng lời: tông, khổ hình, độ dài (Bước 6–7)
+> - **Phần D:** Sửa một cảnh, không quay lại từ đầu (Bước 8–9)
+> - **Phần E:** Áp vào sản phẩm thật và giới hạn (Bước 10)
 
 ---
 
-## Timeline
+## Nhịp buổi học (150 phút)
 
-| Khối | Phút | Nội dung |
-|---|---|---|
-| K0 | 00:00-00:12 | Mở đầu, tổng kết cả khóa |
-| K1 | 00:12-00:35 | Capstone là gì + cách thiết kế một quy trình |
-| K2 | 00:35-01:05 | Demo GV: chạy một quy trình end-to-end mẫu |
-| Nghỉ | 01:05-01:15 | |
-| K3 | 01:15-02:00 | Học viên dựng capstone của mình |
-| K4 | 02:00-02:22 | Trình bày capstone |
-| K5 | 02:22-02:30 | Chốt khóa, chứng nhận, học tiếp |
-
-Mốc cứng: K3 là phần chính, không cắt. K2 nếu cháy thì rút gọn để dồn giờ cho K3.
-
----
-
-## K0: Mở đầu và tổng kết khóa (12 phút)
-
-**Lời dẫn GV:** "Đây là buổi cuối. Năm buổi qua mỗi buổi mình học một mảnh: skill, CLAUDE.md, MCP, agent, đội agent. Hôm nay không học thêm cái mới, mà xâu tất cả lại thành một quy trình công việc thật của anh chị, cho nó chạy một mạch, rồi mỗi người trình bày cho cả lớp xem."
-- Chiếu bảng tổng kết khóa (phần nền).
-- Nêu ba việc hôm nay: thiết kế quy trình, dựng và chạy, trình bày.
-
-**PROMPT K0 (kiểm đồ nghề còn đủ):**
-```
-Liệt kê giúp tôi: các agent trong .claude/agents, các skill trong .claude/skills, và file CLAUDE.md của tôi đang có những quy tắc gì.
-```
-Kết quả mong đợi: agent, skill, CLAUDE.md của học viên còn đủ. Ai thiếu thì trợ giảng kèm nhanh.
-
----
-
-## K1: Capstone là gì và cách thiết kế một quy trình (23 phút)
-
-### Phần 1: Capstone là gì (5 phút)
-- Chọn một việc thật anh chị làm mỗi tuần hoặc mỗi tháng, gồm nhiều bước. Dùng những thứ đã học để nó chạy gần như tự động.
-- Không cần hoành tráng. Một quy trình 3 tới 4 bước là đủ.
-
-### Phần 2: Cách thiết kế, dùng bảng (10 phút)
-Trước khi gõ lệnh, vẽ quy trình ra giấy theo bảng này:
-
-| Bước | Làm gì | Dùng công cụ nào | Đầu vào | Đầu ra |
+| Phần | Khái niệm dạy | Học viên cầm được | Thời lượng | Bước |
 |---|---|---|---|---|
-| 1 | ... | agent / skill / MCP | file nào | file hoặc kết quả gì |
-| 2 | ... | ... | kết quả bước 1 | ... |
-| 3 | ... | ... | ... | ... |
-
-- Nhấn: mỗi bước ghi rõ dùng agent nào hay skill nào, đầu vào lấy ở đâu, đầu ra lưu vào đâu.
-- Câu hỏi tự soi: bước nào nối chuỗi (chờ bước trước), bước nào có thể song song.
-
-### Phần 3: Ví dụ mẫu để lớp bắt chước (8 phút)
-Chiếu ví dụ "Gói chốt tháng phòng kinh doanh":
-
-| Bước | Làm gì | Công cụ | Đầu vào | Đầu ra |
-|---|---|---|---|---|
-| 1 | Rà khách cần nhắc thanh toán | agent-ra-soat-khach | thư mục hồ sơ khách | danh sách khách cần nhắc |
-| 2 | Soạn báo cáo tháng + email nhắc | agent-soan-bao-cao | kết quả bước 1 + số liệu tháng | báo cáo, email |
-| 3 | Tạo slide tổng kết tháng | MCP tạo slide | báo cáo bước 2 | ảnh slide |
-| 4 | Đặt lịch tự chạy đầu tháng sau | routine | cả quy trình | lịch đã đặt |
-
-Bước 1 tới 2 là nối chuỗi (bước 2 cần kết quả bước 1). Đây là mạch mẫu, học viên đổi theo nghề mình.
+| **A** | Skill làm video là gì, vì sao cần | Skill đã cài, 5 sản phẩm mẫu, một bản kế hoạch "trước khi có skill" | 30 phút | 1–3 |
+| **B** | Một câu lệnh ra một video | Video đầu tiên và bảng so sánh trước/sau | 35 phút | 4–5 |
+| | **Nghỉ giải lao** | Trợ giảng hỗ trợ học viên hoàn thiện cài skill | 10 phút | |
+| **C** | Đạo diễn bằng lời: tông, khổ hình, độ dài | Một bản video khác tông | 25 phút | 6–7 |
+| **D** | Sửa một cảnh, không quay lại từ đầu | Video đã sửa và 3 caption tiếng Việt | 25 phút | 8–9 |
+| **E** | Áp vào sản phẩm thật và giới hạn | Video cho website của chính mình | 25 phút | 10 |
 
 ---
 
-## K2: Demo GV chạy quy trình end-to-end mẫu (30 phút)
+## Phần A. Thuê ê-kíp về công ty
 
-GV chạy trọn ví dụ trên trước lớp, từng bước, để lớp thấy các mảnh ghép vào nhau.
-
-**Bước 1, PROMPT K2-1:**
-```
-Nhờ agent-ra-soat-khach đọc thư mục 03-buoi-03-phan-tich-du-lieu-mcp-routine/demo/phong-kinh-doanh-mau/01-khach-hang, chỉ ra khách cần nhắc thanh toán gấp nhất, lưu vào ket-qua/khach-can-nhac.md.
-```
-Kết quả mong đợi: file khach-can-nhac.md, chỉ ra An Phát.
-
-**Bước 2, PROMPT K2-2:**
-```
-Làm hai việc từ ket-qua/khach-can-nhac.md và file số liệu 04-buoi-04-lap-bao-cao-va-slide/demo/so-lieu-ban-hang-thang.md:
-1. Nhờ agent-soan-bao-cao soạn báo cáo bán hàng tháng 3, lưu vào ket-qua/bao-cao-thang-3.md.
-2. Nhờ agent-soan-bao-cao soạn email nhắc thanh toán gửi đúng khách trong khach-can-nhac.md, không emoji.
-```
-Kết quả mong đợi: báo cáo có nguồn số liệu (1.085 triệu, 915 triệu), email nhắc An Phát.
-
-**Bước 3, PROMPT K2-3 (nếu MCP tạo slide sẵn sàng):**
-```
-Từ ket-qua/bao-cao-thang-3.md, tạo 2 ảnh slide tổng kết tháng: một slide doanh thu, một slide các việc cần theo dõi. Nền trắng, chữ tiếng Việt có dấu, không emoji.
-```
-Kết quả mong đợi: 2 ảnh slide.
-
-**Bước 4, PROMPT K2-4 (nếu routine sẵn sàng):**
-```
-Đặt cho tôi việc chạy tự động ngày 1 hằng tháng: chạy lại quy trình rà khách và soạn báo cáo tháng, lưu vào ket-qua. Chỉ soạn và lưu, không gửi email.
-```
-Kết quả mong đợi: xác nhận đặt lịch.
-
-**Lời dẫn GV chốt demo:** "Cả lớp thấy chưa, mình vừa xâu bốn thứ đã học vào một mạch: agent rà khách, agent soạn thảo, MCP làm slide, routine đặt lịch. Đây chính là capstone. Giờ tới lượt anh chị làm cho việc của mình."
-
-> Nếu MCP slide hoặc routine chưa sẵn sàng, bỏ bước 3 và 4, quy trình vẫn trọn với 2 bước agent nối chuỗi.
+### Giảng:
+- Skill là quyển công thức (buổi 2). `/brag` là quyển công thức của một ê-kíp làm trailer: biên kịch, dựng hình, làm nhạc, viết caption.
+- Không có skill, Claude vẫn viết được kế hoạch video, nhưng chung chung, sản phẩm nào cũng dùng được. Bước 2 cho học viên tự thấy điều đó.
+- Cài cấp thư mục nghĩa là ê-kíp chỉ làm cho văn phòng này, không theo sang máy khác.
+- Trước khi cho người lạ vào công ty phải xem hồ sơ: bảo Claude đọc skill rồi báo lại trước khi cài. Ý này nối với bài "bẫy câu lệnh ẩn" của buổi 05.
 
 ---
 
-## Nghỉ giải lao (10 phút)
+### Thao tác:
+
+#### Bước 1. Lấy 5 sản phẩm mẫu (học viên tự làm)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+Tải giúp tôi thư mục "examples" từ repo https://github.com/latent-spaces/brag về máy, đặt vào thư mục "san-pham-mau" ngay trong thư mục làm việc này. Chỉ lấy đúng thư mục examples, không lấy phần còn lại của repo. Xong thì liệt kê 5 sản phẩm mẫu có trong đó, mỗi cái một câu mô tả bằng tiếng Việt.
+```
+
+**Bạn sẽ thấy:** 5 thư mục, gồm xe đạp cho rắn, trường dạy bay cho cá, app hẹn hò cho ngựa, bác sĩ tâm lý cho chatbot, taxi chở taxi.
 
 ---
 
-## K3: Học viên dựng capstone của mình (45 phút, phần chính)
+#### Bước 2. Thử làm khi chưa có ê-kíp (học viên tự làm)
 
-### Phần 1: Thiết kế (15 phút)
-Mỗi học viên chọn một quy trình thật, điền bảng thiết kế 4 cột ở K1. Trợ giảng đi soát bảng trước khi cho gõ, tránh thiết kế sai từ đầu.
-- Gợi ý theo nghề:
-  - Kinh doanh: rà khách, soạn báo giá, làm slide chào hàng.
-  - Kế toán: rà công nợ, soạn email nhắc, làm bảng tổng hợp.
-  - Nhân sự: sàng lọc hồ sơ, soạn thư mời, làm slide onboarding.
-  - Marketing: tổng hợp số liệu chiến dịch, soạn báo cáo, làm slide.
-- Mốc cứng phút 30 (của giờ): mỗi người dán bảng thiết kế vào chat Zoom.
+Gõ câu lệnh sau vào Claude Code:
 
-### Phần 2: Dựng và chạy (30 phút)
-Học viên chạy quy trình của mình từng bước, lưu kết quả ra thư mục.
-- Bắt buộc: dùng ít nhất 2 thứ đã học (ví dụ agent + đội agent, hoặc agent + MCP).
-- Trợ giảng trực breakout hỗ trợ ai tắc.
-- Ai xong sớm: thêm một bước (slide, hoặc routine).
+```text
+Đọc trang sản phẩm trong thư mục "san-pham-mau/horse-tinder" rồi viết cho tôi kế hoạch một video giới thiệu dài 20 giây: chia cảnh, chữ hiện trên màn hình, thời lượng từng cảnh. Chỉ viết kế hoạch, lưu vào file "ke-hoach-truoc-khi-co-skill.md", chưa dựng video.
+```
+
+**Bạn sẽ thấy:** Một kế hoạch đọc được nhưng an toàn, ít dùng chữ của chính sản phẩm.
 
 ---
 
-## K4: Trình bày capstone (22 phút)
+#### Bước 3. Cài skill (học viên tự làm)
 
-- Gọi 5 tới 6 học viên share màn hình 3 phút mỗi người: quy trình của tôi giải việc gì, gồm mấy bước, mỗi bước dùng gì, kết quả ra sao.
-- GV nhận xét ngắn mỗi bài theo rubric bên dưới.
-- Cả lớp học lẫn nhau, ghi lại ý hay áp được cho mình.
+Gõ câu lệnh sau vào Claude Code:
 
-### Rubric chấm capstone (chiếu lên)
+```text
+Cài cho tôi skill từ repo https://github.com/latent-spaces/brag vào thư mục ".claude/skills" ngay trong thư mục làm việc này, cài cấp thư mục, không cài toàn máy. Lấy cả hai skill "brag" và "brag-slim". Chép file thật, không dùng symlink. Trước khi cài, đọc file SKILL.md của cả hai và báo cho tôi skill này sẽ làm những gì trên máy tôi.
+```
 
-| Tiêu chí | Đạt khi |
-|---|---|
-| Chạy được đầu-cuối | Quy trình cho ra kết quả cuối cùng dùng được |
-| Ghép nhiều thứ | Dùng ít nhất 2 thứ đã học (agent, đội agent, skill, MCP, routine) |
-| Không bịa số | Kết quả có số liệu đúng nguồn, agent khai được nguồn |
-| Giải thích được | Nói được vì sao chọn agent hay skill, bước nào nối chuỗi bước nào song song |
-| Áp vào việc thật | Là quy trình dùng được ở công việc thật, không phải ví dụ suông |
-
-Đạt 4 trên 5 tiêu chí là hoàn thành capstone.
+**Bạn sẽ thấy:** Claude tóm tắt skill rồi tạo `.claude/skills/brag` và `.claude/skills/brag-slim`. Nếu gõ `/brag` chưa nhận thì mở phiên mới.
 
 ---
 
-## K5: Chốt khóa, chứng nhận, học tiếp (8 phút)
+## Phần B. Một câu lệnh ra một video
 
-**Nhìn lại cả khóa:** từ chỗ dùng AI lẻ tẻ, giờ mỗi anh chị có một workspace riêng: hồ sơ, skill, agent, đội agent, và một quy trình thật chạy được.
-
-**Cấp chứng nhận:** học viên đạt tối thiểu 5 trên 6 buổi và có capstone thì được cấp chứng nhận hoàn thành.
-
-**Học gì tiếp sau khóa:**
-- Đưa dần các việc lặp lại khác thành skill và agent.
-- Chia sẻ bộ skill và agent cho đồng nghiệp qua GitHub.
-- Mỗi tháng rà lại: quy trình nào còn làm tay nhiều thì đóng gói tiếp.
-
-**Bài về nhà cuối:** hoàn thiện capstone của mình, dùng thật một tuần, ghi lại chỗ nào cần chỉnh, gửi Zalo lớp.
+### Giảng:
+- Ê-kíp làm 4 việc theo thứ tự: khảo sát sản phẩm, viết kịch bản phân cảnh, dựng và xuất video, viết caption.
+- Bốn thứ nhận về trong `brag-output/`:
+  1. `brag-plan.md`: kịch bản.
+  2. `brag.mp4`: video.
+  3. `brag.jpg`: ảnh bìa.
+  4. `share-copy.txt`: caption.
+- **Nói thẳng:** Mỗi lần dựng mất vài phút và tốn token. Trong lúc chờ, giảng viên giảng "luật sáng tạo" của skill: video ngắn 15–25 giây, 2 giây đầu quyết định tất cả, phải cho thấy sản phẩm thật, cấm câu chung chung.
 
 ---
 
-## Bảng prompt tổng hợp (tra nhanh)
+### Thao tác:
 
-| # | Prompt tóm tắt | Khối | Kết quả mong đợi |
-|---|---|---|---|
-| K0 | Liệt kê agent, skill, CLAUDE.md đang có | K0 | Thấy đồ nghề còn đủ |
-| K2-1 | agent-ra-soat-khach rà khách, lưu file | K2 | File khách cần nhắc (An Phát) |
-| K2-2 | agent-soan-bao-cao soạn báo cáo + email | K2 | Báo cáo có nguồn, email nhắc |
-| K2-3 | Tạo 2 slide tổng kết tháng | K2 | 2 ảnh slide |
-| K2-4 | Đặt routine chạy đầu tháng | K2 | Xác nhận đặt lịch |
+#### Bước 4. Video đầu tiên (học viên tự làm, mỗi bàn một sản phẩm khác nhau)
 
-## Tình huống hay gặp và cách xử lý
+Gõ câu lệnh sau vào Claude Code:
 
-| Tình huống | Cách xử lý |
-|---|---|
-| Học viên chưa còn agent hoặc skill từ buổi trước | Trợ giảng kèm dựng lại nhanh 1 agent để có cái chạy capstone |
-| Thiết kế quy trình quá tham, nhiều bước | Cắt còn 2 tới 3 bước cốt lõi, thêm sau nếu còn giờ |
-| Bước sau chạy khi bước trước chưa xong | Nhắc nối chuỗi: xong bước 1 mới sang bước 2, chỉ rõ file trung gian |
-| Số liệu giữa các bước lệch nhau | Bắt agent khai nguồn, mở file gốc so lại |
-| MCP slide hoặc routine chưa chạy được | Bỏ hai bước đó, capstone vẫn trọn với phần agent |
-| Cháy giờ phần trình bày | Giảm còn 4 người share, số còn lại nộp file, GV nhận xét sau |
+```text
+/brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder"
+```
 
-## Ba câu kiểm hiểu cuối khóa
-1. "Kể tên các thứ bạn đã ghép trong capstone và mỗi thứ lo phần nào."
-2. "Trong quy trình của bạn, bước nào nối chuỗi, bước nào song song, vì sao?"
-3. "Việc tiếp theo bạn sẽ đóng gói thành agent hay skill là việc gì?"
-
-## Tiêu chí hoàn thành buổi và khóa
-- [ ] Có bảng thiết kế quy trình của riêng mình
-- [ ] Chạy được quy trình đầu-cuối, có kết quả cuối dùng được
-- [ ] Ghép ít nhất 2 thứ đã học
-- [ ] Trình bày được capstone, giải thích lựa chọn
-- [ ] Đạt tối thiểu 5 trên 6 buổi để nhận chứng nhận
+**Bạn sẽ thấy:** Claude báo đang dùng bản gọn `/brag-slim`, viết kịch bản, dựng hình, rồi báo đường dẫn tới `brag.mp4`.
 
 ---
 
-## Câu chưa rõ, cần anh chốt trước khi giãn thành bản chi tiết
-1. Ví dụ mẫu K2 giữ bối cảnh phòng kinh doanh, hay đổi sang nhân sự cho khớp buổi trước?
-2. Trình bày capstone: gọi mấy người share màn hình, số còn lại nộp file?
-3. Có phát chứng nhận ngay tối nay hay sau khi nộp bài về nhà?
+#### Bước 5. So trước và sau (học viên tự làm)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+So sánh hai file "ke-hoach-truoc-khi-co-skill.md" và file "brag-plan.md" trong thư mục kết quả vừa tạo. Chỉ ra 3 điểm khác nhau lớn nhất: cách mở đầu, cách dùng chữ của chính sản phẩm, độ dài từng cảnh. Trả lời ngắn, dạng bảng.
+```
+
+**Bạn sẽ thấy:** Bảng 3 dòng. Sau đó mở thêm `brag.mp4` có sẵn trong thư mục mẫu (bản của tác giả) để so với bản của mình.
+
+---
+
+## Phần C. Đạo diễn bằng lời
+
+### Giảng:
+- Cùng một sản phẩm, đổi đạo diễn là ra phim khác.
+- 7 tông có sẵn: `default`, `polished`, `yc-parody`, `chaotic`, `deadpan`, `cinematic`, `app-store`. Tả bằng lời thường cũng được.
+- Khổ hình: ngang (mặc định), dọc cho TikTok/Reels, vuông.
+- Chạy lần hai không ghi đè: skill tự tạo thư mục mới có ngày giờ.
+
+---
+
+### Thao tác:
+
+#### Bước 6. Đổi tông (học viên tự làm, mỗi bàn một tông)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+/brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder", lần này dùng tông deadpan: mặt lạnh, khô khan, coi như không có gì buồn cười.
+```
+
+**Bạn sẽ thấy:** Thư mục kết quả thứ hai, video chậm hơn, ít cảnh hơn, nhiều khoảng trống.
+
+---
+
+#### Bước 7. Bản dọc (giảng viên demo, học viên xem, để tiết kiệm thời gian dựng)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+/brag cho sản phẩm trong thư mục "san-pham-mau/horse-tinder", làm bản dọc để đăng TikTok và Reels, dài khoảng 18 giây.
+```
+
+**Bạn sẽ thấy:** Video 1080x1920, bố cục xếp lại theo chiều dọc.
+
+---
+
+## Phần D. Quay lại một cảnh
+
+### Giảng:
+- Không ưng một cảnh thì bảo ê-kíp quay lại cảnh đó, không làm lại cả phim.
+- Góp ý phải cụ thể: cảnh nào, chưa được ở đâu, muốn thế nào.
+- Caption gốc là tiếng Anh vì trang mẫu viết tiếng Anh. Việt hoá được, nhưng không được thêm lời khen hay con số không có thật.
+
+---
+
+### Thao tác:
+
+#### Bước 8. Sửa cảnh mở đầu (học viên tự làm)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+Trong video vừa làm, cảnh mở đầu chưa đủ gây chú ý. Làm lại riêng cảnh mở đầu cho mạnh hơn, các cảnh còn lại giữ nguyên. Xong thì xuất lại video và nói cho tôi biết bạn đã đổi gì.
+```
+
+**Bạn sẽ thấy:** Video mới chỉ khác phần đầu, kèm vài dòng giải thích.
+
+---
+
+#### Bước 9. Caption tiếng Việt (học viên tự làm)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+Đọc file "share-copy.txt" trong thư mục kết quả rồi viết lại thành 3 phiên bản tiếng Việt: một cho Facebook, một cho LinkedIn, một cho nhóm Zalo khách hàng. Giữ đúng tinh thần bản gốc, không thêm số liệu hay lời khen nào không có trên trang sản phẩm.
+```
+
+**Bạn sẽ thấy:** 3 caption ngắn, giọng khác nhau theo từng kênh.
+
+---
+
+## Phần E. Sản phẩm thật và giới hạn
+
+### Giảng:
+- Bản gọn nhận cả địa chỉ website, không cần có mã nguồn.
+- **Giới hạn cần nói thẳng:**
+  - Video lấy chữ từ trang của bạn, trang sơ sài thì video sơ sài.
+  - Mọi thứ skill đọc được có thể lên hình, nên không chạy trên thư mục chứa dữ liệu khách hàng.
+  - Phải xem lại video trước khi đăng.
+- **Chỉ cần hiểu, chưa cần làm:** Bản đầy đủ (`/brag --full`) có lồng tiếng và nhạc kèm sẵn, nhưng phải cài thêm Hyperframes.
+
+---
+
+### Thao tác:
+
+#### Bước 10. Video cho website của bạn (học viên tự làm, hoặc bài tập về nhà)
+
+Gõ câu lệnh sau vào Claude Code:
+
+```text
+/brag https://[dán địa chỉ website của bạn vào đây], tập trung vào [dán tên sản phẩm hoặc dịch vụ bạn muốn khoe nhất vào đây]. Chỉ dùng chữ và số liệu có thật trên trang, không bịa thêm lời chứng thực hay con số.
+```
+
+**Bạn sẽ thấy:** Video dùng đúng màu, phông chữ và câu chữ của website bạn.
